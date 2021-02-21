@@ -8,6 +8,7 @@ CS 353 Project (Online Course Platform)
   - Ece Ünal			       - sec 1 - 21703149  
 
 ### Project Website
+[Sapientia Website](https://sapientia-course-platform.github.io/CS353_Project/)
 
 ### Files
 [Project Proposal](https://github.com/omerunlusoy/CS353_Project/blob/main/Reports/Project%20Proposal.pdf)
