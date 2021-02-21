@@ -11,4 +11,4 @@ CS 353 Project (Online Course Platform)
 [Sapientia Website](https://sapientia-course-platform.github.io/CS353_Project/)
 
 ### Files
-[Project Proposal](https://github.com/omerunlusoy/CS353_Project/blob/main/Reports/Project%20Proposal.pdf)
+[Project Proposal](https://github.com/Sapientia-Course-Platform/CS353_Project/blob/main/Reports/Project%20Proposal.pdf)
