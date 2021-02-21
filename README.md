@@ -10,3 +10,4 @@ CS 353 Project (Online Course Platform)
 ### Project Website
 
 ### Files
+[Project Proposal](https://github.com/omerunlusoy/CS353_Project/blob/main/Reports/Project%20Proposal.pdf)
