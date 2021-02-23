@@ -7,8 +7,10 @@ CS 353 Project (Online Course Platform)
   - İrem Tekin		       - sec 1 - 21803267  
   - Ece Ünal			       - sec 1 - 21703149  
 
-### Project Website
-[Sapientia Website](https://sapientia-course-platform.github.io/CS353_Project/)
 
 ### Files
 [Project Proposal](https://github.com/Sapientia-Course-Platform/CS353_Project/blob/main/Reports/Project%20Proposal.pdf)
+
+
+### Project Website
+[Sapientia Website](https://sapientia-course-platform.github.io/CS353_Project/)
