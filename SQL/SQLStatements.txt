@@ -42,6 +42,7 @@ DROP TABLE IF EXISTS Admin;
  membership_type    -> CHAR(3)
  refund_request     -> BOOLEAN
  duration           -> TIME
+ lecture_content    -> BLOB NOT NULL
 
  Constraints:
  Student-Course cannot be in Wishlist, Enrolls, and Certificate all together.
@@ -70,7 +71,6 @@ IID             INT AUTO_INCREMENT,
 name            VARCHAR(50) NOT NULL,
 e_mail          VARCHAR(50) NOT NULL UNIQUE,
 password        VARCHAR(30) NOT NULL,
-
 PRIMARY KEY(IID)
 );
 
