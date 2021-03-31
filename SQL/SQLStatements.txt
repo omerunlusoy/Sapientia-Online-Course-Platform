@@ -336,7 +336,7 @@ FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 
 /*
  Binary relationship between Instructor and Course
- Attributes: invite_link
+ Attributes: invite_link, date
  Attention: it uses its own key to allow instructors to create several links
  */
 CREATE TABLE Zoom_Session(
@@ -344,6 +344,7 @@ Session_ID          INT AUTO_INCREMENT,
 IID                 INT NOT NULL,
 CID                 INT NOT NULL,
 invite_link         VARCHAR(1024),
+date                DATE,
 PRIMARY KEY(Session_ID),
 FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
