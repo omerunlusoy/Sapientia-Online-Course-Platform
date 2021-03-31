@@ -39,13 +39,18 @@ DROP TABLE IF EXISTS Admin;
  URL                -> VARCHAR(1024)
 
  Special Cases:
- membership_type    -> CHAR(3)
+ membership_type    -> ENUM('BRZ', 'SLV', 'GLD')
  refund_request     -> BOOLEAN
  duration           -> TIME
  lecture_content    -> BLOB NOT NULL
+ membership_type    -> ENUM('BRZ', 'SLV', 'GLD') NOT NULL DEFAULT 'BRZ'
+ answer             -> ENUM(1, 2, 3, 4) NOT NULL DEFAULT 1
 
  Constraints:
  Student-Course cannot be in Wishlist, Enrolls, and Certificate all together.
+
+ Future:
+ ENGINE = InnoDB; can be added
 
  */
 
@@ -59,7 +64,7 @@ SID             INT AUTO_INCREMENT,
 name            VARCHAR(50) NOT NULL,
 e_mail          VARCHAR(50) NOT NULL UNIQUE,
 password        VARCHAR(30) NOT NULL,
-membership_type CHAR(3) NOT NULL DEFAULT 'BRZ',
+membership_type ENUM('BRZ', 'SLV', 'GLD') NOT NULL DEFAULT 'BRZ',
 PRIMARY KEY(SID)
 );
 
@@ -90,6 +95,7 @@ PRIMARY KEY(AID)
    discount_allowed = True OR Flase
    0 <= certificate_threshold <= 100.00
    attention: FOREIGN KEY (creator_IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE
+              UNIQUE (creator_IID, course_name)
 */
 CREATE TABLE Course(
 CID                     INT AUTO_INCREMENT,
@@ -102,12 +108,14 @@ discount_allowed        BOOLEAN,
 certificate_threshold   NUMERIC(5, 2),
 creator_IID             INT NOT NULL,
 PRIMARY KEY(CID),
-FOREIGN KEY (creator_IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE
+FOREIGN KEY (creator_IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
+UNIQUE (creator_IID, course_name)
 );
 
 /* Assumptions:
    lecture_content is big data
    lecture_content is blob (not recommended, try to store videos in file directories and hold URLs)
+   Attention: UNIQUE (CID, title)
 */
 CREATE TABLE Lecture(
 CID                 INT NOT NULL,
@@ -118,6 +126,7 @@ duration            TIME,
 date                DATE,
 PRIMARY KEY(CID, Lec_ID),
 FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+UNIQUE (CID, title),
 INDEX(Lec_ID)
 );
 
@@ -128,9 +137,14 @@ title               VARCHAR(300) NOT NULL,
 date                DATE,
 PRIMARY KEY(CID, QID),
 FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+UNIQUE (CID, title),
 INDEX(QID)
 );
 
+/*
+ Attention: answer ENUM('choice1', 'choice2', 'choice3', 'choice4') NOT NULL DEFAULT 'choice1'
+ answer = 1 => answer = choice1
+ */
 CREATE TABLE Quiz_Question(
 CID                 INT NOT NULL,
 QID                 INT NOT NULL,
@@ -140,7 +154,7 @@ choice1             VARCHAR(50) NOT NULL DEFAULT '',
 choice2             VARCHAR(50),
 choice3             VARCHAR(50),
 choice4             VARCHAR(50),
-answer              INT NOT NULL DEFAULT 1,
+answer              ENUM('choice1', 'choice2', 'choice3', 'choice4') NOT NULL DEFAULT 'choice1',
 PRIMARY KEY(CID, QID, question_num),
 FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (QID) REFERENCES Quiz(QID) ON DELETE CASCADE ON UPDATE CASCADE
@@ -322,7 +336,7 @@ FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 
 /*
  Binary relationship between Instructor and Course
- Attributes: invite_link
+ Attributes: invite_link, date
  Attention: it uses its own key to allow instructors to create several links
  */
 CREATE TABLE Zoom_Session(
@@ -330,6 +344,7 @@ Session_ID          INT AUTO_INCREMENT,
 IID                 INT NOT NULL,
 CID                 INT NOT NULL,
 invite_link         VARCHAR(1024),
+date                DATE,
 PRIMARY KEY(Session_ID),
 FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
