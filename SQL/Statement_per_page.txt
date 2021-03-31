@@ -63,3 +63,59 @@ BEGIN
 END
 
 
+Add quiz
+
+Edit quiz
+
+Solve quiz
+
+Student filtered main page — Listing all available courses and applying filters (price, discount, keyword etc.)
+
+Inputs: @category, @price_threshold, @discount, @keyword
+
+BEGIN
+	IF NOT EXISTS ( 	SELECT (*)
+					FROM Enrolls NATURAL JOIN Course
+					WHERE SID = @student_id  )
+	BEGIN
+		SELECT course_name, course_photo, cost, old_cost
+		FROM Course FULL OUTER JOIN Discount
+		WHERE category = @category AND price < @price_threshold
+					  	AND rate = @discount
+						AND ( course_name like ‘%keyword%’  
+							OR instructor_name like ‘%keyword%’
+				
+
+	END 
+END 
+
+
+
+View the course —- Selecting a course and see its features like price, description, average rating etc. —also list lectures here to Watch a lecture of the course by selecting it on the course home page after that
+
+
+
+Lecture watch page —  go to course
+	i. When a lecture is finished, continue with the next one.
+
+
+Certificate and comment certificate
+	ii. Get certificate if all lectures are completed
+
+
+	iii. Create notes on lectures (Visible only to user)
+
+
+See wishlist  wishlist
+
+SELECT course_name, course_photo, cost
+	 FROM Wishlist NATURAL JOIN Course NATURAL JOIN Student
+	 WHERE SID = @student_id
+
+Student courses (See bought courses in user’s profile)
+
+SELECT course_name, course_photo, date, time
+	 FROM Enrolls NATURAL JOIN Course FULL OUTER JOIN Zoom_Session
+	 WHERE SID = @student_id
+
+
