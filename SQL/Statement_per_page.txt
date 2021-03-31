@@ -1,0 +1,65 @@
+Instructor log-in:
+
+Inputs: @email , @password
+
+On Login button pressed:
+
+SELECT *
+FROM Instructor
+WHERE email = @email AND password = @password 
+
+
+Student log-in:
+
+Inputs: @email , @password
+
+On Login button pressed:
+
+SELECT *
+FROM Student
+WHERE email = @email AND password = @password 
+
+
+Admin log-in:
+
+Inputs: @email , @password
+
+On Login button pressed:
+
+SELECT *
+FROM Admin
+WHERE email = @email AND password = @password 
+
+Student sign-up
+
+Inputs: @name, @email, @password
+
+On Sign up button pressed:
+
+
+BEGIN
+	IF NOT EXISTS ( SELECT * FROM Student 
+				WHERE e_mail = @email)
+	BEGIN 
+		INSERT INTO Student (name, e_mail, password)
+		VALUES (@name, @email, @password)
+	END
+END
+  
+
+Instructor sign-up
+
+Inputs: @name, @email, @password
+
+On Sign up button pressed:
+
+BEGIN
+	IF NOT EXISTS ( SELECT * FROM Student 
+				WHERE e_mail = @email)
+	BEGIN 
+		INSERT INTO Instructor (name, e_mail, password)
+		VALUES (@name, @email, @password)
+	END
+END
+
+
