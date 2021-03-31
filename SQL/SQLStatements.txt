@@ -1,0 +1,187 @@
+use cs353_project;
+
+DROP TABLE IF EXISTS Complaint_Entry_Student;
+DROP TABLE IF EXISTS Complaint_Entry_Instructor;
+DROP TABLE IF EXISTS QandA_Entry_Student;
+DROP TABLE IF EXISTS QandA_Entry_Instructor;
+DROP TABLE IF EXISTS Course_Announcement;
+DROP TABLE IF EXISTS Note;
+DROP TABLE IF EXISTS Quiz_Question;
+DROP TABLE IF EXISTS Quiz;
+DROP TABLE IF EXISTS Lecture;
+DROP TABLE IF EXISTS Course;
+
+DROP TABLE IF EXISTS Student;
+DROP TABLE IF EXISTS Instructor;
+DROP TABLE IF EXISTS Admin;
+
+
+/* Assumptions:
+   Id is 8 character and unique
+   FOREIGN KEY (bdate) REFERENCES company(cid)
+*/
+CREATE TABLE Student(
+SID             INT AUTO_INCREMENT,
+name            VARCHAR(50) NOT NULL,
+e_mail          VARCHAR(70) NOT NULL UNIQUE,
+password        VARCHAR(30) NOT NULL,
+membership_type CHAR(3) NOT NULL DEFAULT 'BRZ',
+PRIMARY KEY(SID)
+);
+
+/* Assumptions:
+   include functions [course_count(), current_income()]
+*/
+CREATE TABLE Instructor(
+IID             INT AUTO_INCREMENT,
+name            VARCHAR(50) NOT NULL,
+e_mail          VARCHAR(70) NOT NULL UNIQUE,
+password        VARCHAR(30) NOT NULL,
+
+PRIMARY KEY(IID)
+);
+
+CREATE TABLE Admin(
+AID             INT AUTO_INCREMENT,
+name            VARCHAR(50) NOT NULL,
+e_mail          VARCHAR(70) NOT NULL UNIQUE,
+password        VARCHAR(30) NOT NULL,
+salary          NUMERIC(12, 2) NOT NULL DEFAULT 0.00,
+PRIMARY KEY(AID)
+);
+
+/* Assumptions:
+   include functions [rating(), student_count(), lecture_count()]
+   constraints for category and level
+   0 <= cost <= 999,999.99
+   discount_allowed = True OR Flase
+   0 <= certificate_threshold <= 100.00
+*/
+CREATE TABLE Course(
+CID                     INT AUTO_INCREMENT,
+course_name             VARCHAR(80) NOT NULL,
+description             VARCHAR(300),
+category                VARCHAR(30),
+level                   VARCHAR(20),
+cost                    NUMERIC(8, 2) NOT NULL,
+discount_allowed        BOOLEAN,
+certificate_threshold   NUMERIC(5, 2),
+
+PRIMARY KEY(CID)
+);
+
+/* Assumptions:
+   lecture_content is big data
+   lecture_content is blob (not recommended, try to store videos in file directories and hold URLs)
+*/
+CREATE TABLE Lecture(
+CID                 INT NOT NULL,
+Lec_ID              INT NOT NULL,
+title               VARCHAR(300) NOT NULL,
+lecture_content     BLOB NOT NULL,
+duration            TIME,
+date                DATE,
+PRIMARY KEY(CID, Lec_ID),
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+INDEX(Lec_ID)
+);
+
+CREATE TABLE Quiz(
+CID                 INT NOT NULL,
+Q_ID                INT NOT NULL,
+title               VARCHAR(300) NOT NULL,
+date                DATE,
+PRIMARY KEY(CID, Q_ID),
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+INDEX(Q_ID)
+);
+
+CREATE TABLE Quiz_Question(
+CID                 INT NOT NULL,
+Q_ID                INT NOT NULL,
+question_num        INT NOT NULL,
+question_text       VARCHAR(300) NOT NULL,
+choice1             VARCHAR(50) NOT NULL DEFAULT '',
+choice2             VARCHAR(50),
+choice3             VARCHAR(50),
+choice4             VARCHAR(50),
+answer              INT NOT NULL DEFAULT 1,
+PRIMARY KEY(CID, Q_ID, question_num),
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (Q_ID) REFERENCES Quiz(Q_ID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Note(
+Note_ID             INT AUTO_INCREMENT,
+SID                 INT NOT NULL,
+Lec_ID              INT NOT NULL,
+time                TIMESTAMP,
+text                VARCHAR(300) NOT NULL,
+PRIMARY KEY(Note_ID),
+FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (Lec_ID) REFERENCES Lecture(Lec_ID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Course_Announcement(
+Ann_ID              INT AUTO_INCREMENT,
+IID                 INT NOT NULL,
+CID                 INT NOT NULL,
+date                DATE,
+subject_name        VARCHAR(30) NOT NULL,
+text                VARCHAR(300) NOT NULL,
+PRIMARY KEY(Ann_ID),
+FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE QandA_Entry_Student(
+QandA_ID            INT AUTO_INCREMENT,
+CID                 INT NOT NULL,
+SID                 INT NOT NULL,
+subject_name        VARCHAR(30) NOT NULL,
+text                VARCHAR(300) NOT NULL,
+date                DATE,
+PRIMARY KEY(QandA_ID),
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE QandA_Entry_Instructor(
+QandA_ID            INT AUTO_INCREMENT,
+CID                 INT NOT NULL,
+IID                 INT NOT NULL,
+subject_name        VARCHAR(30) NOT NULL,
+text                VARCHAR(300) NOT NULL,
+date                DATE,
+PRIMARY KEY(QandA_ID),
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Complaint_Entry_Student(
+Complaint_ID        INT AUTO_INCREMENT,
+CID                 INT NOT NULL,
+SID                 INT NOT NULL,
+subject_name        VARCHAR(30) NOT NULL,
+text                VARCHAR(300) NOT NULL,
+date                DATE,
+refund_request      BOOLEAN,
+PRIMARY KEY(Complaint_ID),
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Complaint_Entry_Instructor(
+Complaint_ID        INT AUTO_INCREMENT,
+CID                 INT NOT NULL,
+IID                 INT NOT NULL,
+subject_name        VARCHAR(30) NOT NULL,
+text                VARCHAR(300) NOT NULL,
+date                DATE,
+refund_request      BOOLEAN,
+PRIMARY KEY(Complaint_ID),
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
