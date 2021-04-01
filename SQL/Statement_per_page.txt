@@ -65,9 +65,49 @@ END
 
 Add quiz
 
+Input: @title, @section
+
+On Save Quiz button pressed:
+
+INSERT INTO Quiz (title, section, CID)
+VALUES (@title, @section, @CID)
+
+Add question
+
+Input: @question_text, @choice1, @choice2, @choice3, @answer
+
+On Save button pressed:
+
+INSERT INTO Quiz_Question (CID, QID, question_num, question_text, choice1, choice2, choice3, answer)
+VALUES ( @CID, @QID, @question_num, @question_text, @choice1, @choice2, @choice3, @answer) 
+
+
 Edit quiz
 
+Input: @title, @section, @question_text, @choice1, @choice2, @choice3, @answer
+
+On Save Quiz button pressed:
+
+UPDATE Quiz
+SET title = @title, section = @section
+WHERE CID = @CID AND QID = @QID
+
+On Save button pressed:
+
+UPDATE Quiz_Question
+SET question_text = @question_text, choice1 = @choice1, choice2 = @choice2, choice3 = @choice3, answer = @answer
+
+
 Solve quiz
+
+SELECT question_num, question_text, choice1, choice2, choice3
+FROM Quiz_Question
+WHERE CID = @CID AND QID = @QID
+
+On Submit Quiz button pressed
+
+
+
 
 Student filtered main page — Listing all available courses and applying filters (price, discount, keyword etc.)
 
@@ -83,7 +123,7 @@ BEGIN
 		WHERE category = @category AND price < @price_threshold
 					  	AND rate = @discount
 						AND ( course_name like ‘%keyword%’  
-							OR instructor_name like ‘%keyword%’
+							OR instructor_name like ‘%keyword%’ )
 				
 
 	END 
