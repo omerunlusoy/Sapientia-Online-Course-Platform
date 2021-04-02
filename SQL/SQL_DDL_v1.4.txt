@@ -112,7 +112,7 @@ category                    VARCHAR(30),
 level                       VARCHAR(30),
 cost                        NUMERIC(8, 2) NOT NULL DEFAULT 0.00,
 discount_allowed            BOOLEAN,
-certificate_threshold       NUMERIC(5, 2),
+quiz_threshold              NUMERIC(5, 2),
 lecture_completed_threshold NUMERIC(5, 2),
 PRIMARY KEY (CID),
 FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
@@ -428,7 +428,7 @@ INSERT INTO Student (name, e_mail, password, membership_type)
 VALUES ('Ece', 'ce@mer', '345', 'SLV');
 
 INSERT INTO Course (IID, course_name, course_photo, description, category,
-                    level, cost, discount_allowed, certificate_threshold, lecture_completed_threshold)
+                    level, cost, discount_allowed, quiz_threshold, lecture_completed_threshold)
 VALUES (1, 'SQL Beginner', NULL, 'SQL Beginner Course', 'Programming', 'Beginner', 99.99, FALSE, 90, 85);
 
 INSERT INTO Teaches (IID, CID)
