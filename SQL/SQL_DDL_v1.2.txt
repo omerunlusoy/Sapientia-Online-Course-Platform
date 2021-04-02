@@ -230,7 +230,7 @@ CREATE TABLE Complaint_Entry_Student(
 Complaint_ID        INT AUTO_INCREMENT,
 SID                 INT NOT NULL,
 CID                 INT NOT NULL,
-subject_name        VARCHAR(30) NOT NULL,
+subject_title       VARCHAR(30) NOT NULL,
 text                VARCHAR(300) NOT NULL,
 date                DATE,
 refund_request      BOOLEAN,
@@ -309,7 +309,7 @@ FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
  Binary relationship between Admin and Complaint_Entry
  Attention: FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE
  */
-CREATE TABLE Evaluates_Complaint_Entry_Student(
+CREATE TABLE (
 AID                 INT NOT NULL,
 Complaint_ID        INT NOT NULL,
 response            VARCHAR(300),
