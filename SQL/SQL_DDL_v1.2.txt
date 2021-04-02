@@ -309,7 +309,7 @@ FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
  Binary relationship between Admin and Complaint_Entry
  Attention: FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE
  */
-CREATE TABLE (
+CREATE TABLE Evaluates_Complaint_Entry_Student(
 AID                 INT NOT NULL,
 Complaint_ID        INT NOT NULL,
 response            VARCHAR(300),
