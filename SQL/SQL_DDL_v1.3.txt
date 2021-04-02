@@ -103,6 +103,7 @@ PRIMARY KEY (AID)
 */
 CREATE TABLE Course(
 CID                         INT AUTO_INCREMENT,
+IID                         INT NOT NULL,
 course_name                 VARCHAR(70) NOT NULL,
 course_photo                BLOB,
 description                 VARCHAR(300),
@@ -113,10 +114,9 @@ cost                        NUMERIC(8, 2) NOT NULL DEFAULT 0.00,
 discount_allowed            BOOLEAN,
 certificate_threshold       NUMERIC(5, 2),
 lecture_completed_threshold NUMERIC(5, 2),
-creator_IID                 INT NOT NULL,
 PRIMARY KEY (CID),
-FOREIGN KEY (creator_IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
-UNIQUE (creator_IID, course_name)
+FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
+UNIQUE (IID, course_name)
 );
 
 CREATE TABLE Section(
@@ -136,6 +136,7 @@ INDEX (section)
 CREATE TABLE Lecture(
 CID                 INT NOT NULL,
 content_num         INT NOT NULL,
+IID                 INT NOT NULL,
 section             INT NOT NULL,
 title               VARCHAR(300) NOT NULL,
 lecture_content     BLOB NOT NULL,
@@ -144,6 +145,7 @@ date                DATE,
 PRIMARY KEY (CID, content_num),
 FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (section) REFERENCES Section(section) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
 UNIQUE (CID, title),
 INDEX (content_num)
 );
@@ -151,12 +153,14 @@ INDEX (content_num)
 CREATE TABLE Quiz(
 CID                 INT NOT NULL,
 content_num         INT NOT NULL,
+IID                 INT NOT NULL,
 section             INT NOT NULL,
 title               VARCHAR(300) NOT NULL,
 date                DATE,
 PRIMARY KEY (CID, content_num),
 FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (section) REFERENCES Section(section) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
 UNIQUE (CID, title),
 INDEX (content_num)
 );
@@ -423,9 +427,9 @@ VALUES ('İrem', 'rem@mer', '234');
 INSERT INTO Student (name, e_mail, password, membership_type)
 VALUES ('Ece', 'ce@mer', '345', 'SLV');
 
-INSERT INTO Course (course_name, course_photo, description, category,
-                    level, cost, discount_allowed, certificate_threshold, lecture_completed_threshold, creator_IID)
-VALUES ('SQL Beginner', NULL, 'SQL Beginner Course', 'Programming', 'Beginner', 99.99, FALSE, 90, 85, 1);
+INSERT INTO Course (IID, course_name, course_photo, description, category,
+                    level, cost, discount_allowed, certificate_threshold, lecture_completed_threshold)
+VALUES (1, 'SQL Beginner', NULL, 'SQL Beginner Course', 'Programming', 'Beginner', 99.99, FALSE, 90, 85);
 
 INSERT INTO Teaches (IID, CID)
 VALUES (1, 1);
@@ -436,11 +440,11 @@ VALUES (1, 1, 'Section 1');
 INSERT INTO Section (CID, section, title)
 VALUES (1, 2, 'Section 2');
 
-INSERT INTO Lecture (CID, content_num, section, title, lecture_content, duration, date)
-VALUES (1, 1, 1, 'Lecture 1', HEX('Test'), '13:30', CURDATE());
+INSERT INTO Lecture (CID, IID, content_num, section, title, lecture_content, duration, date)
+VALUES (1, 1, 1, 1, 'Lecture 1', HEX('Test'), '13:30', CURDATE());
 
-INSERT INTO Quiz (CID, content_num, section, title)
-VALUES (1, 2, 1, 'Quiz 1');
+INSERT INTO Quiz (CID, IID, content_num, section, title)
+VALUES (1, 1, 2, 1, 'Quiz 1');
 
 INSERT INTO Quiz_Question (CID, content_num, question_num, question_text, choice1, choice2, choice3, answer)
 VALUES (1, 2, 1, 'Capital of Turkey', 'İstanbul', 'Ankara', 'İzmir', 'choice1');
