@@ -1,0 +1,469 @@
+use cs353_project;
+
+DROP TABLE IF EXISTS Take_Quiz_Question;
+DROP TABLE IF EXISTS Take_Lecture;
+DROP TABLE IF EXISTS Take_Quiz;
+DROP TABLE IF EXISTS Zoom_Session;
+DROP TABLE IF EXISTS Discount;
+DROP TABLE IF EXISTS Evaluates_Complaint_Entry_Student;
+DROP TABLE IF EXISTS Evaluates_Complaint_Entry_Instructor;
+DROP TABLE IF EXISTS Teaches;
+DROP TABLE IF EXISTS Enrolls;
+DROP TABLE IF EXISTS Wishlist;
+DROP TABLE IF EXISTS Certificate;
+DROP TABLE IF EXISTS QnA_Entry_Student;
+DROP TABLE IF EXISTS QnA_Entry_Instructor;
+DROP TABLE IF EXISTS Complaint_Entry_Student;
+DROP TABLE IF EXISTS Complaint_Entry_Instructor;
+DROP TABLE IF EXISTS Course_Announcement;
+DROP TABLE IF EXISTS Note;
+DROP TABLE IF EXISTS Quiz_Question;
+DROP TABLE IF EXISTS Quiz;
+DROP TABLE IF EXISTS Lecture;
+DROP TABLE IF EXISTS Section;
+DROP TABLE IF EXISTS Course;
+
+DROP TABLE IF EXISTS Student;
+DROP TABLE IF EXISTS Instructor;
+DROP TABLE IF EXISTS Admin;
+
+/*
+ General Assumptions:
+ ID                 -> INT AUTO_INCREMENT
+ referencing ID     -> INT NOT NULL
+ short string       -> VARCHAR(30)
+ mid string         -> VARCHAR(50)
+ long string        -> VARCHAR(70)
+ description        -> VARCHAR(300)
+ money              -> NUMERIC(12, 2) OR NUMERIC(8, 2)
+ %                  -> NUMERIC(5, 2)
+ date               -> DATE
+ URL                -> VARCHAR(1024)
+
+ Special Cases:
+ membership_type    -> ENUM('BRZ', 'SLV', 'GLD')
+ refund_request     -> BOOLEAN
+ duration           -> TIME
+ lecture_content    -> BLOB NOT NULL
+ membership_type    -> ENUM('BRZ', 'SLV', 'GLD') NOT NULL DEFAULT 'BRZ'
+ answer             -> ENUM('choice1', 'choice2', 'choice3') NOT NULL DEFAULT 'choice1'
+
+ Constraints:
+ Student-Course cannot be in Wishlist, Enrolls, and Certificate all together.
+ adds Wishlist -> Enrolls (remove from Wishlist) -> get Certificate (add Certificate not remove Enrolls)
+ Lecture and Quiz content_num
+
+ Future:
+ ENGINE = InnoDB; can be added
+
+ */
+
+
+/*
+ Assumptions:
+*/
+CREATE TABLE Student(
+SID             INT AUTO_INCREMENT,
+name            VARCHAR(50) NOT NULL,
+e_mail          VARCHAR(50) NOT NULL UNIQUE,
+password        VARCHAR(30) NOT NULL,
+membership_type ENUM('BRZ', 'SLV', 'GLD') NOT NULL DEFAULT 'BRZ',
+PRIMARY KEY (SID)
+);
+
+/* Assumptions:
+   include functions [course_count(), current_income()]
+*/
+CREATE TABLE Instructor(
+IID             INT AUTO_INCREMENT,
+name            VARCHAR(50) NOT NULL,
+e_mail          VARCHAR(50) NOT NULL UNIQUE,
+password        VARCHAR(30) NOT NULL,
+PRIMARY KEY (IID)
+);
+
+CREATE TABLE Admin(
+AID             INT AUTO_INCREMENT,
+name            VARCHAR(50) NOT NULL,
+e_mail          VARCHAR(50) NOT NULL UNIQUE,
+password        VARCHAR(30) NOT NULL,
+salary          NUMERIC(12, 2) NOT NULL DEFAULT 0.00,
+PRIMARY KEY (AID)
+);
+
+/* Assumptions:
+   include functions [rating(), student_count(), lecture_count()]
+   constraints for category and level
+   0 <= cost <= 999,999.99
+   discount_allowed = True OR False
+   lecture_completed_threshold = %70
+   0 <= certificate_threshold <= 100.00
+   attention: FOREIGN KEY (creator_IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE
+              UNIQUE (creator_IID, course_name)
+*/
+CREATE TABLE Course(
+CID                         INT AUTO_INCREMENT,
+course_name                 VARCHAR(70) NOT NULL,
+course_photo                BLOB,
+description                 VARCHAR(300),
+rating                      NUMERIC(5, 2) DEFAULT 0.00,
+category                    VARCHAR(30),
+level                       VARCHAR(30),
+cost                        NUMERIC(8, 2) NOT NULL DEFAULT 0.00,
+discount_allowed            BOOLEAN,
+certificate_threshold       NUMERIC(5, 2),
+lecture_completed_threshold NUMERIC(5, 2),
+creator_IID                 INT NOT NULL,
+PRIMARY KEY (CID),
+FOREIGN KEY (creator_IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
+UNIQUE (creator_IID, course_name)
+);
+
+CREATE TABLE Section(
+CID                 INT NOT NULL,
+section             INT NOT NULL,
+title               VARCHAR(300),
+PRIMARY KEY (CID, section),
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+INDEX (section)
+);
+
+/* Assumptions:
+   lecture_content is big data
+   lecture_content is blob (not recommended, try to store videos in file directories and hold URLs)
+   Attention: UNIQUE (CID, title)
+*/
+CREATE TABLE Lecture(
+CID                 INT NOT NULL,
+content_num         INT NOT NULL,
+section             INT NOT NULL,
+title               VARCHAR(300) NOT NULL,
+lecture_content     BLOB NOT NULL,
+duration            TIME NOT NULL,
+date                DATE,
+PRIMARY KEY (CID, content_num),
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (section) REFERENCES Section(section) ON DELETE CASCADE ON UPDATE CASCADE,
+UNIQUE (CID, title),
+INDEX (content_num)
+);
+
+CREATE TABLE Quiz(
+CID                 INT NOT NULL,
+content_num         INT NOT NULL,
+section             INT NOT NULL,
+title               VARCHAR(300) NOT NULL,
+PRIMARY KEY (CID, content_num),
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (section) REFERENCES Section(section) ON DELETE CASCADE ON UPDATE CASCADE,
+UNIQUE (CID, title),
+INDEX (content_num)
+);
+
+/*
+ Attention: answer ENUM('choice1', 'choice2', 'choice3') NOT NULL DEFAULT 'choice1'
+ answer = 1 => answer = choice1
+ */
+CREATE TABLE Quiz_Question(
+CID                 INT NOT NULL,
+content_num         INT NOT NULL,
+question_num        INT NOT NULL,
+question_text       VARCHAR(300) NOT NULL,
+choice1             VARCHAR(50) NOT NULL DEFAULT '',
+choice2             VARCHAR(50),
+choice3             VARCHAR(50),
+answer              ENUM('choice1', 'choice2', 'choice3') NOT NULL DEFAULT 'choice1',
+PRIMARY KEY (CID, content_num, question_num),
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (content_num) REFERENCES Quiz(content_num) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Note(
+Note_ID             INT AUTO_INCREMENT,
+SID                 INT NOT NULL,
+content_num         INT NOT NULL,
+time                TIME,
+text                VARCHAR(300) NOT NULL,
+PRIMARY KEY (Note_ID),
+FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (content_num) REFERENCES Lecture(content_num) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Course_Announcement(
+Ann_ID              INT AUTO_INCREMENT,
+IID                 INT NOT NULL,
+CID                 INT NOT NULL,
+date                DATE,
+subject_name        VARCHAR(30) NOT NULL,
+text                VARCHAR(300) NOT NULL,
+PRIMARY KEY (Ann_ID),
+FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE QnA_Entry_Student(
+QnA_ID              INT AUTO_INCREMENT,
+SID                 INT NOT NULL,
+CID                 INT NOT NULL,
+subject_name        VARCHAR(30) NOT NULL,
+text                VARCHAR(300) NOT NULL,
+date                DATE,
+PRIMARY KEY (QnA_ID),
+FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE NO ACTION ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE QnA_Entry_Instructor(
+QnA_ID              INT AUTO_INCREMENT,
+IID                 INT NOT NULL,
+CID                 INT NOT NULL,
+subject_name        VARCHAR(30) NOT NULL,
+text                VARCHAR(300) NOT NULL,
+date                DATE,
+PRIMARY KEY(QnA_ID),
+FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Complaint_Entry_Student(
+Complaint_ID        INT AUTO_INCREMENT,
+SID                 INT NOT NULL,
+CID                 INT NOT NULL,
+subject_name        VARCHAR(30) NOT NULL,
+text                VARCHAR(300) NOT NULL,
+date                DATE,
+refund_request      BOOLEAN,
+PRIMARY KEY (Complaint_ID),
+FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Complaint_Entry_Instructor(
+Complaint_ID        INT AUTO_INCREMENT,
+IID                 INT NOT NULL,
+CID                 INT NOT NULL,
+subject_name        VARCHAR(30) NOT NULL,
+text                VARCHAR(300) NOT NULL,
+date                DATE,
+PRIMARY KEY (Complaint_ID),
+FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+/*
+ Binary relationship between Student and Course
+ Attributes: date
+ */
+CREATE TABLE Wishlist(
+SID                 INT NOT NULL,
+CID                 INT NOT NULL,
+date                DATE,
+PRIMARY KEY (SID, CID),
+FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*
+ Binary relationship between Student and Course
+ Attributes: progress, rating
+ */
+CREATE TABLE Enrolls(
+SID                 INT NOT NULL,
+CID                 INT NOT NULL,
+progress            NUMERIC(5, 2) DEFAULT 0.00,
+rating              NUMERIC(5, 2),
+date                DATE,
+PRIMARY KEY (SID, CID),
+FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*
+ Binary relationship between Student and Course
+ Attributes: date
+ */
+CREATE TABLE Certificate(
+SID                 INT NOT NULL,
+CID                 INT NOT NULL,
+certificate_text    VARCHAR(300),
+date                DATE,
+PRIMARY KEY (SID, CID),
+FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*
+ Binary relationship between Instructor and Course
+ */
+CREATE TABLE Teaches(
+IID                 INT NOT NULL,
+CID                 INT NOT NULL,
+PRIMARY KEY (IID, CID),
+FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*
+ Binary relationship between Admin and Complaint_Entry
+ Attention: FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE
+ */
+CREATE TABLE Evaluates_Complaint_Entry_Student(
+AID                 INT NOT NULL,
+Complaint_ID        INT NOT NULL,
+response            VARCHAR(300),
+isRefund            BOOLEAN,
+PRIMARY KEY (AID, Complaint_ID),
+FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE,
+FOREIGN KEY (Complaint_ID) REFERENCES Complaint_Entry_Student(Complaint_ID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*
+ Binary relationship between Admin and Complaint_Entry
+ Attention: FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE
+ */
+CREATE TABLE Evaluates_Complaint_Entry_Instructor(
+AID                 INT NOT NULL,
+Complaint_ID        INT NOT NULL,
+response            VARCHAR(300),
+PRIMARY KEY (AID, Complaint_ID),
+FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE,
+FOREIGN KEY (Complaint_ID) REFERENCES Complaint_Entry_Instructor(Complaint_ID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*
+ Binary relationship between Admin and Course
+ Attributes: rate (e.g. %30)
+ Attention: FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE
+ */
+CREATE TABLE Discount(
+AID                 INT NOT NULL,
+CID                 INT NOT NULL,
+rate                NUMERIC(5, 2),
+PRIMARY KEY (AID, CID),
+FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*
+ Binary relationship between Instructor and Course
+ Attributes: invite_link, start_date
+ Attention: it uses its own key to allow instructors to create several links
+ */
+CREATE TABLE Zoom_Session(
+Session_ID          INT AUTO_INCREMENT,
+IID                 INT NOT NULL,
+CID                 INT NOT NULL,
+invite_link         VARCHAR(1024),
+start_date          TIMESTAMP,
+PRIMARY KEY (Session_ID),
+FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*
+ Binary relationship between Student and Quiz
+ Attributes: grade (updated according to Student_Take_Quiz_Question)
+ Attention: its key is Student(SID) U Quiz(CID, QID)
+ */
+CREATE TABLE Take_Quiz(
+SID                 INT NOT NULL,
+CID                 INT NOT NULL,
+content_num         INT NOT NULL,
+grade               NUMERIC(5, 2),
+PRIMARY KEY (SID, CID, content_num),
+FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (content_num) REFERENCES Quiz(content_num) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*
+ Binary relationship between Student and Quiz_Question
+ keeps students' answers to each quiz question
+ Attributes: isTrue
+ */
+CREATE TABLE Take_Quiz_Question(
+SID                 INT NOT NULL,
+CID                 INT NOT NULL,
+content_num         INT NOT NULL,
+question_num        INT NOT NULL,
+answer              ENUM('choice1', 'choice2', 'choice3') NOT NULL,
+isTrue              BOOLEAN,
+PRIMARY KEY (SID, CID, content_num, question_num),
+FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (CID, content_num, question_num) REFERENCES Quiz_Question(CID, content_num, question_num) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*
+ Binary relationship between Student and Lecture
+ keeps students' completion to each lecture (lecture_completed_threshold in lecture (e.g. %70 for each lecture))
+ Attributes: isCompleted
+ */
+CREATE TABLE Take_Lecture(
+SID                 INT NOT NULL,
+CID                 INT NOT NULL,
+content_num         INT NOT NULL,
+isCompleted         BOOLEAN,
+PRIMARY KEY (SID, CID, content_num),
+FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (CID, content_num) REFERENCES Lecture(CID, content_num) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*
+ Example Insertions
+ */
+
+INSERT INTO Admin (name, e_mail, password, salary)
+VALUES ('Ömer', 'mer@mer', '123', 1000000000.00);
+
+INSERT INTO Instructor (name, e_mail, password)
+VALUES ('İrem', 'rem@mer', '234');
+
+INSERT INTO Student (name, e_mail, password, membership_type)
+VALUES ('Ece', 'ce@mer', '345', 'SLV');
+
+INSERT INTO Course (course_name, course_photo, description, category,
+                    level, cost, discount_allowed, certificate_threshold, lecture_completed_threshold, creator_IID)
+VALUES ('SQL Beginner', NULL, 'SQL Beginner Course', 'Programming', 'Beginner', 99.99, FALSE, 90, 85, 1);
+
+INSERT INTO Teaches (IID, CID)
+VALUES (1, 1);
+
+INSERT INTO Section (CID, section, title)
+VALUES (1, 1, 'Section 1');
+
+INSERT INTO Section (CID, section, title)
+VALUES (1, 2, 'Section 2');
+
+INSERT INTO Lecture (CID, content_num, section, title, lecture_content, duration, date)
+VALUES (1, 1, 1, 'Lecture 1', HEX('Test'), '13:30', CURDATE());
+
+INSERT INTO Quiz (CID, content_num, section, title)
+VALUES (1, 2, 1, 'Quiz 1');
+
+INSERT INTO Quiz_Question (CID, content_num, question_num, question_text, choice1, choice2, choice3, answer)
+VALUES (1, 2, 1, 'Capital of Turkey', 'İstanbul', 'Ankara', 'İzmir', 'choice1');
+
+INSERT INTO Wishlist (SID, CID, date)
+VALUES (1, 1, CURDATE());
+
+INSERT INTO Enrolls (SID, CID, rating, date)
+VALUES (1, 1, 89.00, CURDATE());
+
+INSERT INTO Take_Lecture (SID, CID, content_num, isCompleted)
+VALUES (1, 1, 1, TRUE);
+
+/*
+ isTrue will be calculated according to answer
+ */
+INSERT INTO Take_Quiz_Question (SID, CID, content_num, question_num, answer, isTrue)
+VALUES (1, 1, 2, 1, 'choice2', FALSE);
+
+/*
+ grade will be calculated according to Take_Quiz_Question with same (SID, CID, content_num)
+ */
+INSERT INTO Take_Quiz (SID, CID, content_num, grade)
+VALUES (1, 1, 2, 0.00);
+
+INSERT INTO Note (SID, content_num, time, text)
+VALUES (1, 1, '3:30', 'varchar defined');
