@@ -1,0 +1,200 @@
+Instructor log-in:
+
+Inputs: @email , @password
+
+On Login button pressed:
+
+SELECT *
+FROM Instructor
+WHERE email = @email AND password = @password 
+
+
+Student log-in:
+
+Inputs: @email , @password
+
+On Login button pressed:
+
+SELECT *
+FROM Student
+WHERE email = @email AND password = @password 
+
+
+Admin log-in:
+
+Inputs: @email , @password
+
+On Login button pressed:
+
+SELECT *
+FROM Admin
+WHERE email = @email AND password = @password 
+
+Student sign-up
+
+Inputs: @name, @email, @password
+
+On Sign up button pressed:
+
+
+BEGIN
+	IF NOT EXISTS ( SELECT * FROM Student 
+				WHERE e_mail = @email)
+	BEGIN 
+		INSERT INTO Student (name, e_mail, password)
+		VALUES (@name, @email, @password)
+	END
+END
+  
+
+Instructor sign-up
+
+Inputs: @name, @email, @password
+
+On Sign up button pressed:
+
+BEGIN
+	IF NOT EXISTS ( SELECT * FROM Student 
+				WHERE e_mail = @email)
+	BEGIN 
+		INSERT INTO Instructor (name, e_mail, password)
+		VALUES (@name, @email, @password)
+	END
+END
+
+
+Add quiz
+
+Input: @title, @section
+
+On Save Quiz button pressed:
+
+INSERT INTO Quiz (title, section, CID)
+VALUES (@title, @section, @CID)
+
+Add question
+
+Input: @question_text, @choice1, @choice2, @choice3, @answer
+
+On Save button pressed:
+
+INSERT INTO Quiz_Question (CID, QID, question_num, question_text, choice1, choice2, choice3, answer)
+VALUES ( @CID, @QID, @question_num, @question_text, @choice1, @choice2, @choice3, @answer) 
+
+
+Edit quiz
+
+Input: @title, @section, @question_text, @choice1, @choice2, @choice3, @answer
+
+On Save Quiz button pressed:
+
+UPDATE Quiz
+SET title = @title, section = @section
+WHERE CID = @CID AND QID = @QID
+
+On Save button pressed:
+
+UPDATE Quiz_Question
+SET question_text = @question_text, choice1 = @choice1, choice2 = @choice2, choice3 = @choice3, answer = @answer
+
+
+Solve quiz
+
+SELECT question_num, question_text, choice1, choice2, choice3
+FROM Quiz_Question
+WHERE CID = @CID AND QID = @QID
+
+On Submit Quiz button pressed
+
+INSERT INTO Student_Answers(SID, CID, QID, s_answer) Buna bakılacak
+
+
+
+Student filtered main page — Listing all available courses and applying filters (price, discount, keyword etc.)
+
+Inputs: @category, @price_threshold, @discount, @keyword, @level
+
+
+	BEGIN
+		SELECT course_name, course_photo, cost, old_cost
+		FROM Course FULL OUTER JOIN Discount
+		WHERE category = @category AND price < @price_threshold
+					  	AND rate = @discount
+						AND ( course_name like ‘%keyword%’  
+							OR instructor_name like ‘%keyword%’ )
+					 EXCEPT ( 	SELECT course_name, course_photo, cost, old_cost
+                            	FROM Enrolls NATURAL JOIN Course
+                            	WHERE SID = @student_id  )
+
+	END
+
+
+
+View the course —- Selecting a course and see its features like price, description, average rating etc. —also list lectures here to Watch a lecture of the course by selecting it on the course home page after that
+SELECT course_photo,course_name, old_cost, cost, description, avg_rating
+FROM Course
+WHERE CID = @CID
+
+SELECT COUNT(*)
+FROM Lecture
+WHERE CID = @CID
+
+SELECT COUNT(*)
+FROM Quiz
+WHERE CID = @CID
+
+Lecture watch page —  go to course
+i. When a lecture is finished, continue with the next one.
+    SELECT lecture_content, Con_num
+	FROM Lecture
+	WHERE CID = @CID AND Con_num = @Con_num
+
+	SELECT Con_num, title
+    FROM Content NATURAL JOIN Lecture
+
+    SELECT Con_num, title
+    FROM Content NATURAL JOIN Quiz
+
+Lecture note shows
+
+    SELECT text
+    FROM Note NATURAL JOIN Student NATURAL JOIN Lecture
+    WHERE CID = @CID AND Con_num = @Con_num AND SID = @SID
+
+    Input: @note_text, @question_text
+
+
+	iii. Create notes on lectures (Visible only to user)
+
+    On Save button pressed:
+    INSERT INTO Note(SID, Con_num, text)
+    VALUES(@SID,@Con_num,@note_text)
+
+    On Post Question button pressed:
+
+QAndAEntry instructor and student olacak 2 tane yani
+
+    INSERT INTO QAndA_Entry_Student(CID, SID, Con_num, text)
+    VALUES(@CID, @SID, @Con_num, @question_text)
+
+
+
+Certificate and comment course
+	ii. Get certificate if all lectures are completed and quiz threshold is met
+
+
+
+
+See wishlist  wishlist
+
+SELECT course_name, course_photo, cost
+	 FROM Wishlist NATURAL JOIN Course NATURAL JOIN Student
+	 WHERE SID = @student_id
+
+Student courses (See bought courses in user’s profile)
+
+SELECT course_name, course_photo, date, time
+	 FROM Enrolls NATURAL JOIN Course FULL OUTER JOIN Zoom_Session
+	 WHERE SID = @student_id
+
+
