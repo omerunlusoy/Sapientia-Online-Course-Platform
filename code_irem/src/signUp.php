@@ -1,29 +1,98 @@
 <?php
 
 include("connect.php");
-session_start();
 
 /*
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $given_cid = $_POST['given_cid'];
-    $student_id = $_SESSION['login_pass'];
+if(isset($_POST['signUpButton']) == 0)
+{
+    echo 'nooo';
+}
 
-    // cancel the application
-    $delete = "delete from apply where sid ='$student_id' and cid='$given_cid'";
-    $result = mysqli_query($con,$delete);
+if (($_POST['signUpButton'] == 'submit_s')) {
 
-    // increase quota
-    $update_quota = "update company set quota = (quota + 1) where cid='$given_cid'";
-    $result2 = mysqli_query($con,$update_quota);
 
-    if (!$result && !$result2) {
-        echo "<script type='text/javascript'>alert('Cancellation FAILED!');</script>";
-        exit();
-    }else{
-        echo "<script type='text/javascript'>alert('Successful cancellation!');</script>";
+    $e_mail = $_POST['email_s'];
+    $password = $_POST['password_s'];
+    $name = $_POST['name_s'];
+
+
+    if($e_mail=="" | $password=="" | $name =="")
+    {
+        echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
     }
-}*/
+    else {
+        echo "<script type='text/javascript'>alert('yeyeyey');</script>";
+
+        $sql = "SELECT * FROM Student WHERE e_mail ='$e_mail'";
+        $result = mysqli_query($con, $sql);
+
+        if ($result) {
+            $row = mysqli_fetch_array($result);
+
+            if ($result->num_rows == 0) {
+                $sql2 = "INSERT INTO Student (name, e_mail, password,membership_type) VALUES ('$name','$e_mail', '$password','SLV')";
+
+                if ($result = $con->query($sql2)) {
+                    header("location: index.php");
+                }
+
+            } else {
+                //you already have an account
+            }
+
+        } else {
+            header("Location:signUp.php");
+        }
+
+    }
+
+
+}
+elseif(($_POST['signUpButton'] == 'submit_i'))
+{
+    $e_mail = $_POST['email_s'];
+    $password = $_POST['password_s'];
+    $name = $_POST['name_s'];
+
+
+    if($e_mail=="" | $password=="" | $name =="")
+    {
+        echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
+    }
+    else {
+        echo "<script type='text/javascript'>alert('yeyeyey');</script>";
+
+        $sql = "SELECT * FROM Instructor WHERE e_mail ='$e_mail'";
+        $result = mysqli_query($con, $sql);
+
+        if ($result) {
+            $row = mysqli_fetch_array($result);
+
+            if ($result->num_rows == 0) {
+                $sql2 = "INSERT INTO Instructor (name, e_mail, password) VALUES ('$name','$e_mail', '$password')";
+
+                if ($result = $con->query($sql2)) {
+                    header("location: index.php");
+                }
+
+            } else {
+                //you already have an account
+            }
+
+        } else {
+            header("Location:signUp.php");
+        }
+
+    }
+}
+
+
+*/
+
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html style="font-size: 16px;">
@@ -53,15 +122,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta property="og:title" content="Sign Up">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#478ac9">
-    <link rel="canonical" href="index.html">
-    <meta property="og:url" content="index.html">
 </head>
 <body class="u-body"><header class="u-clearfix u-header u-header" id="sec-85c8"><div class="u-clearfix u-sheet u-sheet-1">
         <a href="https://nicepage.com" class="u-image u-logo u-image-1">
             <img src="#" class="u-logo-image u-logo-image-1">
         </a>
-        <a href="https://nicepage.com/k/radio-website-templates" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-style u-none u-text-body-color u-btn-1">Home</a>
-        <a href="https://nicepage.com/k/radio-website-templates" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-style u-none u-text-body-color u-btn-2">Login</a>
     </div></header>
 <section class="u-clearfix u-image u-valign-top u-section-1" id="sec-5c0b">
     <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
@@ -74,30 +139,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h1 class="u-text u-text-3">
                             <span style="font-size: 2.5rem;">Sign Up for Wisdom</span>
                         </h1>
-                        <div class="u-form u-form-1">
-                            <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px" source="custom" name="form-1">
+                        <div class="u-expanded-width u-form u-form-1">
+                            <form method="POST" action="#">
                                 <div class="u-form-group u-form-name">
-                                    <label for="name-4921" class="u-form-control-hidden u-label">Name</label>
-                                    <input type="text" placeholder="Enter your Name" id="name-4921" name="name" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+                                    <label for="name_s" class="u-form-control-hidden u-label">Name</label>
+                                    <input type="text" placeholder="Enter your Name" id="name_s" name="name_s" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
                                 </div>
                                 <div class="u-form-email u-form-group">
-                                    <label for="email-4921" class="u-form-control-hidden u-label">Email</label>
-                                    <input type="email" placeholder="Enter a valid email address" id="email-4921" name="email" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+                                    <label for="email_s" class="u-form-control-hidden u-label">Email</label>
+                                    <input type="text" placeholder="Enter a valid email address" id="email_s" name="email_s" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
                                 </div>
                                 <div class="u-form-group u-form-group-3">
-                                    <label for="text-2187" class="u-form-control-hidden u-label"></label>
-                                    <input type="text" placeholder="Enter a password" id="text-2187" name="password" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+                                    <label for="password_s" class="u-form-control-hidden u-label"></label>
+                                    <input type="password" placeholder="Enter a password" id="password_s" name="password_s" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
                                 </div>
+
                                 <div class="u-align-left u-form-group u-form-submit">
-                                    <a href="#" class="u-btn u-btn-submit u-button-style">Sign Up<br>
+                                    <a  href="#" class="u-btn u-btn-submit u-button-style">Sign Up as Student<br>
                                     </a>
-                                    <input type="submit" value="submit" class="u-form-control-hidden">
+                                    <input type="submit" onclick="javascript: form.action='signUpS.php';" name="signUpButton" value="submit_s" class="u-form-control-hidden">
                                 </div>
-                                <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
-                                <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
-                                <input type="hidden" value="" name="recaptchaResponse">
+
+                                <div class="u-align-right u-form-group u-form-submit">
+                                    <a  href="#" class="u-btn u-button-style u-btn-2">Sign Up as Instructor<br>
+                                    </a>
+                                    <input type="submit" onclick="javascript: form.action='signUpI.php';" name="signUpButton" value="submit_i" class="u-form-control-hidden">
+                                </div>
+
+
                             </form>
                         </div>
+
                     </div>
                 </div>
                 <div class="u-align-right u-container-style u-image u-layout-cell u-size-31 u-image-1">
