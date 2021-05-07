@@ -42,6 +42,7 @@ if(isset($_POST['e_mail']))
 
 
 
+
 <!DOCTYPE html>
 <html style="font-size: 16px;">
 <head>
@@ -65,19 +66,18 @@ if(isset($_POST['e_mail']))
             "@type": "Organization",
             "name": "",
             "url": "index.html",
-            "logo": "#"
+            "logo": "images/SapientiaLogo.PNG"
         }</script>
     <meta property="og:title" content="Login">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#478ac9">
-
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
 </head>
 <body class="u-body"><header class="u-clearfix u-header u-header" id="sec-85c8"><div class="u-clearfix u-sheet u-sheet-1">
-        <a href="https://nicepage.com" class="u-image u-logo u-image-1">
-            <img src="#" class="u-logo-image u-logo-image-1">
+        <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="521" data-image-height="202">
+            <img src="images/SapientiaLogo.PNG" class="u-logo-image u-logo-image-1" data-image-width="196.129">
         </a>
-        <a href="https://nicepage.com/k/radio-website-templates" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-style u-none u-text-body-color u-btn-1">Home</a>
-        <a href="https://nicepage.com/k/radio-website-templates" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-style u-none u-text-body-color u-btn-2">Login</a>
     </div></header>
 <section class="u-clearfix u-image u-valign-top u-section-1" id="sec-832e">
     <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
@@ -124,8 +124,6 @@ if(isset($_POST['e_mail']))
 
 </body>
 </html>
-
-
 
 
 

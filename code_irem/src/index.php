@@ -5,7 +5,6 @@ include("connect.php");
 
 ?>
 
-
 <!DOCTYPE html>
 <html style="font-size: 16px;">
 <head>
@@ -30,18 +29,18 @@ include("connect.php");
             "@type": "Organization",
             "name": "",
             "url": "index.html",
-            "logo": "#"
+            "logo": "images/SapientiaLogo.PNG"
         }</script>
     <meta property="og:title" content="Home">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
 </head>
-<body class="u-body"><header class="u-clearfix u-header u-header" id="sec-85c8"><div class="u-clearfix u-sheet u-sheet-1">
-        <a href="https://nicepage.com" class="u-image u-logo u-image-1">
-            <img src="#" class="u-logo-image u-logo-image-1">
+<body data-home-page="Home.html" data-home-page-title="Home" class="u-body"><header class="u-clearfix u-header u-header" id="sec-85c8"><div class="u-clearfix u-sheet u-sheet-1">
+        <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="521" data-image-height="202">
+            <img src="images/SapientiaLogo.PNG" class="u-logo-image u-logo-image-1" data-image-width="196.129">
         </a>
-        <a href="https://nicepage.com/k/radio-website-templates" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-style u-none u-text-body-color u-btn-1">Home</a>
-        <a href="https://nicepage.com/k/radio-website-templates" class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn u-button-style u-none u-text-body-color u-btn-2">Login</a>
     </div></header>
 <section class="u-clearfix u-image u-valign-top u-section-1" id="sec-832e">
     <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
@@ -56,7 +55,7 @@ include("connect.php");
                             <br>
                         </p>
                         <form method="POST" action="signUp.php">
-                        <a   id="signUpButton" class="u-active-palette-1-dark-2 u-btn u-btn-rectangle u-button-style u-custom-font u-font-pt-sans u-hover-palette-1-dark-2 u-palette-1-dark-3 u-radius-0 u-btn-1">Sign up for Wısdom</a>
+                            <a   id="signUpButton" class="u-active-palette-1-dark-2 u-btn u-btn-rectangle u-button-style u-custom-font u-font-pt-sans u-hover-palette-1-dark-2 u-palette-1-dark-3 u-radius-0 u-btn-1">Sign up for Wısdom</a>
                             <script type="text/javascript">
                                 document.getElementById("signUpButton").onclick = function () {
                                     location.href = "signUp.php";
@@ -64,7 +63,7 @@ include("connect.php");
                             </script>
                         </form>
                         <form method="POST" action="login.php">
-                        <a id="loginButton"  class="u-active-palette-1-dark-2 u-btn u-btn-rectangle u-button-style u-custom-font u-font-pt-sans u-hover-palette-1-dark-2 u-palette-1-dark-3 u-radius-0 u-btn-2">logın for Wısdom</a>
+                            <a id="loginButton"  class="u-active-palette-1-dark-2 u-btn u-btn-rectangle u-button-style u-custom-font u-font-pt-sans u-hover-palette-1-dark-2 u-palette-1-dark-3 u-radius-0 u-btn-2">logın for Wısdom</a>
                             <script type="text/javascript">
                                 document.getElementById("loginButton").onclick = function () {
                                     location.href = "login.php";
@@ -72,7 +71,6 @@ include("connect.php");
                             </script>
                         </form>
                     </div>
-
                 </div>
                 <div class="u-align-right u-container-style u-image u-layout-cell u-size-31 u-image-1">
                     <div class="u-container-layout u-valign-bottom u-container-layout-2"></div>
@@ -159,16 +157,6 @@ include("connect.php");
 <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-266b"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <p class="u-small-text u-text u-text-variant u-text-1">Wisdom is life...</p>
     </div></footer>
-<section class="u-backlink u-clearfix u-grey-80">
-    <a class="u-link" href="https://nicepage.com/website-mockup" target="_blank">
-        <span>Website Mockup</span>
-    </a>
-    <p class="u-text">
-        <span>created with</span>
-    </p>
-    <a class="u-link" href="https://nicepage.com/" target="_blank">
-        <span>Website Builder Software</span>
-    </a>.
-</section>
+
 </body>
 </html>
