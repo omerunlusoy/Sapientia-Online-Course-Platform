@@ -140,33 +140,15 @@ elseif(($_POST['signUpButton'] == 'submit_i'))
                             <span style="font-size: 2.5rem;">Sign Up for Wisdom</span>
                         </h1>
                         <div class="u-expanded-width u-form u-form-1">
-                            <form method="POST" action="#">
-                                <div class="u-form-group u-form-name">
-                                    <label for="name_s" class="u-form-control-hidden u-label">Name</label>
-                                    <input type="text" placeholder="Enter your Name" id="name_s" name="name_s" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-                                </div>
-                                <div class="u-form-email u-form-group">
-                                    <label for="email_s" class="u-form-control-hidden u-label">Email</label>
-                                    <input type="text" placeholder="Enter a valid email address" id="email_s" name="email_s" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
-                                </div>
-                                <div class="u-form-group u-form-group-3">
-                                    <label for="password_s" class="u-form-control-hidden u-label"></label>
-                                    <input type="password" placeholder="Enter a password" id="password_s" name="password_s" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
-                                </div>
-
-                                <div class="u-align-left u-form-group u-form-submit">
-                                    <a  href="#" class="u-btn u-btn-submit u-button-style">Sign Up as Student<br>
-                                    </a>
-                                    <input type="submit" onclick="javascript: form.action='signUpS.php';" name="signUpButton" value="submit_s" class="u-form-control-hidden">
-                                </div>
-
-                                <div class="u-align-right u-form-group u-form-submit">
-                                    <a  href="#" class="u-btn u-button-style u-btn-2">Sign Up as Instructor<br>
-                                    </a>
-                                    <input type="submit" onclick="javascript: form.action='signUpI.php';" name="signUpButton" value="submit_i" class="u-form-control-hidden">
-                                </div>
-
-
+                            <form action="signUpS.php" method="POST">
+                                <label for="name_s" class="u-form-control-hidden u-label">Name</label>
+                                <input type="text" placeholder="Enter your Name" id="name_s" name="name_s" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+                                <label for="email_s" class="u-form-control-hidden u-label">Email</label>
+                                <input type="text" placeholder="Enter a valid email address" id="email_s" name="email_s" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
+                                <label for="password_s" class="u-form-control-hidden u-label"></label>
+                                <input type="password" placeholder="Enter a password" id="password_s" name="password_s" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+                                <button type="submit"   class="u-btn u-btn-submit u-button-style" >Sign Up as Student</button>
+                                <button type="submit" class="u-btn u-button-style u-btn-2" formaction="signUpI.php">Sign Up as Instructor</button>
                             </form>
                         </div>
 

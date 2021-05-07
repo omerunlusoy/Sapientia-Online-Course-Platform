@@ -27,6 +27,18 @@ if(isset($_POST['e_mail']))
             }
             else
             {
+                $sql = "select IID from Instructor where e_mail='$e_mail' and password='$password'";
+                if( $result = $con->query($sql))
+                {
+                    if($result->num_rows==1)
+                    {
+                        session_start();
+                        $_SESSION['login_user'] = $e_mail;
+                        $_SESSION['login_pass'] = $password;
+                        header("location: instructor_main_courses.php");
+                    }
+                    echo "<script type='text/javascript'>alert('Invalid E-mail or Password!');</script>";
+                }
                 echo "<script type='text/javascript'>alert('Invalid E-mail or Password!');</script>";
             }
         }
