@@ -7,6 +7,7 @@ if(isset($_POST['e_mail']))
     $e_mail = $_POST['e_mail'];
     $password = $_POST['password'];
 
+
     if($e_mail=="" | $password=="")
     {
         echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
@@ -19,11 +20,10 @@ if(isset($_POST['e_mail']))
 
             if($result->num_rows==1)
             {
-
                 session_start();
                 $_SESSION['login_user'] = $e_mail;
                 $_SESSION['login_pass'] = $password;
-                header("location: welcome1.php");
+                header("location: student_main.php");
             }
             else
             {
@@ -36,7 +36,6 @@ if(isset($_POST['e_mail']))
         }
 
     }
-
 }
 ?>
 
