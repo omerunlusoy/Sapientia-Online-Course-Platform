@@ -23,7 +23,6 @@
 .u-section-1 .u-group-1 {
   width: 800px;
   min-height: 504px;
-  height: auto;
   margin: -677px calc(((100% - 1140px) / 2) + 133px) 60px auto;
 }
 
@@ -70,7 +69,6 @@
   .u-section-1 .u-group-1 {
     margin-right: auto;
     margin-left: calc(((100% - 1140px) / 2) + 110px);
-    height: auto;
   }
 }
 

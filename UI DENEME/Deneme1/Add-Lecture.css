@@ -23,7 +23,6 @@
 .u-section-1 .u-group-1 {
   width: 800px;
   min-height: 600px;
-  height: auto;
   margin: -677px calc(((100% - 1140px) / 2) + 133px) 60px auto;
 }
 
@@ -59,7 +58,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   background-image: none;
-  margin: -60px auto 0 129px;
+  margin: 34px auto 0 129px;
 }
 
 @media (max-width: 1199px) {
@@ -82,7 +81,6 @@
   .u-section-1 .u-group-1 {
     margin-right: auto;
     margin-left: calc(((100% - 1140px) / 2) + 110px);
-    height: auto;
   }
 }
 
