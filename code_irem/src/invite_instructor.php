@@ -2,6 +2,72 @@
 
 include("connect.php");
 
+if(isset($_POST['invite_instructor_button']))
+{
+
+    $instructor_name = $_POST['instructor_name'];
+    $instructor_email = $_POST['instructor_email'];
+
+
+    if($instructor_name=="" | $instructor_email=="")
+    {
+        echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
+    }
+    else
+    {
+        echo 'hello1';
+        session_start();
+        $CID = $_SESSION['CID'];
+        $IID = $_SESSION['IID'];
+        $IIID = 0;
+
+        $sql = "select IID from Instructor where e_mail='$instructor_email' and name='$instructor_name'";
+        if( $result = $con->query($sql)) {
+            echo 'hello2';
+            if ($result->num_rows == 1) {
+                echo 'hello3';
+                $row = mysqli_fetch_array($result);
+                session_start();
+                $IIID = $row['IID'];
+
+                if($IIID == $IID){
+                    echo "<script type='text/javascript'>alert('You cannot invite yourself!');</script>";
+                }
+                else
+                {
+                    echo 'hello4';
+                    $sql = "INSERT INTO Teaches (IID, CID)
+                    VALUES ('$IIID', '$CID');";
+
+                    if( $result = $con->query($sql)) {
+                        echo "<script type='text/javascript'>alert('Invited Instructor Added to the Course!');</script>";
+                        header("location: add_course.php");
+                    }
+                    else
+                    {
+                        echo "<script type='text/javascript'>alert('Insertion failed!');</script>";
+                    }
+
+
+                }
+
+            }
+            else
+            {
+                echo 'hello5';
+                echo "<script type='text/javascript'>alert('No Such Instructor!');</script>";
+                header("Location:invite_instructor.php");
+            }
+        }
+        else
+        {
+            echo 'hello6';
+            echo "<script type='text/javascript'>alert('No Such Instructor!');</script>";
+            header("Location:invite_instructor.php");
+        }
+
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,9 +78,9 @@ include("connect.php");
     <meta name="keywords" content="Learn Everyday, Join online courses today, Train Your Brain Today!, Learn to enjoyevery minute of your life., Online Learning, Innovations in Online Learning, Education and Learning, 01, 02, 03, 04, Contact Us">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>Add Lecture</title>
+    <title>Invite Instructor</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
-    <link rel="stylesheet" href="Add-Lecture.css" media="screen">
+    <link rel="stylesheet" href="Invite-Instructor.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.13.2, nicepage.com">
@@ -29,7 +95,7 @@ include("connect.php");
             "url": "index.html",
             "logo": "images/SapientiaLogo.PNG"
         }</script>
-    <meta property="og:title" content="Add Lecture">
+    <meta property="og:title" content="Invite Instructor">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#478ac9">
     <link rel="canonical" href="index.html">
@@ -40,8 +106,8 @@ include("connect.php");
             <img src="images/SapientiaLogo.PNG" class="u-logo-image u-logo-image-1" data-image-width="196.129">
         </a>
     </div></header>
-<section class="u-align-center u-clearfix u-section-1" id="sec-0fef">
-    <h2 class="u-text u-text-1"><b>Add a Lecture</b>
+<section class="u-align-center u-clearfix u-section-1" id="sec-c4db">
+    <h2 class="u-text u-text-1"><b>Invite Instructor</b>
     </h2>
     <div class="u-shape u-shape-svg u-text-palette-4-base u-shape-1">
         <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 160" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-4a4f"></use></svg>
@@ -59,32 +125,23 @@ include("connect.php");
     <div class="u-border-12 u-border-palette-4-light-2 u-container-style u-group u-white u-group-1">
         <div class="u-container-layout u-container-layout-1">
             <div class="u-form u-form-1">
-                <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
+                <form action="#" method="POST" >
                     <div class="u-form-group u-form-name">
-                        <label for="name-6797" class="u-label">Lecture Title</label>
-                        <input type="text" placeholder="Enter Lecture Title" id="name-6797" name="lecture_title" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" required="">
+                        <label for="name-6797" class="u-label">Instructor Name</label>
+                        <input type="text" placeholder="Enter Instructor Name" id="name-6797" name="instructor_name" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" required="">
                     </div>
-                    <div class="u-form-group u-form-group-2">
-                        <label for="text-baef" class="u-label">Lecture Section</label>
-                        <input type="text" placeholder="Enter Lecture Section" id="text-baef" name="lecture_section" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
+                    <div class="u-form-email u-form-group u-form-group-2">
+                        <label for="text-422d" class="u-label">Instructor Email</label>
+                        <input type="email" placeholder="Enter Instructor Mail" id="text-422d" name="instructor_email" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
                     </div>
-                    <div class="u-form-group u-form-group-3">
-                        <label for="text-5870" class="u-label">Content No</label>
-                        <input type="text" placeholder="Enter Content No" id="text-5870" name="content_no" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
-                    </div>
-                    <div class="u-form-group u-form-group-4">
-                        <label for="textarea-4101" class="u-form-control-hidden u-label"></label>
-                        <textarea placeholder="" rows="4" cols="50" id="textarea-4101" name="textarea-1" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle"></textarea>
-                    </div>
-                    <div class="u-align-right u-form-group u-form-submit">
-                        <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-radius-15 u-btn-1">PUBLISH LECTURE<br>
+                    <div class="u-align-center u-form-group u-form-submit">
+                        <a href="invite_instructor.php" class="u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-radius-15 u-btn-1">Invite Instructor<br>
                         </a>
-                        <input type="submit" value="submit" class="u-form-control-hidden">
+                        <input type="submit" name='invite_instructor_button' value="submit" class="u-form-control-hidden">
                     </div>
 
                 </form>
             </div>
-            <a href="https://nicepage.com/c/sports-website-templates" class="u-btn u-btn-round u-button-style u-hover-palette-2-light-2 u-palette-2-light-2 u-radius-15 u-btn-2">Select Vıdeo</a>
         </div>
     </div>
 </section>
@@ -93,5 +150,6 @@ include("connect.php");
 <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-266b"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <p class="u-small-text u-text u-text-variant u-text-1">Wisdom is life...</p>
     </div></footer>
+
 </body>
 </html>

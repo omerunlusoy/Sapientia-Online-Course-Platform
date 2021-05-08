@@ -30,9 +30,11 @@ if(isset($_POST['e_mail']))
                 $sql = "select IID from Instructor where e_mail='$e_mail' and password='$password'";
                 if( $result = $con->query($sql))
                 {
+                    $row = mysqli_fetch_array($result);
                     if($result->num_rows==1)
                     {
                         session_start();
+                        $_SESSION['IID'] = $row['IID'];
                         $_SESSION['login_user'] = $e_mail;
                         $_SESSION['login_pass'] = $password;
                         header("location: instructor_main_courses.php");

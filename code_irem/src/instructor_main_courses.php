@@ -53,7 +53,7 @@ include("connect.php");
 </section>
 <section class="u-align-center u-border-7 u-border-palette-4-base u-clearfix u-white u-section-2" id="sec-17aa">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <a href="https://nicepage.com/website-builder" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-2-light-2 u-radius-6 u-btn-1">Add Course</a>
+        <a href="add_course.php" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-2-light-2 u-radius-6 u-btn-1">Add Course</a>
         <div class="u-table u-table-responsive u-table-1">
             <table class="u-table-entity u-table-entity-1">
                 <colgroup>
