@@ -2,6 +2,70 @@
 
 include("connect.php");
 
+if(isset($_POST['add_quiz_button']))
+{
+
+    $quiz_title = $_POST['quiz_title'];
+    $quiz_section = $_POST['quiz_section'];
+    $quiz_content_no = $_POST['quiz_content_no'];
+
+
+    if($quiz_title=="" | $quiz_section=="" | $quiz_content_no=="")
+    {
+        echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
+    }
+    else
+    {
+
+        session_start();
+        $CID = $_SESSION['CID'];
+        $IID = $_SESSION['IID'];
+        $sql = "select CID,section from Section where CID='$CID' and section='$quiz_section'";
+        if( $result = $con->query($sql)) {
+            if ($result->num_rows == 1) {
+                $sql = "INSERT INTO Quiz (CID, IID, content_num, section, title)
+                        VALUES ('$CID', '$IID', '$quiz_content_no', '$quiz_section', '$quiz_title');";
+
+                $sql1 = "select content_num from Quiz where CID='$CID' and section='$quiz_section' and content_num = '$quiz_content_no'";
+                $sql2 = "select content_num from Lecture where CID='$CID' and section='$quiz_section' and content_num = '$quiz_content_no'";
+                if( $result1 = $con->query($sql1) && $result2 = $con->query($sql2))
+                {
+                    if ($result1->num_rows == 0 && $result2->num_rows == 0)
+                    {
+                        if ($result = $con->query($sql)) {
+                            echo "<script type='text/javascript'>alert('Quiz Added!');</script>";
+                            header("location: add_quiz_questions.php");
+                        }
+                        else
+                        {
+                            echo "<script type='text/javascript'>alert('Quiz Cannot be Added 1!');</script>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<script type='text/javascript'>alert('Given content number is already in use!');</script>";
+                    }
+                }
+                else
+                {
+                    echo "<script type='text/javascript'>alert('Quiz Cannot be Added! 2');</script>";
+                }
+
+            }
+            else
+            {
+                echo "<script type='text/javascript'>alert('Quiz Cannot be Added! 3');</script>";
+            }
+
+        }
+        else
+        {
+            echo "<script type='text/javascript'>alert('Quiz Cannot be Added! 4');</script>";
+
+        }
+
+    }
+}
 
 ?>
 
@@ -60,7 +124,7 @@ include("connect.php");
     <div class="u-border-12 u-border-palette-4-light-2 u-container-style u-group u-white u-group-1">
         <div class="u-container-layout u-container-layout-1">
             <div class="u-form u-form-1">
-                <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
+                <form action="#" method="POST">
                     <div class="u-form-group u-form-name">
                         <label for="name-6797" class="u-label">Quiz Title</label>
                         <input type="text" placeholder="Enter Quiz Title" id="name-6797" name="quiz_title" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" required="">
@@ -71,16 +135,13 @@ include("connect.php");
                     </div>
                     <div class="u-form-group u-form-group-3">
                         <label for="text-5870" class="u-label">Content No</label>
-                        <input type="text" placeholder="Enter Content No" id="text-5870" name="content_no_q" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
+                        <input type="text" placeholder="Enter Content No" id="text-5870" name="quiz_content_no" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
                     </div>
                     <div class="u-align-center u-form-group u-form-submit">
                         <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-radius-15 u-btn-1">Save Quiz<br>
                         </a>
-                        <input type="submit" value="submit" class="u-form-control-hidden">
+                        <input type="submit" name= "add_quiz_button" value="submit" class="u-form-control-hidden">
                     </div>
-                    <div class="u-form-send-message u-form-send-success">Thank you! Your message has been sent.</div>
-                    <div class="u-form-send-error u-form-send-message">Unable to send your message. Please fix errors then try again.</div>
-                    <input type="hidden" value="" name="recaptchaResponse">
                 </form>
             </div>
         </div>
