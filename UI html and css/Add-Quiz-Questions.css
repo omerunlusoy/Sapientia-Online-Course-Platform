@@ -3,14 +3,14 @@
 }
 
 .u-section-1 .u-sheet-1 {
-  min-height: 746px;
+  min-height: 1216px;
 }
 
 .u-section-1 .u-group-1 {
   width: 1091px;
-  min-height: 826px;
+  min-height: 1018px;
   height: auto;
-  margin: 24px auto 31px;
+  margin: 83px auto 60px;
 }
 
 .u-section-1 .u-container-layout-1 {
@@ -23,12 +23,12 @@
 }
 
 .u-section-1 .u-form-1 {
-  height: 662px;
-  margin: 16px 109px 0 129px;
+  height: 622px;
+  margin: 16px 99px 0 139px;
 }
 
 .u-section-1 .u-label-1 {
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .u-section-1 .u-form-group-2 {
@@ -36,68 +36,93 @@
 }
 
 .u-section-1 .u-label-2 {
-  font-weight: 400;
-}
-
-.u-section-1 .u-label-3 {
-  font-weight: 400;
-}
-
-.u-section-1 .u-label-4 {
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .u-section-1 .u-form-group-3 {
   margin-left: 0;
 }
 
-.u-section-1 .u-label-5 {
-  font-weight: 400;
+.u-section-1 .u-label-3 {
+  font-weight: 700;
 }
 
 .u-section-1 .u-form-group-4 {
   margin-left: 0;
 }
 
-.u-section-1 .u-label-6 {
-  font-weight: 400;
-}
-
-.u-section-1 .u-label-7 {
-  font-weight: 400;
-}
-
-.u-section-1 .u-label-8 {
-  font-weight: 400;
+.u-section-1 .u-label-4 {
+  font-weight: 700;
 }
 
 .u-section-1 .u-form-group-5 {
   margin-left: 0;
 }
 
-.u-section-1 .u-label-9 {
-  font-weight: 400;
+.u-section-1 .u-label-5 {
+  font-weight: 700;
 }
 
 .u-section-1 .u-form-group-6 {
   margin-left: 0;
 }
 
+.u-section-1 .u-label-6 {
+  font-weight: 700;
+}
+
+.u-section-1 .u-form-group-7 {
+  margin-left: 0;
+}
+
+.u-section-1 .u-label-7 {
+  font-weight: 700;
+}
+
+.u-section-1 .u-form-group-8 {
+  margin-left: 0;
+}
+
+.u-section-1 .u-label-8 {
+  font-weight: 700;
+}
+
+.u-section-1 .u-form-group-9 {
+  margin-left: 0;
+}
+
+.u-section-1 .u-label-9 {
+  font-weight: 700;
+}
+
+.u-section-1 .u-form-group-10 {
+  margin-left: 0;
+}
+
 .u-section-1 .u-label-10 {
-  font-weight: 400;
+  font-weight: 700;
+}
+
+.u-section-1 .u-form-group-11 {
+  margin-left: 0;
 }
 
 .u-section-1 .u-label-11 {
-  font-weight: 400;
+  font-weight: 700;
+}
+
+.u-section-1 .u-form-group-12 {
+  margin-left: 0;
 }
 
 .u-section-1 .u-label-12 {
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .u-section-1 .u-btn-1 {
   background-image: none;
   border-style: none;
+  font-weight: 700;
 }
 
 @media (max-width: 1199px) {
@@ -112,8 +137,8 @@
   }
 
   .u-section-1 .u-form-1 {
-    margin-right: 34px;
-    margin-left: 54px;
+    margin-right: 24px;
+    margin-left: 64px;
     width: 793px;
   }
 }
