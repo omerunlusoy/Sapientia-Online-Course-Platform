@@ -56,66 +56,41 @@ include("connect.php");
         <a href="add_course.php" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-2-light-2 u-radius-6 u-btn-1">Add Course</a>
         <div class="u-table u-table-responsive u-table-1">
             <table class="u-table-entity u-table-entity-1">
-                <colgroup>
-                    <col width="16.6%">
-                    <col width="16.6%">
-                    <col width="16.6%">
-                    <col width="16.6%">
-                    <col width="16.6%">
-                    <col width="17%">
-                </colgroup>
-                <thead class="u-palette-4-base u-table-header u-table-header-1">
-                <tr style="height: 49px;">
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Course Name</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Price</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Level</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Category</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Instructor</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell"></th>
-                </tr>
-                </thead>
-                <tbody class="u-table-body">
-                <tr style="height: 67px;">
-                    <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7">Row 1</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-2" href="https://nicepage.com">Edit</a>
-                    </td>
-                </tr>
-                <tr style="height: 31px;">
-                    <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13">Row 2</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-3" href="https://nicepage.com">Edit</a>
-                    </td>
-                </tr>
-                <tr style="height: 26px;">
-                    <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19">Row 3</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4" href="https://nicepage.com">Edit</a>
-                    </td>
-                </tr>
-                <tr style="height: 69px;">
-                    <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-25">Row 4</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-5" href="https://nicepage.com">Edit</a>
-                    </td>
-                </tr>
-                </tbody>
+                <?php
+                session_start();
+                $sql = "select course_name, category, level from Course where IID = " .$_SESSION['IID'];
+                $result = mysqli_query($con, $sql);
+
+                if ($result)
+                {
+                    echo "<table class=\"u-table-body\">
+            <tr class=\"u-palette-4-base u-table-header u-table-header-1\">
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Course Name</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"> Category</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Level</th>
+            
+            </tr>";
+
+                    while($row = mysqli_fetch_array($result)) {
+                        echo "<tr>";
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7\">" .$row['course_name']. "</td>";
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13\">" .$row['category']. "</td>";
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['level']. "</td>";
+                        echo "<td> <form action=\"#\" METHOD=\"POST\">
+                    <button type=\"submit\" name = \"given_cid\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['course_name'] .">Edit</button>
+                    </form>
+                     
+                  </td>";
+                        echo "</tr>";
+                    }
+
+                    echo "</table>";
+                }
+                else
+                {
+                    header("Location:index.php");
+                }
+                ?>
             </table>
         </div>
     </div>
