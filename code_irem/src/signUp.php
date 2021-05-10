@@ -124,8 +124,8 @@ elseif(($_POST['signUpButton'] == 'submit_i'))
     <meta name="theme-color" content="#478ac9">
 </head>
 <body class="u-body"><header class="u-clearfix u-header u-header" id="sec-85c8"><div class="u-clearfix u-sheet u-sheet-1">
-        <a href="https://nicepage.com" class="u-image u-logo u-image-1">
-            <img src="#" class="u-logo-image u-logo-image-1">
+        <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="521" data-image-height="202">
+            <img src="images/SapientiaLogo.PNG" class="u-logo-image u-logo-image-1" data-image-width="196.129">
         </a>
     </div></header>
 <section class="u-clearfix u-image u-valign-top u-section-1" id="sec-5c0b">
@@ -166,16 +166,6 @@ elseif(($_POST['signUpButton'] == 'submit_i'))
 <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-266b"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <p class="u-small-text u-text u-text-variant u-text-1">Wisdom is life...</p>
     </div></footer>
-<section class="u-backlink u-clearfix u-grey-80">
-    <a class="u-link" href="https://nicepage.com/html5-template" target="_blank">
-        <span>HTML5 Templates</span>
-    </a>
-    <p class="u-text">
-        <span>created with</span>
-    </p>
-    <a class="u-link" href="https://nicepage.com/html-website-builder" target="_blank">
-        <span>HTML Builder</span>
-    </a>.
-</section>
+
 </body>
 </html>

@@ -1,6 +1,13 @@
+<?php
+
+include("connect.php");
+
+
+?>
+
 <!DOCTYPE html>
 <html style="font-size: 16px;">
-  <head>
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Learn Everyday, Join online courses today, Train Your Brain Today!, Learn to enjoyevery minute of your life., Online Learning, Innovations in Online Learning, Education and Learning, 01, 02, 03, 04, Contact Us">
@@ -8,105 +15,102 @@
     <meta name="page_type" content="np-template-header-footer-from-plugin">
     <title>Add course</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
-<link rel="stylesheet" href="Add-course.css" media="screen">
+    <link rel="stylesheet" href="edit-course.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.13.2, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
-    
-    
-    
+
+
+
     <script type="application/ld+json">{
-		"@context": "http://schema.org",
-		"@type": "Organization",
-		"name": "",
-		"url": "index.html",
-		"logo": "images/SapientiaLogo.PNG"
-}</script>
+            "@context": "http://schema.org",
+            "@type": "Organization",
+            "name": "",
+            "url": "index.html",
+            "logo": "images/SapientiaLogo.PNG"
+        }</script>
     <meta property="og:title" content="Add course">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#478ac9">
     <link rel="canonical" href="index.html">
     <meta property="og:url" content="index.html">
-  </head>
-  <body class="u-body"><header class="u-clearfix u-header u-header" id="sec-85c8"><div class="u-clearfix u-sheet u-sheet-1">
+</head>
+<body class="u-body"><header class="u-clearfix u-header u-header" id="sec-85c8"><div class="u-clearfix u-sheet u-sheet-1">
         <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="521" data-image-height="202">
-          <img src="images/SapientiaLogo.PNG" class="u-logo-image u-logo-image-1" data-image-width="196.129">
+            <img src="images/SapientiaLogo.PNG" class="u-logo-image u-logo-image-1" data-image-width="196.129">
         </a>
-      </div></header> 
-    <section class="u-clearfix u-section-1" id="sec-cc68">
-      <div class="u-clearfix u-sheet u-sheet-1">
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Settings</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
+    </div></header>
+<section class="u-clearfix u-section-1" id="sec-cc68">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <a href="instructor_account.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
+        <a href="instructor_settings.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Settings</a>
+        <a href="instructor_main_courses.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
         <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Fill a Complaint</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Statistics</a>
-      </div>
-    </section>
-    <section class="u-border-8 u-border-palette-4-base u-clearfix u-section-2" id="sec-0358">
-      <div class="u-clearfix u-sheet u-sheet-1">
+        <a href="logout.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
+        <a href="instructor_statistics.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Statistics</a>
+    </div>
+</section>
+<section class="u-border-8 u-border-palette-4-base u-clearfix u-section-2" id="sec-0358">
+    <div class="u-clearfix u-sheet u-sheet-1">
         <h2 class="u-text u-text-1">Edit a Course&nbsp;</h2>
         <div class="u-form u-form-1">
-          <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
-            <div class="u-form-group u-form-name">
-              <label for="name-6797" class="u-label">Course  Name</label>
-              <input type="text" placeholder="Course Name" id="name-6797" name="name" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" required="">
-            </div>
-            <div class="u-form-group u-form-select u-form-group-2">
-              <label for="select-3cb3" class="u-label">Category</label>
-              <div class="u-form-select-wrapper">
-                <select id="select-3cb3" name="category" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
-                  <option value="Item 1">Item 1</option>
-                  <option value="Item 2">Item 2</option>
-                  <option value="Item 3">Item 3</option>
-                </select>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" version="1" class="u-caret"><path fill="currentColor" d="M4 8L0 4h8z"></path></svg>
-              </div>
-            </div>
-            <div class="u-form-group u-form-select u-form-group-3">
-              <label for="select-a426" class="u-label">Level</label>
-              <div class="u-form-select-wrapper">
-                <select id="select-a426" name="level" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
-                  <option value="Item 1">Item 1</option>
-                  <option value="Item 2">Item 2</option>
-                  <option value="Item 3">Item 3</option>
-                </select>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" version="1" class="u-caret"><path fill="currentColor" d="M4 8L0 4h8z"></path></svg>
-              </div>
-            </div>
-            <div class="u-form-group u-form-message">
-              <label for="message-6797" class="u-label">Description</label>
-              <textarea placeholder="Description" rows="4" cols="50" id="message-6797" name="description" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" required="" maxlength="100"></textarea>
-            </div>
-            <div class="u-form-email u-form-group">
-              <label for="email-6797" class="u-label">Price ($)</label>
-              <input type="email" placeholder="Price" id="email-6797" name="price" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" required="">
-            </div>
-            <div class="u-form-group u-form-group-6">
-              <label for="text-3cfa" class="u-label">Min. Quiz Average (.../10)</label>
-              <input type="text" placeholder="min quiz avg" id="text-3cfa" name="quiz_avg" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
-            </div>
-            <div class="u-form-group u-form-group-7">
-              <label for="text-c34b" class="u-label">Zoom Link</label>
-              <input type="text" placeholder="Enter zoom link" id="text-c34b" name="zoom_link" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
-            </div>
-            <div class="u-form-date u-form-group u-form-partition-factor-2 u-form-group-8">
-              <label for="text-2173" class="u-label">Date</label>
-              <input type="date" placeholder="" id="text-2173" name="date" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
-            </div>
-            <div class="u-form-group u-form-partition-factor-2 u-form-group-9">
-              <label for="text-7e07" class="u-label">Time</label>
-              <input placeholder="" id="text-7e07" name="time" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" type="text">
-            </div>
-            <div class="u-align-center u-form-group u-form-submit">
-              <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-2 u-radius-12 u-btn-1">Add Course</a>
-              <input type="submit" value="submit" class="u-form-control-hidden">
-            </div>
-            <div class="u-form-send-message u-form-send-success">Thank you! Your message has been sent.</div>
-            <div class="u-form-send-error u-form-send-message">Unable to send your message. Please fix errors then try again.</div>
-            <input type="hidden" value="" name="recaptchaResponse">
-          </form>
+            <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
+                <div class="u-form-group u-form-name">
+                    <label for="name-6797" class="u-label">Course  Name</label>
+                    <input type="text" placeholder="Course Name" id="name-6797" name="name" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" required="">
+                </div>
+                <div class="u-form-group u-form-select u-form-group-2">
+                    <label for="select-3cb3" class="u-label">Category</label>
+                    <div class="u-form-select-wrapper">
+                        <select id="select-3cb3" name="category" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
+                            <option value="Item 1">Item 1</option>
+                            <option value="Item 2">Item 2</option>
+                            <option value="Item 3">Item 3</option>
+                        </select>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12"  class="u-caret"><path fill="currentColor" d="M4 8L0 4h8z"></path></svg>
+                    </div>
+                </div>
+                <div class="u-form-group u-form-select u-form-group-3">
+                    <label for="select-a426" class="u-label">Level</label>
+                    <div class="u-form-select-wrapper">
+                        <select id="select-a426" name="level" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
+                            <option value="Item 1">Item 1</option>
+                            <option value="Item 2">Item 2</option>
+                            <option value="Item 3">Item 3</option>
+                        </select>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12"  class="u-caret"><path fill="currentColor" d="M4 8L0 4h8z"></path></svg>
+                    </div>
+                </div>
+                <div class="u-form-group u-form-message">
+                    <label for="message-6797" class="u-label">Description</label>
+                    <textarea placeholder="Description" rows="4" cols="50" id="message-6797" name="description" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" required="" maxlength="100"></textarea>
+                </div>
+                <div class="u-form-email u-form-group">
+                    <label for="email-6797" class="u-label">Price ($)</label>
+                    <input type="email" placeholder="Price" id="email-6797" name="price" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" required="">
+                </div>
+                <div class="u-form-group u-form-group-6">
+                    <label for="text-3cfa" class="u-label">Min. Quiz Average (.../10)</label>
+                    <input type="text" placeholder="min quiz avg" id="text-3cfa" name="quiz_avg" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
+                </div>
+                <div class="u-form-group u-form-group-7">
+                    <label for="text-c34b" class="u-label">Zoom Link</label>
+                    <input type="text" placeholder="Enter zoom link" id="text-c34b" name="zoom_link" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
+                </div>
+                <div class="u-form-date u-form-group u-form-partition-factor-2 u-form-group-8">
+                    <label for="text-2173" class="u-label">Date</label>
+                    <input type="date" placeholder="" id="text-2173" name="date" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle">
+                </div>
+                <div class="u-form-group u-form-partition-factor-2 u-form-group-9">
+                    <label for="text-7e07" class="u-label">Time</label>
+                    <input placeholder="" id="text-7e07" name="time" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" type="text">
+                </div>
+                <div class="u-align-center u-form-group u-form-submit">
+                    <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-2 u-radius-12 u-btn-1">Add Course</a>
+                    <input type="submit" value="submit" class="u-form-control-hidden">
+                </div>
+            </form>
         </div>
         <a href="https://nicepage.com/c/gallery-html-templates" class="u-btn u-btn-round u-button-style u-hover-palette-2-dark-1 u-palette-2-light-2 u-radius-25 u-btn-2"><span class="u-icon u-icon-1"><svg class="u-svg-content" viewBox="0 0 512 512" x="0px" y="0px" style="width: 1em; height: 1em;"><g><g><path d="M256,0C114.833,0,0,114.833,0,256s114.833,256,256,256s256-114.853,256-256S397.167,0,256,0z M256,472.341    c-119.275,0-216.341-97.046-216.341-216.341S136.725,39.659,256,39.659S472.341,136.705,472.341,256S375.295,472.341,256,472.341z    "></path>
 </g>
@@ -146,23 +150,12 @@
 </g>
 </g></svg><img></span>&nbsp;EDIT quızıez
         </a>
-      </div>
-    </section>
-    
-    
-    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-266b"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+    </div>
+</section>
+
+
+<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-266b"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <p class="u-small-text u-text u-text-variant u-text-1">Wisdom is life...</p>
-      </div></footer>
-    <section class="u-backlink u-clearfix u-grey-80">
-      <a class="u-link" href="https://nicepage.com/css-templates" target="_blank">
-        <span>CSS Templates</span>
-      </a>
-      <p class="u-text">
-        <span>created with</span>
-      </p>
-      <a class="u-link" href="https://nicepage.com/html-website-builder" target="_blank">
-        <span>HTML Creator</span>
-      </a>. 
-    </section>
-  </body>
+    </div></footer>
+</body>
 </html>
