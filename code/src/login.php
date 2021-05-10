@@ -7,7 +7,6 @@ if(isset($_POST['e_mail']))
     $e_mail = $_POST['e_mail'];
     $password = $_POST['password'];
 
-
     if($e_mail=="" | $password=="")
     {
         echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
@@ -88,7 +87,7 @@ if(isset($_POST['e_mail']))
     <meta property="og:url" content="index.html">
 </head>
 <body class="u-body"><header class="u-clearfix u-header u-header" id="sec-85c8"><div class="u-clearfix u-sheet u-sheet-1">
-        <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="521" data-image-height="202">
+        <a href="login.php" class="u-image u-logo u-image-1" data-image-width="521" data-image-height="202">
             <img src="images/SapientiaLogo.PNG" class="u-logo-image u-logo-image-1" data-image-width="196.129">
         </a>
     </div></header>
