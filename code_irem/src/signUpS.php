@@ -13,7 +13,6 @@ include("connect.php");
         echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
     }
     else {
-        echo "<script type='text/javascript'>alert('yeyeyey');</script>";
 
         $sql = "SELECT * FROM Student WHERE e_mail ='$e_mail'";
         $result = mysqli_query($con, $sql);
@@ -30,6 +29,7 @@ include("connect.php");
 
                 } else {
                     //you already have an account
+                    echo "<script type='text/javascript'>alert('You already have an account');</script>";
                 }
 
             } else {
