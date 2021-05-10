@@ -34,6 +34,10 @@ if(isset($_POST['add_quiz_button']))
                     {
                         if ($result = $con->query($sql)) {
                             echo "<script type='text/javascript'>alert('Quiz Added!');</script>";
+
+
+                            $_SESSION['quiz_content_no'] = $quiz_content_no;
+                            $_SESSION['quiz_content_no'] = $quiz_content_no;
                             header("location: add_quiz_questions.php");
                         }
                         else

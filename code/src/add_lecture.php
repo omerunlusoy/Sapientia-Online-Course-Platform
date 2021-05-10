@@ -151,11 +151,13 @@ if(isset($_POST['publish_button']))
                         <a href="index.php" class="u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-radius-15 u-btn-1">PUBLISH LECTURE<br>
                         </a>
                         <input type="submit" name="publish_button" value="submit" class="u-form-control-hidden">
+                        <a href="https://nicepage.com/c/sports-website-templates" class="u-btn u-btn-round u-button-style u-hover-palette-2-light-2 u-palette-2-light-2 u-radius-15 u-btn-2">Select Video</a>
+
                     </div>
+
 
                 </form>
             </div>
-            <a href="https://nicepage.com/c/sports-website-templates" class="u-btn u-btn-round u-button-style u-hover-palette-2-light-2 u-palette-2-light-2 u-radius-15 u-btn-2">Select Vıdeo</a>
         </div>
     </div>
 </section>
