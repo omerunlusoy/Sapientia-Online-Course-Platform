@@ -33669,42 +33669,21 @@ a.u-link.u-text-hover-grey-90:hover {
 }
 
 .u-header .u-sheet-1 {
-  min-height: 138px;
+  min-height: 97px;
 }
 
 .u-header .u-image-1 {
-  margin: 1px auto 0 0;
+  margin: 21px auto 0 0;
 }
 
 .u-header .u-logo-image-1 {
-  max-width: 64px;
-  max-height: 64px;
-}
-
-.u-header .u-btn-1 {
-  border-style: none none solid;
-  margin: 38px 147px 0 auto;
-  padding: 0;
-}
-
-.u-header .u-btn-2 {
-  border-style: none none solid;
-  margin: -26px 55px 41px auto;
-  padding: 0;
+  max-width: 196px;
+  max-height: 196px;
 }
 @media (max-width: 1199px) {
   .u-header .u-image-1 {
     width: 64px;
     height: 32px;
-  }
-
-  .u-header .u-btn-1 {
-    margin-right: 0;
-  }
-
-  .u-header .u-btn-2 {
-    margin-top: -26px;
-    margin-right: 0;
   }
 }
 
