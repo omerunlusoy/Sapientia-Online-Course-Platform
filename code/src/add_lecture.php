@@ -2,6 +2,77 @@
 
 include("connect.php");
 
+if(isset($_POST['publish_button']))
+{
+
+    $lecture_title = $_POST['lecture_title'];
+    $lecture_section = $_POST['lecture_section'];
+    $content_no = $_POST['content_no'];
+    $lecture_description = $_POST['lecture_description'];
+
+
+    if($lecture_title=="" | $lecture_section=="" | $content_no=="" | $lecture_description=="")
+    {
+        echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
+    }
+    else
+    {
+
+        session_start();
+        $CID = $_SESSION['CID'];
+        $IID = $_SESSION['IID'];
+        $sql = "select CID, section from Section where CID='$CID' and section='$lecture_section'";
+
+        if( $result = $con->query($sql)) {
+
+            if ($result->num_rows == 1) {
+
+                $sql1 = "select content_num from Quiz where CID='$CID' and section='$lecture_section' and content_num = '$content_no'";
+                $sql2 = "select content_num from Lecture where CID='$CID' and section='$lecture_section' and content_num = '$content_no'";
+
+                if( $result1 = $con->query($sql1) && $result2 = $con->query($sql2)) {
+
+                    if ($result1->num_rows == 0 && $result2->num_rows == 0) {
+
+                        $sql = "INSERT INTO Lecture (CID, content_num, IID, section, title, lecture_content)
+                        VALUES ('$CID', '$content_no', '$IID', '$lecture_section', '$lecture_title', '$lecture_description');";
+
+
+                        if ($result = $con->query($sql)) {
+                            echo "<script type='text/javascript'>alert('Lecture Added!');</script>";
+                            header("location: instructor_main_courses.php");
+                        }
+                        else
+                        {
+                            echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<script type='text/javascript'>alert('Given content number is already in use!');</script>";
+                    }
+                }
+                else
+                {
+                    echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                }
+
+            }
+            else
+            {
+                echo "<script type='text/javascript'>alert('Section does not exist!');</script>";
+            }
+
+        }
+        else
+        {
+            echo "<script type='text/javascript'>alert('Database Error!');</script>";
+
+        }
+
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +130,7 @@ include("connect.php");
     <div class="u-border-12 u-border-palette-4-light-2 u-container-style u-group u-white u-group-1">
         <div class="u-container-layout u-container-layout-1">
             <div class="u-form u-form-1">
-                <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
+                <form action="#" method="POST">
                     <div class="u-form-group u-form-name">
                         <label for="name-6797" class="u-label">Lecture Title</label>
                         <input type="text" placeholder="Enter Lecture Title" id="name-6797" name="lecture_title" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" required="">
@@ -74,12 +145,12 @@ include("connect.php");
                     </div>
                     <div class="u-form-group u-form-group-4">
                         <label for="textarea-4101" class="u-form-control-hidden u-label"></label>
-                        <textarea placeholder="" rows="4" cols="50" id="textarea-4101" name="textarea-1" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle"></textarea>
+                        <textarea placeholder="" rows="4" cols="50" id="textarea-4101" name="lecture_description" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle"></textarea>
                     </div>
                     <div class="u-align-right u-form-group u-form-submit">
-                        <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-radius-15 u-btn-1">PUBLISH LECTURE<br>
+                        <a href="index.php" class="u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-radius-15 u-btn-1">PUBLISH LECTURE<br>
                         </a>
-                        <input type="submit" value="submit" class="u-form-control-hidden">
+                        <input type="submit" name="publish_button" value="submit" class="u-form-control-hidden">
                     </div>
 
                 </form>
