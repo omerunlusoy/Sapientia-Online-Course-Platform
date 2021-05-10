@@ -2,6 +2,13 @@
 
 include("connect.php");
 
+if(isset($_POST['given_cid'])) {
+    session_start();
+    $_SESSION['CID'] = $_POST['given_cid'];
+    $print = $_POST['given_cid'];
+    echo "<script type='text/javascript'>alert('$print');</script>";
+    header("Location:edit_course.php");
+}
 
 ?>
 
@@ -58,7 +65,7 @@ include("connect.php");
             <table class="u-table-entity u-table-entity-1">
                 <?php
                 session_start();
-                $sql = "select course_name, category, level from Course where IID = " .$_SESSION['IID'];
+                $sql = "select CID, course_name, category, level from Course where IID = " .$_SESSION['IID'];
                 $result = mysqli_query($con, $sql);
 
                 if ($result)
@@ -77,7 +84,7 @@ include("connect.php");
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13\">" .$row['category']. "</td>";
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['level']. "</td>";
                         echo "<td> <form action=\"#\" METHOD=\"POST\">
-                    <button type=\"submit\" name = \"given_cid\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['course_name'] .">Edit</button>
+                    <button type=\"submit\" name = \"given_cid\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">Edit</button>
                     </form>
                      
                   </td>";
@@ -88,7 +95,8 @@ include("connect.php");
                 }
                 else
                 {
-                    header("Location:index.php");
+                    echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                    header("Location:login.php");
                 }
                 ?>
             </table>
