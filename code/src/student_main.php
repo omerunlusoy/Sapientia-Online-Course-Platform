@@ -2,6 +2,45 @@
 
 include("connect.php");
 
+session_start();
+$_SESSION['PAGE_NUM'] = 1;
+
+
+if(isset($_POST['filter_button'])){
+
+    $_SESSION['level'] = $_POST['level'];
+    $_SESSION['category'] = $_POST['category'];
+    $_SESSION['price'] = $_POST['price'];
+    $_SESSION['discount'] = $_POST['discount'];
+
+    header("location: student_main.php");
+}
+
+
+if(isset($_POST['view_button'])){
+    $_SESSION['CID'] = $_POST['view_button'];
+
+    header("location: index.php");
+}
+
+if(isset($_POST['add_to_wishlist_button'])){
+
+    $_SESSION['CID'] = $_POST['add_to_wishlist_button'];
+    $CID = $_SESSION['CID'];
+    $SID = $_SESSION['SID'];
+
+
+    $wishlist_sql = "insert into Wishlist (SID, CID) VALUES  ('$SID', '$CID')";
+    $result = mysqli_query($con, $wishlist_sql);
+
+    if ($result){
+        echo "<script type='text/javascript'>alert('Course added to wishlist!');</script>";
+    }
+    else{
+        echo "<script type='text/javascript'>alert('Course is already in wishlist!');</script>";
+    }
+}
+
 
 ?>
 
@@ -44,7 +83,7 @@ include("connect.php");
 <section class="u-clearfix u-section-1" id="sec-75fe">
     <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <a href="student_account.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
-        <a href="student_settings.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Settings</a>
+        <a href="student_settings.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Wishlist</a>
         <a href="student_my_courses.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
         <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Fill a Complaint</a>
         <a href="logout.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
@@ -63,14 +102,15 @@ include("connect.php");
             <input class="u-search-input" type="search" name="search" value="" placeholder="Search">
         </form>
         <div class="u-form u-form-1">
-            <form action="#" method="POST" class="u-clearfix u-form-horizontal u-form-spacing-15 u-inner-form" style="padding: 15px" source="custom">
+            <form action="#" method="POST">
                 <div class="u-form-group u-form-select u-form-group-1">
                     <label for="select-f368" class="u-label">Level</label>
                     <div class="u-form-select-wrapper">
-                        <select id="select-f368" name="select" class="u-border-4 u-border-palette-4-base u-input u-input-rectangle">
-                            <option value="Item 1">Item 1</option>
-                            <option value="Item 2">Item 2</option>
-                            <option value="Item 3">Item 3</option>
+                        <select id="select-f368" name="level" class="u-border-4 u-border-palette-4-base u-input u-input-rectangle">
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                            <option selected value="All">All</option>
                         </select>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12"  class="u-caret"><path fill="currentColor" d="M4 8L0 4h8z"></path></svg>
                     </div>
@@ -78,10 +118,23 @@ include("connect.php");
                 <div class="u-form-group u-form-select u-form-group-2">
                     <label for="select-90be" class="u-label">Category</label>
                     <div class="u-form-select-wrapper">
-                        <select id="select-90be" name="select-1" class="u-border-4 u-border-palette-4-base u-input u-input-rectangle">
-                            <option value="Item 1">Item 1</option>
-                            <option value="Item 2">Item 2</option>
-                            <option value="Item 3">Item 3</option>
+                        <select id="select-90be" name="category" class="u-border-4 u-border-palette-4-base u-input u-input-rectangle">
+                            <option value="Music">Music</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Philosophy">Philosophy</option>
+                            <option value="Math">Math</option>
+                            <option value="Graphic Design">Graphic Design</option>
+                            <option value="Gardening">Gardening</option>
+                            <option value="Pop Culture">Pop Culture</option>
+                            <option value="Literature">Literature</option>
+                            <option value="Science">Science</option>
+                            <option value="Psychology">Psychology</option>
+                            <option value="Medicine">Medicine</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Hand Crafting">Hand Crafting</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Photography">Photography</option>
+                            <option selected value="All">All</option>
                         </select>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12"  class="u-caret"><path fill="currentColor" d="M4 8L0 4h8z"></path></svg>
                     </div>
@@ -89,10 +142,14 @@ include("connect.php");
                 <div class="u-form-group u-form-select u-form-group-3">
                     <label for="select-4350" class="u-label">Price</label>
                     <div class="u-form-select-wrapper">
-                        <select id="select-4350" name="select-2" class="u-border-4 u-border-palette-4-base u-input u-input-rectangle">
-                            <option value="Item 1">Item 1</option>
-                            <option value="Item 2">Item 2</option>
-                            <option value="Item 3">Item 3</option>
+                        <select id="select-4350" name="price" class="u-border-4 u-border-palette-4-base u-input u-input-rectangle">
+                            <option value="Fifty_plus">$50+</option>
+                            <option value="Thirty_five">$35-$50</option>
+                            <option value="Fifteen">$15-$35</option>
+                            <option value="Five">$5-$15</option>
+                            <option value="Zero">$0-$5</option>
+                            <option value="Free">Free</option>
+                            <option selected value="All">All</option>
                         </select>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12"  class="u-caret"><path fill="currentColor" d="M4 8L0 4h8z"></path></svg>
                     </div>
@@ -100,97 +157,178 @@ include("connect.php");
                 <div class="u-form-group u-form-select u-form-group-4">
                     <label for="select-cdbe" class="u-label">Discount</label>
                     <div class="u-form-select-wrapper">
-                        <select id="select-cdbe" name="select-3" class="u-border-4 u-border-palette-4-base u-input u-input-rectangle">
-                            <option value="Item 1">Item 1</option>
-                            <option value="Item 2">Item 2</option>
-                            <option value="Item 3">Item 3</option>
+                        <select id="select-cdbe" name="discount" class="u-border-4 u-border-palette-4-base u-input u-input-rectangle">
+                            <option value="Seventy_five">%75-%100</option>
+                            <option value="Fifty">%50-%75</option>
+                            <option value="Twenty_five">%25-%50</option>
+                            <option value="Zero">%0-%25</option>
+                            <option selected value="All">All</option>
                         </select>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12"  class="u-caret"><path fill="currentColor" d="M4 8L0 4h8z"></path></svg>
                     </div>
                 </div>
                 <div class="u-form-group u-form-submit">
                     <a href="#" class="u-btn u-btn-submit u-button-style u-palette-4-base u-btn-1">Filter</a>
-                    <input type="submit" value="submit" class="u-form-control-hidden">
+                    <input type="submit" value="filter_button" name="filter_button" class="u-form-control-hidden">
                 </div>
 
             </form>
         </div>
         <div class="u-table u-table-responsive u-table-1">
-            <table class="u-table-entity">
-                <colgroup>
-                    <col width="14.3%">
-                    <col width="14.3%">
-                    <col width="14.3%">
-                    <col width="14.3%">
-                    <col width="14.3%">
-                    <col width="12.7%">
-                    <col width="15.7%">
-                </colgroup>
-                <thead class="u-palette-4-base u-table-header u-table-header-1">
-                <tr style="height: 49px;">
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Course Name</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Price</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Level</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Category</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Instructor</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell"></th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell"></th>
-                </tr>
-                </thead>
-                <tbody class="u-table-body">
-                <tr style="height: 62px;">
-                    <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-8">Row 1</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-2" href="https://nicepage.com">Edit</a>
-                    </td>
-                    <td class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn-rectangle u-none u-table-cell u-text-palette-1-base u-table-cell-14">
-                        <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-3" href="https://nicepage.com">Add to Wishlist</a>
-                    </td>
-                </tr>
-                <tr style="height: 31px;">
-                    <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-15">Row 2</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4" href="https://nicepage.com">Edit</a>
-                    </td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-5" href="https://nicepage.com">Add to Wishlist</a>
-                    </td>
-                </tr>
-                <tr style="height: 26px;">
-                    <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-22">Row 3</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-6" href="https://nicepage.com">Edit</a>
-                    </td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-7" href="https://nicepage.com">Add to Wishlist</a>
-                    </td>
-                </tr>
-                <tr style="height: 69px;">
-                    <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-29">Row 4</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-8" href="https://nicepage.com">Edit</a>
-                    </td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-9" href="https://nicepage.com">Add to Wishlist</a>
-                    </td>
-                </tr>
-                </tbody>
+            <h2>Popular Courses</h2>
+            <table class="u-table-entity u-table-entity-1">
+                <?php
+
+                if(isset($_SESSION['level'])){
+                    $level = $_SESSION['level'];}
+                else{$level = "All";}
+
+                if(isset($_SESSION['category'])){
+                    $category = $_SESSION['category'];}
+                else{$category = "All";}
+
+                if(isset($_SESSION['price'])){
+                    $price = $_SESSION['price'];}
+                else{$price = "All";}
+
+                if(isset($_SESSION['discount'])){
+                    $discount = $_SESSION['discount'];}
+                else{$discount = "All";}
+
+
+
+                $price_max = 100000;
+                $price_min = 0;
+                if($price == "Fifty_plus"){
+                    $price_max = 100000;
+                    $price_min = 50;
+                }
+                else if($price == "Thirty_five"){
+                    $price_max = 50;
+                    $price_min = 35;
+                }
+                else if($price == "Fifteen"){
+                    $price_max = 35;
+                    $price_min = 15;
+                }
+                else if($price == "Five"){
+                    $price_max = 15;
+                    $price_min = 5;
+                }
+                else if($price == "Zero"){
+                    $price_max = 5;
+                    $price_min = 0;
+                }
+                else if($price == "Free"){
+                    $price_max = 0;
+                    $price_min = 0;
+                }
+                else{
+                    $price_max = 100000;
+                    $price_min = 0;
+                }
+
+                $discount_max = 100;
+                $discount_min = 0;
+
+                if($discount == "Seventy_five"){
+                    $discount_max = 100;
+                    $discount_min = 75;
+                }
+                else if($discount == "Fifty"){
+                    $discount_max = 75;
+                    $discount_min = 50;
+                }
+                else if($discount == "Twenty_five"){
+                    $discount_max = 50;
+                    $discount_min = 25;
+                }
+                else if($discount == "Zero"){
+                    $discount_max = 25;
+                    $discount_min = 0;
+                }
+                else{
+                    $discount_max = 100;
+                    $discount_min = 0;
+                }
+
+
+
+                $all_courses_sql = "";
+                if($level == "All" && $category == "All"){
+                    $all_courses_sql = "select * from Course left join Discount on Course.CID = Discount.CID
+                                        and cost <= '$price_max' and cost >= '$price_min' and 
+                                        rate <= '$discount_max' and rate >= '$discount_min'";
+                }
+                else if($level == "All" && $category != "All"){
+                    $all_courses_sql = "select * from Course left join Discount on Course.CID = Discount.CID
+                                        and category = '$category' 
+                                        and cost <= '$price_max' and cost >= '$price_min'and 
+                                        rate <= '$discount_max' and rate >= '$discount_min'";
+                }
+                else if($level != "All" && $category == "All"){
+                    $all_courses_sql = "select * from Course left join Discount on Course.CID = Discount.CID
+                                        and level ='$level' 
+                                        and cost <= '$price_max' and cost >= '$price_min'and 
+                                        rate <= '$discount_max' and rate >= '$discount_min'";
+                }
+                else{
+                    $all_courses_sql = "select * from Course left join Discount on Course.CID = Discount.CID
+                                        and level ='$level' and category = '$category' 
+                                        and cost <= '$price_max' and cost >= '$price_min'and 
+                                        rate <= '$discount_max' and rate >= '$discount_min'";
+                }
+
+
+                $result = mysqli_query($con, $all_courses_sql);
+
+                if ($result) {
+
+                    echo "<table class=\"u-table-body\">
+            <tr class=\"u-palette-4-base u-table-header u-table-header-1\">
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Course Name</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Price</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Category</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Level</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Instructor</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"></th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"></th>
+            
+            
+            </tr>";
+
+                    while($row = mysqli_fetch_array($result)) {
+
+                        $IID_cur = $row['IID'];
+                        $current_instructor_name_sql = "select name from Instructor where IID = '$IID_cur'";
+                        $result2 = mysqli_query($con, $current_instructor_name_sql);
+                        $row2 = mysqli_fetch_array($result2);
+                        $cur_int_name = $row2['name'];
+
+                        echo "<tr>";
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7\">" .$row['course_name']. "</td>";
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13\">" .$row['cost']. "</td>";
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['category']. "</td>";
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['level']. "</td>";
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$cur_int_name. "</td>";
+                        echo "<td> <form action=\"#\" METHOD=\"POST\">
+                                    <button type=\"submit\" name = \"view_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">View</button>
+                                     </form>
+                            </td>";
+                        echo "<td> <form action=\"#\" METHOD=\"POST\">
+                                    <button type=\"submit\" name = \"add_to_wishlist_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">Add to Wishlist</button>
+                                     </form>
+                            </td>";
+                        echo "</tr>";
+                    }
+
+                    echo "</table>";
+                }
+                else {
+                    echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                    header("Location:login.php");
+                }
+                ?>
             </table>
         </div>
     </div>

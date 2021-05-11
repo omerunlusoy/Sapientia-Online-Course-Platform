@@ -145,7 +145,7 @@ if(isset($_POST['publish_button']))
                     </div>
                     <div class="u-form-group u-form-group-4">
                         <label for="textarea-4101" class="u-form-control-hidden u-label"></label>
-                        <textarea placeholder="" rows="4" cols="50" id="textarea-4101" name="lecture_description" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle"></textarea>
+                        <textarea placeholder="Enter Lecture Description..." rows="4" cols="50" id="textarea-4101" name="lecture_description" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle"></textarea>
                     </div>
                     <div class="u-align-right u-form-group u-form-submit">
                         <a href="index.php" class="u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-radius-15 u-btn-1">PUBLISH LECTURE<br>

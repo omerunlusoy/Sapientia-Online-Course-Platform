@@ -2,58 +2,73 @@
 
 include("connect.php");
 
-if(isset($_POST['e_mail']))
-{
+if(isset($_POST['e_mail'])) {
+    echo "<script type='text/javascript'>alert('12!');</script>";
     $e_mail = $_POST['e_mail'];
     $password = $_POST['password'];
 
-    if($e_mail=="" | $password=="")
-    {
+    if($e_mail=="" | $password==""){
         echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
     }
-    else
-    {
-        $sql = "select SID from Student where e_mail='$e_mail' and password='$password'";
-        if( $result = $con->query($sql))
-        {
-
-            if($result->num_rows==1)
-            {
+    else {
+        echo "<script type='text/javascript'>alert('1');</script>";
+        $student_sql = "select SID from Student where e_mail='$e_mail' and password='$password'";
+        if( $result = $con->query($student_sql)) {
+            echo "<script type='text/javascript'>alert('2');</script>";
+            // Student Login
+            if($result->num_rows==1) {
+                echo "<script type='text/javascript'>alert('3');</script>";
                 session_start();
-                $_SESSION['login_user'] = $e_mail;
-                $_SESSION['login_pass'] = $password;
+                $row = mysqli_fetch_array($result);
+                $_SESSION['SID'] = $row['SID'];
                 header("location: student_main.php");
             }
-            else
-            {
-                $sql = "select IID from Instructor where e_mail='$e_mail' and password='$password'";
-                if( $result = $con->query($sql))
-                {
+
+
+            $instructor_sql = "select IID from Instructor where e_mail='$e_mail' and password='$password'";
+            if($result = $con->query($instructor_sql)) {
+
+                // Instructor Login
+                if($result->num_rows==1) {
+                    session_start();
                     $row = mysqli_fetch_array($result);
-                    if($result->num_rows==1)
-                    {
+                    $_SESSION['IID'] = $row['IID'];
+                    header("location: instructor_main_courses.php");
+                }
+
+                $admin_sql = "select AID from Admin where e_mail='$e_mail' and password='$password'";
+                if($result = $con->query($admin_sql)) {
+
+                    // Admin Login
+                    if($result->num_rows==1) {
                         session_start();
-                        $_SESSION['IID'] = $row['IID'];
-                        $_SESSION['login_user'] = $e_mail;
-                        $_SESSION['login_pass'] = $password;
+                        $row = mysqli_fetch_array($result);
+                        $_SESSION['AID'] = $row['AID'];
                         header("location: instructor_main_courses.php");
                     }
-                    echo "<script type='text/javascript'>alert('Invalid E-mail or Password!');</script>";
+
+                    else{
+                        echo "<script type='text/javascript'>alert('Invalid E-mail or Password!');</script>";
+                    }
                 }
-                echo "<script type='text/javascript'>alert('Invalid E-mail or Password!');</script>";
+                else{
+                    echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                    header("Location:index.php");
+                }
+            }
+            else{
+                echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                header("Location:index.php");
             }
         }
-        else
-        {
+        else {
+            echo "<script type='text/javascript'>alert('Database Error!');</script>";
             header("Location:index.php");
         }
 
     }
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html style="font-size: 16px;">

@@ -65,6 +65,7 @@ if(isset($_POST['given_cid'])) {
             <table class="u-table-entity u-table-entity-1">
                 <?php
                 session_start();
+
                 $sql = "select CID, course_name, category, level from Course where IID = " .$_SESSION['IID'];
                 $result = mysqli_query($con, $sql);
 

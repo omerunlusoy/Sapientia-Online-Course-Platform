@@ -41,7 +41,7 @@ if(isset($_POST['invite_instructor_button']))
 
                     if( $result = $con->query($sql)) {
                         echo "<script type='text/javascript'>alert('Invited Instructor Added to the Course!');</script>";
-                        header("location: add_course.php");
+                        header("location: instructor_main_courses.php");
                     }
                     else
                     {
