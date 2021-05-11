@@ -4,14 +4,31 @@ include("connect.php");
 
 session_start();
 $_SESSION['PAGE_NUM'] = 1;
+$level = $_SESSION['level'];
+
+
+if(isset($_GET['search'])){
+    $_SESSION['search'] = $_GET['search'];
+
+    header("location: student_main.php");
+}
+
 
 
 if(isset($_POST['filter_button'])){
 
-    $_SESSION['level'] = $_POST['level'];
-    $_SESSION['category'] = $_POST['category'];
-    $_SESSION['price'] = $_POST['price'];
-    $_SESSION['discount'] = $_POST['discount'];
+    if($_POST['level'] != ""){
+        $_SESSION['level'] = $_POST['level'];
+    }
+    if($_POST['category'] != ""){
+        $_SESSION['category'] = $_POST['category'];
+    }
+    if($_POST['price'] != ""){
+        $_SESSION['price'] = $_POST['price'];
+    }
+    if($_POST['discount'] != ""){
+        $_SESSION['discount'] = $_POST['discount'];
+    }
 
     header("location: student_main.php");
 }
@@ -110,7 +127,14 @@ if(isset($_POST['add_to_wishlist_button'])){
                             <option value="Beginner">Beginner</option>
                             <option value="Intermediate">Intermediate</option>
                             <option value="Advanced">Advanced</option>
-                            <option selected value="All">All</option>
+                            <option value="All">All</option>
+
+                            <option selected value='<?php if(isset($_SESSION['level'])){
+                                $level = $_SESSION['level'];}
+                            else{$level = "All";}; ?>'><?php if(isset($_SESSION['level'])){
+                                    $level = $_SESSION['level'];
+                            echo $level;}
+                                else{echo "All";} ?></option>
                         </select>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12"  class="u-caret"><path fill="currentColor" d="M4 8L0 4h8z"></path></svg>
                     </div>
@@ -134,7 +158,13 @@ if(isset($_POST['add_to_wishlist_button'])){
                             <option value="Hand Crafting">Hand Crafting</option>
                             <option value="Sports">Sports</option>
                             <option value="Photography">Photography</option>
-                            <option selected value="All">All</option>
+                            <option value="All">All</option>
+                            <option selected value='<?php if(isset($_SESSION['category'])){
+                                $category = $_SESSION['category'];}
+                            else{$level = "All";}; ?>'><?php if(isset($_SESSION['category'])){
+                                    $category = $_SESSION['category'];
+                                    echo $category;}
+                                else{echo "All";} ?></option>
                         </select>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12"  class="u-caret"><path fill="currentColor" d="M4 8L0 4h8z"></path></svg>
                     </div>
@@ -149,7 +179,13 @@ if(isset($_POST['add_to_wishlist_button'])){
                             <option value="Five">$5-$15</option>
                             <option value="Zero">$0-$5</option>
                             <option value="Free">Free</option>
-                            <option selected value="All">All</option>
+                            <option value="All">All</option>
+                            <option selected value='<?php if(isset($_SESSION['price'])){
+                                $price = $_SESSION['price'];}
+                            else{$price = "All";}; ?>'><?php if(isset($_SESSION['price'])){
+                                    $price = $_SESSION['price'];
+                                    echo $price;}
+                                else{echo "All";} ?></option>
                         </select>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12"  class="u-caret"><path fill="currentColor" d="M4 8L0 4h8z"></path></svg>
                     </div>
@@ -162,7 +198,13 @@ if(isset($_POST['add_to_wishlist_button'])){
                             <option value="Fifty">%50-%75</option>
                             <option value="Twenty_five">%25-%50</option>
                             <option value="Zero">%0-%25</option>
-                            <option selected value="All">All</option>
+                            <option value="All">All</option>
+                            <option selected value='<?php if(isset($_SESSION['discount'])){
+                                $discount = $_SESSION['discount'];}
+                            else{$discount = "All";}; ?>'><?php if(isset($_SESSION['discount'])){
+                                    $discount = $_SESSION['discount'];
+                                    echo $discount;}
+                                else{echo "All";} ?></option>
                         </select>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12"  class="u-caret"><path fill="currentColor" d="M4 8L0 4h8z"></path></svg>
                     </div>
@@ -194,7 +236,6 @@ if(isset($_POST['add_to_wishlist_button'])){
                 if(isset($_SESSION['discount'])){
                     $discount = $_SESSION['discount'];}
                 else{$discount = "All";}
-
 
 
                 $price_max = 100000;
@@ -252,31 +293,38 @@ if(isset($_POST['add_to_wishlist_button'])){
                     $discount_min = 0;
                 }
 
-
-
                 $all_courses_sql = "";
+
                 if($level == "All" && $category == "All"){
-                    $all_courses_sql = "select * from Course left join Discount on Course.CID = Discount.CID
-                                        and cost <= '$price_max' and cost >= '$price_min' and 
-                                        rate <= '$discount_max' and rate >= '$discount_min'";
+                    $all_courses_sql = "select * 
+                                        from Course left join Discount on Course.CID = Discount.CID and 
+                                        rate <= '$discount_max' and rate >= '$discount_min'
+                                        where
+                                        cost <= '$price_max' and cost >= '$price_min'";
                 }
                 else if($level == "All" && $category != "All"){
-                    $all_courses_sql = "select * from Course left join Discount on Course.CID = Discount.CID
-                                        and category = '$category' 
-                                        and cost <= '$price_max' and cost >= '$price_min'and 
-                                        rate <= '$discount_max' and rate >= '$discount_min'";
+                    $all_courses_sql = "select * 
+                                    from Course left join Discount on Course.CID = Discount.CID and 
+                                        rate <= '$discount_max' and rate >= '$discount_min'
+                                    where
+                                        cost <= '$price_max' and cost >= '$price_min' and 
+                                        category = '$category'";
                 }
                 else if($level != "All" && $category == "All"){
-                    $all_courses_sql = "select * from Course left join Discount on Course.CID = Discount.CID
-                                        and level ='$level' 
-                                        and cost <= '$price_max' and cost >= '$price_min'and 
-                                        rate <= '$discount_max' and rate >= '$discount_min'";
+                    $all_courses_sql = "select * 
+                                    from Course left join Discount on Course.CID = Discount.CID and 
+                                        rate <= '$discount_max' and rate >= '$discount_min'
+                                    where
+                                        cost <= '$price_max' and cost >= '$price_min' and
+                                        level = '$level'";
                 }
                 else{
-                    $all_courses_sql = "select * from Course left join Discount on Course.CID = Discount.CID
-                                        and level ='$level' and category = '$category' 
-                                        and cost <= '$price_max' and cost >= '$price_min'and 
-                                        rate <= '$discount_max' and rate >= '$discount_min'";
+                    $all_courses_sql = "select * 
+                                    from Course left join Discount on Course.CID = Discount.CID and 
+                                        rate <= '$discount_max' and rate >= '$discount_min'
+                                    where
+                                        cost <= '$price_max' and cost >= '$price_min' and 
+                                        category = '$category' and level = '$level'";
                 }
 
 

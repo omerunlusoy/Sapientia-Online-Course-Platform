@@ -16,7 +16,6 @@ if(isset($_POST['invite_instructor_button']))
     else
     {
         echo 'hello1';
-        session_start();
         $CID = $_SESSION['CID'];
         $IID = $_SESSION['IID'];
         $IIID = 0;
@@ -27,7 +26,6 @@ if(isset($_POST['invite_instructor_button']))
             if ($result->num_rows == 1) {
                 echo 'hello3';
                 $row = mysqli_fetch_array($result);
-                session_start();
                 $IIID = $row['IID'];
 
                 if($IIID == $IID){

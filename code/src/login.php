@@ -1,6 +1,7 @@
 <?php
 
 include("connect.php");
+session_start();
 
 if(isset($_POST['e_mail'])) {
     echo "<script type='text/javascript'>alert('12!');</script>";
@@ -18,9 +19,15 @@ if(isset($_POST['e_mail'])) {
             // Student Login
             if($result->num_rows==1) {
                 echo "<script type='text/javascript'>alert('3');</script>";
-                session_start();
+
                 $row = mysqli_fetch_array($result);
                 $_SESSION['SID'] = $row['SID'];
+
+                $_SESSION['level'] = "All";
+                $_SESSION['category'] = "All";
+                $_SESSION['price'] = "All";
+                $_SESSION['discount'] = "All";
+
                 header("location: student_main.php");
             }
 
@@ -30,7 +37,6 @@ if(isset($_POST['e_mail'])) {
 
                 // Instructor Login
                 if($result->num_rows==1) {
-                    session_start();
                     $row = mysqli_fetch_array($result);
                     $_SESSION['IID'] = $row['IID'];
                     header("location: instructor_main_courses.php");
@@ -41,7 +47,6 @@ if(isset($_POST['e_mail'])) {
 
                     // Admin Login
                     if($result->num_rows==1) {
-                        session_start();
                         $row = mysqli_fetch_array($result);
                         $_SESSION['AID'] = $row['AID'];
                         header("location: instructor_main_courses.php");
