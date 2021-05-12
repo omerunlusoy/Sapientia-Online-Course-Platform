@@ -51,7 +51,7 @@ if(isset($_POST['e_mail'])) {
                     if($result->num_rows==1) {
                         $row = mysqli_fetch_array($result);
                         $_SESSION['AID'] = $row['AID'];
-                        header("location: instructor_main_courses.php");
+                        header("location: admin_main.php");
                     }
 
                     else{
