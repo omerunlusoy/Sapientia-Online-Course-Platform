@@ -28,7 +28,7 @@ if(isset($_POST['e_mail'])) {
                 $_SESSION['price'] = "All";
                 $_SESSION['discount'] = "All";
                 $_SESSION['search'] = "";
-                $_SESSION['PAGENUM'] = 1;
+                $_SESSION['PAGENUM'] = 0;
 
                 header("location: student_main.php");
             }
