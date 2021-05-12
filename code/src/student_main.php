@@ -37,7 +37,7 @@ if(isset($_POST['filter_button'])){
 if(isset($_POST['view_button'])){
     $_SESSION['CID'] = $_POST['view_button'];
 
-    header("location: index.php");
+    header("location: view_course.php");
 }
 
 if(isset($_POST['add_to_wishlist_button'])){
@@ -52,6 +52,7 @@ if(isset($_POST['add_to_wishlist_button'])){
 
     if ($result){
         echo "<script type='text/javascript'>alert('Course added to wishlist!');</script>";
+        header("location: wishlist.php");
     }
     else{
         echo "<script type='text/javascript'>alert('Course is already in wishlist!');</script>";
