@@ -4,13 +4,15 @@ include("connect.php");
 
 session_start();
 $_SESSION['PAGE_NUM'] = 1;
-$level = $_SESSION['level'];
+
+if(isset($_SESSION['level'])){
+    $level = $_SESSION['level'];}
+else{$level = "All";}
+
 
 
 if(isset($_GET['search'])){
     $_SESSION['search'] = $_GET['search'];
-
-    header("location: student_main.php");
 }
 
 
@@ -117,7 +119,7 @@ if(isset($_POST['add_to_wishlist_button'])){
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svg-edc1" x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve" class="u-svg-content"><path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"></path></svg>
             </span>
             </button>
-            <input class="u-search-input" type="search" name="search" value="" placeholder="Search">
+            <input class="u-search-input" type="search" name="search" value="" placeholder="Search in Courses or Instructors...">
         </form>
         <div class="u-form u-form-1">
             <form action="#" method="POST">
@@ -174,11 +176,11 @@ if(isset($_POST['add_to_wishlist_button'])){
                     <label for="select-4350" class="u-label">Price</label>
                     <div class="u-form-select-wrapper">
                         <select id="select-4350" name="price" class="u-border-4 u-border-palette-4-base u-input u-input-rectangle">
-                            <option value="Fifty_plus">$50+</option>
-                            <option value="Thirty_five">$35-$50</option>
-                            <option value="Fifteen">$15-$35</option>
-                            <option value="Five">$5-$15</option>
-                            <option value="Zero">$0-$5</option>
+                            <option value="$50+">$50+</option>
+                            <option value="$35-$50">$35-$50</option>
+                            <option value="$15-$35">$15-$35</option>
+                            <option value="$5-$15">$5-$15</option>
+                            <option value="$0-$5">$0-$5</option>
                             <option value="Free">Free</option>
                             <option value="All">All</option>
                             <option selected value='<?php if(isset($_SESSION['price'])){
@@ -195,10 +197,10 @@ if(isset($_POST['add_to_wishlist_button'])){
                     <label for="select-cdbe" class="u-label">Discount</label>
                     <div class="u-form-select-wrapper">
                         <select id="select-cdbe" name="discount" class="u-border-4 u-border-palette-4-base u-input u-input-rectangle">
-                            <option value="Seventy_five">%75-%100</option>
-                            <option value="Fifty">%50-%75</option>
-                            <option value="Twenty_five">%25-%50</option>
-                            <option value="Zero">%0-%25</option>
+                            <option value="%75-%100">%75-%100</option>
+                            <option value="%50-%75">%50-%75</option>
+                            <option value="%25-%50">%25-%50</option>
+                            <option value="%0-%25">%0-%25</option>
                             <option value="All">All</option>
                             <option selected value='<?php if(isset($_SESSION['discount'])){
                                 $discount = $_SESSION['discount'];}
@@ -241,23 +243,23 @@ if(isset($_POST['add_to_wishlist_button'])){
 
                 $price_max = 100000;
                 $price_min = 0;
-                if($price == "Fifty_plus"){
+                if($price == "$50+"){
                     $price_max = 100000;
                     $price_min = 50;
                 }
-                else if($price == "Thirty_five"){
+                else if($price == "$35-$50"){
                     $price_max = 50;
                     $price_min = 35;
                 }
-                else if($price == "Fifteen"){
+                else if($price == "$15-$35"){
                     $price_max = 35;
                     $price_min = 15;
                 }
-                else if($price == "Five"){
+                else if($price == "$5-$15"){
                     $price_max = 15;
                     $price_min = 5;
                 }
-                else if($price == "Zero"){
+                else if($price == "$0-$5"){
                     $price_max = 5;
                     $price_min = 0;
                 }
@@ -273,19 +275,19 @@ if(isset($_POST['add_to_wishlist_button'])){
                 $discount_max = 100;
                 $discount_min = 0;
 
-                if($discount == "Seventy_five"){
+                if($discount == "%75-%100"){
                     $discount_max = 100;
                     $discount_min = 75;
                 }
-                else if($discount == "Fifty"){
+                else if($discount == "%50-%75"){
                     $discount_max = 75;
                     $discount_min = 50;
                 }
-                else if($discount == "Twenty_five"){
+                else if($discount == "%25-%50"){
                     $discount_max = 50;
                     $discount_min = 25;
                 }
-                else if($discount == "Zero"){
+                else if($discount == "%0-%25"){
                     $discount_max = 25;
                     $discount_min = 0;
                 }
@@ -294,38 +296,48 @@ if(isset($_POST['add_to_wishlist_button'])){
                     $discount_min = 0;
                 }
 
-                $all_courses_sql = "";
 
+
+                if(isset($_SESSION['search'])){
+                    $search_word = $_SESSION['search'];}
+                else{$search_word = "";}
+
+                $all_courses_sql = "";
                 if($level == "All" && $category == "All"){
                     $all_courses_sql = "select * 
-                                        from Course left join Discount on Course.CID = Discount.CID and 
-                                        rate <= '$discount_max' and rate >= '$discount_min'
+                                        from Course left join Discount on Course.CID = Discount.CID  and
+                                        rate <= '$discount_max' and rate >= '$discount_min' natural join Instructor
                                         where
-                                        cost <= '$price_max' and cost >= '$price_min'";
+                                        
+                                        cost <= '$price_max' and cost >= '$price_min' and 
+                                        (course_name like '%$search_word%' or Instructor.name like '%$search_word%')";
                 }
                 else if($level == "All" && $category != "All"){
                     $all_courses_sql = "select * 
                                     from Course left join Discount on Course.CID = Discount.CID and 
-                                        rate <= '$discount_max' and rate >= '$discount_min'
+                                        rate <= '$discount_max' and rate >= '$discount_min' natural join Instructor
                                     where
                                         cost <= '$price_max' and cost >= '$price_min' and 
-                                        category = '$category'";
+                                        category = '$category' and 
+                                        (course_name like '%$search_word%' or Instructor.name like '%$search_word%')";
                 }
                 else if($level != "All" && $category == "All"){
                     $all_courses_sql = "select * 
                                     from Course left join Discount on Course.CID = Discount.CID and 
-                                        rate <= '$discount_max' and rate >= '$discount_min'
+                                        rate <= '$discount_max' and rate >= '$discount_min' natural join Instructor
                                     where
                                         cost <= '$price_max' and cost >= '$price_min' and
-                                        level = '$level'";
+                                        level = '$level' and 
+                                        (course_name like '%$search_word%' or Instructor.name like '%$search_word%')";
                 }
                 else{
                     $all_courses_sql = "select * 
                                     from Course left join Discount on Course.CID = Discount.CID and 
-                                        rate <= '$discount_max' and rate >= '$discount_min'
+                                        rate <= '$discount_max' and rate >= '$discount_min' natural join Instructor
                                     where
                                         cost <= '$price_max' and cost >= '$price_min' and 
-                                        category = '$category' and level = '$level'";
+                                        category = '$category' and level = '$level' and 
+                                        (course_name like '%$search_word%' or Instructor.name like '%$search_word%')";
                 }
 
 
@@ -353,10 +365,27 @@ if(isset($_POST['add_to_wishlist_button'])){
                         $result2 = mysqli_query($con, $current_instructor_name_sql);
                         $row2 = mysqli_fetch_array($result2);
                         $cur_int_name = $row2['name'];
+                        $discount_rate = $row['rate'];
+                        $cost = $row['cost'];
+                        $new_price = round(((100 - $discount_rate) / 100) * $cost, 2);
+
+                        if($cost == 0.0){
+                            $cost = "Free";
+                            $new_price = "Free";
+                        }
 
                         echo "<tr>";
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7\">" .$row['course_name']. "</td>";
-                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13\">" .$row['cost']. "</td>";
+                        if($cost == "Free"){
+                            echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13\">" .$cost."</td>" ;
+                        }
+                        else if($discount_rate == 0.0){
+                            echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13\">" .$cost."₺</td>" ;
+                        }
+                        else{
+                            echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13\"> <del>" .$cost. "₺<br></del> ".$new_price. "₺</td>" ;
+                        }
+
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['category']. "</td>";
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['level']. "</td>";
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$cur_int_name. "</td>";
