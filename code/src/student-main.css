@@ -38,6 +38,13 @@
   padding: 0;
 }
 
+.u-section-1 .u-btn-23 {
+  background-image: none;
+  border-style: none none solid;
+  margin: -27px 130px 0 auto;
+  padding: 0;
+}
+
 .u-section-1 .u-btn-6 {
   background-image: none;
   border-style: none none solid;
@@ -70,6 +77,10 @@
   }
 
   .u-section-1 .u-btn-5 {
+    margin-right: 0;
+  }
+
+  .u-section-1 .u-btn-23 {
     margin-right: 0;
   }
 
