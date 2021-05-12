@@ -23,7 +23,7 @@ if(isset($_POST['publish_section_button']))
         if( $result = $con->query($sql))
         {
             echo "<script type='text/javascript'>alert('Section Added!');</script>";
-            header("Location:add_course.php");
+            header("Location:instructor_main_courses.php");
         }
         else
         {
