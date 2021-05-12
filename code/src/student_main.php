@@ -7,7 +7,7 @@ session_start();
 
 if(isset($_SESSION['PAGENUM'])){
     $page_num = $_SESSION['PAGENUM'];}
-else{$page_num = 0;}
+else{$_SESSION['PAGENUM'] = 0;}
 
 if(isset($_SESSION['level'])){
     $level = $_SESSION['level'];}
@@ -63,16 +63,31 @@ if(isset($_POST['add_to_wishlist_button'])){
     $SID = $_SESSION['SID'];
 
 
-    $wishlist_sql = "insert into Wishlist (SID, CID) VALUES  ('$SID', '$CID')";
-    $result = mysqli_query($con, $wishlist_sql);
+    $sql_select = "select * 
+                   from  Wishlist 
+                   where SID = '$SID' and CID = '$CID'";
 
-    if ($result){
-        echo "<script type='text/javascript'>alert('Course added to wishlist!');</script>";
-        header("location: wishlist.php");
-    }
-    else{
+    $result = mysqli_query($con, $sql_select);
+
+    if ($result->num_rows == 1) {
         echo "<script type='text/javascript'>alert('Course is already in wishlist!');</script>";
     }
+    else{
+        $wishlist_sql = "insert into Wishlist (SID, CID) VALUES  ($SID, $CID)";
+
+
+        $result = mysqli_query($con, $wishlist_sql);
+        if( $result)
+        {
+            echo "<script type='text/javascript'>alert('Course added to wishlist!');</script>";
+        }
+        else
+        {
+            echo "<script type='text/javascript'>alert('Database Error!');</script>";
+        }
+
+    }
+
 }
 
 
@@ -117,7 +132,7 @@ if(isset($_POST['add_to_wishlist_button'])){
 <section class="u-clearfix u-section-1" id="sec-75fe">
     <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <a href="student_account.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
-        <a href="student_settings.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Wishlist</a>
+        <a href="wishlist.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Wishlist</a>
         <a href="student_my_courses.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
         <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Fill a Complaint</a>
         <a href="logout.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
@@ -323,7 +338,7 @@ if(isset($_POST['add_to_wishlist_button'])){
                 $page_num = $_SESSION['PAGENUM'] * $page_entry_num;
                 if($level == "All" && $category == "All"){
                     $all_courses_sql = "select * 
-                                        from Course left join Discount on Course.CID = Discount.CID  and
+                                        from Discount right join Course on Course.CID = Discount.CID  and
                                         rate <= '$discount_max' and rate >= '$discount_min' natural join Instructor
                                         where
                                         cost <= '$price_max' and cost >= '$price_min' and 
@@ -332,7 +347,7 @@ if(isset($_POST['add_to_wishlist_button'])){
                 }
                 else if($level == "All" && $category != "All"){
                     $all_courses_sql = "select * 
-                                    from Course left join Discount on Course.CID = Discount.CID and 
+                                    from Discount right join Course on Course.CID = Discount.CID and 
                                         rate <= '$discount_max' and rate >= '$discount_min' natural join Instructor
                                     where
                                         cost <= '$price_max' and cost >= '$price_min' and 
@@ -342,7 +357,7 @@ if(isset($_POST['add_to_wishlist_button'])){
                 }
                 else if($level != "All" && $category == "All"){
                     $all_courses_sql = "select * 
-                                    from Course left join Discount on Course.CID = Discount.CID and 
+                                    from Discount right join Course on Course.CID = Discount.CID and 
                                         rate <= '$discount_max' and rate >= '$discount_min' natural join Instructor
                                     where
                                         cost <= '$price_max' and cost >= '$price_min' and
@@ -352,7 +367,7 @@ if(isset($_POST['add_to_wishlist_button'])){
                 }
                 else{
                     $all_courses_sql = "select * 
-                                    from Course left join Discount on Course.CID = Discount.CID and 
+                                    from Discount right join Course on Course.CID = Discount.CID and 
                                         rate <= '$discount_max' and rate >= '$discount_min' natural join Instructor
                                     where
                                         cost <= '$price_max' and cost >= '$price_min' and 
@@ -382,7 +397,6 @@ if(isset($_POST['add_to_wishlist_button'])){
             </tr>";
 
                     while($row = mysqli_fetch_array($result)) {
-
                         $IID_cur = $row['IID'];
                         $current_instructor_name_sql = "select name from Instructor where IID = '$IID_cur'";
                         $result2 = mysqli_query($con, $current_instructor_name_sql);
