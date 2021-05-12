@@ -215,7 +215,7 @@ if(isset($_POST['add_to_wishlist_button'])){
                 </div>
                 <div class="u-form-group u-form-submit">
                     <a href="#" class="u-btn u-btn-submit u-button-style u-palette-4-base u-btn-1">Filter</a>
-                    <input type="submit" value="filter_button" name="filter_button" class="u-form-control-hidden">
+                    <input type="submit"  value="filter_button" name="filter_button" class="u-form-control-hidden">
                 </div>
 
             </form>
