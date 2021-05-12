@@ -60,7 +60,7 @@ if(isset($_POST['given_cid'])) {
 </section>
 <section class="u-align-center u-border-7 u-border-palette-4-base u-clearfix u-white u-section-2" id="sec-17aa">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <a href="add_course.php" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-2-light-2 u-radius-6 u-btn-1">Add Course</a>
+        <a style = "position:relative; left:26px; top:56px; href="add_course.php" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-2-light-2 u-radius-6 u-btn-1">Add Course</a>
         <div class="u-table u-table-responsive u-table-1">
             <table class="u-table-entity u-table-entity-1">
                 <?php

@@ -41,6 +41,8 @@ if(isset($_POST['add_course_button']))
                 if( $result = $con->query($sql))
                 {
                     echo "<script type='text/javascript'>alert('Course Added!');</script>";
+                    header("Location:instructor_main_courses.php");
+
                 }
                 else
                 {
@@ -113,9 +115,9 @@ if(isset($_POST['add_course_button']))
         <a href="instructor_statistics.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Statistics</a>
     </div>
 </section>
-<section class="u-border-8 u-border-palette-4-base u-clearfix u-section-2" id="sec-0358">
+<section  id="sec-0358">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-text u-text-1">Add a Course&nbsp;</h2>
+        <h2 class="u-text u-text-1" style="text-align:center">Add a Course&nbsp;</h2>
         <div class="u-form u-form-1">
             <form action="#" method="POST"  style="padding: 15px;" >
                 <div class="u-form-group u-form-name">
@@ -175,30 +177,7 @@ if(isset($_POST['add_course_button']))
                 </div>
             </form>
         </div>
-        <a href="add_section.php" class="u-btn u-btn-round u-button-style u-hover-palette-2-dark-1 u-palette-2-light-2 u-radius-25 u-btn-2"><span class="u-icon u-icon-1"><svg class="u-svg-content" viewBox="0 0 512 512" x="0px" y="0px" style="width: 1em; height: 1em;"><g><g><path d="M256,0C114.833,0,0,114.833,0,256s114.833,256,256,256s256-114.853,256-256S397.167,0,256,0z M256,472.341    c-119.275,0-216.341-97.046-216.341-216.341S136.725,39.659,256,39.659S472.341,136.705,472.341,256S375.295,472.341,256,472.341z    "></path>
-</g>
-</g><g><g><path d="M355.148,234.386H275.83v-79.318c0-10.946-8.864-19.83-19.83-19.83s-19.83,8.884-19.83,19.83v79.318h-79.318    c-10.966,0-19.83,8.884-19.83,19.83s8.864,19.83,19.83,19.83h79.318v79.318c0,10.946,8.864,19.83,19.83,19.83    s19.83-8.884,19.83-19.83v-79.318h79.318c10.966,0,19.83-8.884,19.83-19.83S366.114,234.386,355.148,234.386z"></path>
-</g>
-</g></svg><img></span>&nbsp;Add sections
-        </a>
-        <a href="add_lecture.php" class="u-btn u-btn-round u-button-style u-hover-palette-2-dark-1 u-palette-2-light-2 u-radius-25 u-btn-3"><span class="u-icon u-icon-2"><svg class="u-svg-content" viewBox="0 0 512 512" x="0px" y="0px" style="width: 1em; height: 1em;"><g><g><path d="M256,0C114.833,0,0,114.833,0,256s114.833,256,256,256s256-114.853,256-256S397.167,0,256,0z M256,472.341    c-119.275,0-216.341-97.046-216.341-216.341S136.725,39.659,256,39.659S472.341,136.705,472.341,256S375.295,472.341,256,472.341z    "></path>
-</g>
-</g><g><g><path d="M355.148,234.386H275.83v-79.318c0-10.946-8.864-19.83-19.83-19.83s-19.83,8.884-19.83,19.83v79.318h-79.318    c-10.966,0-19.83,8.884-19.83,19.83s8.864,19.83,19.83,19.83h79.318v79.318c0,10.946,8.864,19.83,19.83,19.83    s19.83-8.884,19.83-19.83v-79.318h79.318c10.966,0,19.83-8.884,19.83-19.83S366.114,234.386,355.148,234.386z"></path>
-</g>
-</g></svg><img></span>&nbsp;Add Lecture&nbsp;
-        </a>
-        <a href="invite_instructor.php" class="u-btn u-btn-round u-button-style u-hover-palette-2-dark-1 u-palette-2-light-2 u-radius-25 u-btn-4"><span class="u-icon u-icon-3"><svg class="u-svg-content" viewBox="0 0 512 512" x="0px" y="0px" style="width: 1em; height: 1em;"><g><g><path d="M367.57,256.909c-9.839-4.677-19.878-8.706-30.093-12.081C370.56,219.996,392,180.455,392,136C392,61.01,330.991,0,256,0    c-74.991,0-136,61.01-136,136c0,44.504,21.488,84.084,54.633,108.911c-30.368,9.998-58.863,25.555-83.803,46.069    c-45.732,37.617-77.529,90.086-89.532,147.743c-3.762,18.066,0.745,36.622,12.363,50.908C25.222,503.847,42.365,512,60.693,512    H307c11.046,0,20-8.954,20-20c0-11.046-8.954-20-20-20H60.693c-8.538,0-13.689-4.766-15.999-7.606    c-3.989-4.905-5.533-11.29-4.236-17.519c20.755-99.695,108.691-172.521,210.24-174.977c1.759,0.068,3.526,0.102,5.302,0.102    c1.793,0,3.578-0.035,5.354-0.104c31.12,0.73,61.05,7.832,89.044,21.14c9.977,4.74,21.907,0.499,26.649-9.478    C381.789,273.582,377.547,261.651,367.57,256.909z M260.878,231.877c-1.623-0.029-3.249-0.044-4.878-0.044    c-1.614,0-3.228,0.016-4.84,0.046C200.465,229.35,160,187.312,160,136c0-52.935,43.065-96,96-96s96,43.065,96,96    C352,187.299,311.555,229.329,260.878,231.877z"></path>
-</g>
-</g><g><g><path d="M492,397h-55v-55c0-11.046-8.954-20-20-20c-11.046,0-20,8.954-20,20v55h-55c-11.046,0-20,8.954-20,20    c0,11.046,8.954,20,20,20h55v55c0,11.046,8.954,20,20,20c11.046,0,20-8.954,20-20v-55h55c11.046,0,20-8.954,20-20    C512,405.954,503.046,397,492,397z"></path>
-</g>
-</g></svg><img></span>&nbsp;Invite Instructor
-        </a>
-        <a href="add_quiz.php" class="u-btn u-btn-round u-button-style u-hover-palette-2-dark-1 u-palette-2-light-2 u-radius-25 u-btn-5"><span class="u-icon u-icon-4"><svg class="u-svg-content" viewBox="0 0 512 512" x="0px" y="0px" style="width: 1em; height: 1em;"><g><g><path d="M256,0C114.833,0,0,114.833,0,256s114.833,256,256,256s256-114.853,256-256S397.167,0,256,0z M256,472.341    c-119.275,0-216.341-97.046-216.341-216.341S136.725,39.659,256,39.659S472.341,136.705,472.341,256S375.295,472.341,256,472.341z    "></path>
-</g>
-</g><g><g><path d="M355.148,234.386H275.83v-79.318c0-10.946-8.864-19.83-19.83-19.83s-19.83,8.884-19.83,19.83v79.318h-79.318    c-10.966,0-19.83,8.884-19.83,19.83s8.864,19.83,19.83,19.83h79.318v79.318c0,10.946,8.864,19.83,19.83,19.83    s19.83-8.884,19.83-19.83v-79.318h79.318c10.966,0,19.83-8.884,19.83-19.83S366.114,234.386,355.148,234.386z"></path>
-</g>
-</g></svg><img></span>&nbsp;Add Quiz
-        </a>
+
     </div>
 </section>
 
