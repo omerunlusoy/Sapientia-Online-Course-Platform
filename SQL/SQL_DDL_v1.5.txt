@@ -64,32 +64,32 @@ DROP TABLE IF EXISTS Admin;
  Assumptions:
 */
 CREATE TABLE Student(
-SID             INT AUTO_INCREMENT,
-name            VARCHAR(50) NOT NULL,
-e_mail          VARCHAR(50) NOT NULL UNIQUE,
-password        VARCHAR(30) NOT NULL,
-membership_type ENUM('BRZ', 'SLV', 'GLD') NOT NULL DEFAULT 'BRZ',
-PRIMARY KEY (SID)
+                        SID             INT AUTO_INCREMENT,
+                        name            VARCHAR(50) NOT NULL,
+                        e_mail          VARCHAR(50) NOT NULL UNIQUE,
+                        password        VARCHAR(30) NOT NULL,
+                        membership_type ENUM('BRZ', 'SLV', 'GLD') NOT NULL DEFAULT 'BRZ',
+                        PRIMARY KEY (SID)
 );
 
 /* Assumptions:
    include functions [course_count(), current_income()]
 */
 CREATE TABLE Instructor(
-IID             INT AUTO_INCREMENT,
-name            VARCHAR(50) NOT NULL,
-e_mail          VARCHAR(50) NOT NULL UNIQUE,
-password        VARCHAR(30) NOT NULL,
-PRIMARY KEY (IID)
+                           IID             INT AUTO_INCREMENT,
+                           name            VARCHAR(50) NOT NULL,
+                           e_mail          VARCHAR(50) NOT NULL UNIQUE,
+                           password        VARCHAR(30) NOT NULL,
+                           PRIMARY KEY (IID)
 );
 
 CREATE TABLE Admin(
-AID             INT AUTO_INCREMENT,
-name            VARCHAR(50) NOT NULL,
-e_mail          VARCHAR(50) NOT NULL UNIQUE,
-password        VARCHAR(30) NOT NULL,
-salary          NUMERIC(12, 2) NOT NULL DEFAULT 0.00,
-PRIMARY KEY (AID)
+                      AID             INT AUTO_INCREMENT,
+                      name            VARCHAR(50) NOT NULL,
+                      e_mail          VARCHAR(50) NOT NULL UNIQUE,
+                      password        VARCHAR(30) NOT NULL,
+                      salary          NUMERIC(12, 2) NOT NULL DEFAULT 0.00,
+                      PRIMARY KEY (AID)
 );
 
 /* Assumptions:
@@ -103,30 +103,30 @@ PRIMARY KEY (AID)
               UNIQUE (creator_IID, course_name)
 */
 CREATE TABLE Course(
-CID                         INT AUTO_INCREMENT,
-IID                         INT NOT NULL,
-course_name                 VARCHAR(70) NOT NULL,
-course_photo                BLOB,
-description                 VARCHAR(300),
-rating                      NUMERIC(5, 2) DEFAULT 0.00,
-category                    VARCHAR(30),
-level                       VARCHAR(30),
-cost                        NUMERIC(8, 2) NOT NULL DEFAULT 0.00,
-discount_allowed            BOOLEAN,
-quiz_threshold              NUMERIC(5, 2),
-lecture_completed_threshold NUMERIC(5, 2),
-PRIMARY KEY (CID),
-FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
-UNIQUE (IID, course_name)
+                       CID                         INT AUTO_INCREMENT,
+                       IID                         INT NOT NULL,
+                       course_name                 VARCHAR(70) NOT NULL,
+                       course_photo                BLOB,
+                       description                 VARCHAR(300),
+                       rating                      NUMERIC(5, 2) DEFAULT 0.00,
+                       category                    VARCHAR(30),
+                       level                       VARCHAR(30),
+                       cost                        NUMERIC(8, 2) NOT NULL DEFAULT 0.00,
+                       discount_allowed            BOOLEAN,
+                       quiz_threshold              NUMERIC(5, 2),
+                       lecture_completed_threshold NUMERIC(5, 2),
+                       PRIMARY KEY (CID),
+                       FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
+                       UNIQUE (IID, course_name)
 );
 
 CREATE TABLE Section(
-CID                 INT NOT NULL,
-section             INT NOT NULL,
-title               VARCHAR(300),
-PRIMARY KEY (CID, section),
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
-INDEX (section)
+                        CID                 INT NOT NULL,
+                        section             INT NOT NULL,
+                        title               VARCHAR(300),
+                        PRIMARY KEY (CID, section),
+                        FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+                        INDEX (section)
 );
 
 /* Assumptions:
@@ -135,35 +135,35 @@ INDEX (section)
    Attention: UNIQUE (CID, title)
 */
 CREATE TABLE Lecture(
-CID                 INT NOT NULL,
-content_num         INT NOT NULL,
-IID                 INT NOT NULL,
-section             INT NOT NULL,
-title               VARCHAR(300) NOT NULL,
-lecture_content     BLOB NOT NULL,
-duration            TIME NOT NULL,
-date                DATE,
-PRIMARY KEY (CID, content_num),
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (section) REFERENCES Section(section) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
-UNIQUE (CID, title),
-INDEX (content_num)
+                        CID                 INT NOT NULL,
+                        content_num         INT NOT NULL,
+                        IID                 INT NOT NULL,
+                        section             INT NOT NULL,
+                        title               VARCHAR(300) NOT NULL,
+                        lecture_content     BLOB NOT NULL,
+                        duration            TIME NOT NULL,
+                        date                DATE,
+                        PRIMARY KEY (CID, content_num),
+                        FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+                        FOREIGN KEY (section) REFERENCES Section(section) ON DELETE CASCADE ON UPDATE CASCADE,
+                        FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
+                        UNIQUE (CID, title),
+                        INDEX (content_num)
 );
 
 CREATE TABLE Quiz(
-CID                 INT NOT NULL,
-content_num         INT NOT NULL,
-IID                 INT NOT NULL,
-section             INT NOT NULL,
-title               VARCHAR(300) NOT NULL,
-date                DATE,
-PRIMARY KEY (CID, content_num),
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (section) REFERENCES Section(section) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
-UNIQUE (CID, title),
-INDEX (content_num)
+                     CID                 INT NOT NULL,
+                     content_num         INT NOT NULL,
+                     IID                 INT NOT NULL,
+                     section             INT NOT NULL,
+                     title               VARCHAR(300) NOT NULL,
+                     date                DATE,
+                     PRIMARY KEY (CID, content_num),
+                     FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+                     FOREIGN KEY (section) REFERENCES Section(section) ON DELETE CASCADE ON UPDATE CASCADE,
+                     FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
+                     UNIQUE (CID, title),
+                     INDEX (content_num)
 );
 
 /*
@@ -171,89 +171,89 @@ INDEX (content_num)
  answer = 1 => answer = choice1
  */
 CREATE TABLE Quiz_Question(
-CID                 INT NOT NULL,
-content_num         INT NOT NULL,
-question_num        INT NOT NULL,
-question_text       VARCHAR(300) NOT NULL,
-choice1             VARCHAR(50) NOT NULL DEFAULT '',
-choice2             VARCHAR(50),
-choice3             VARCHAR(50),
-answer              ENUM('choice1', 'choice2', 'choice3') NOT NULL DEFAULT 'choice1',
-PRIMARY KEY (CID, content_num, question_num),
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (content_num) REFERENCES Quiz(content_num) ON DELETE CASCADE ON UPDATE CASCADE
+                              CID                 INT NOT NULL,
+                              content_num         INT NOT NULL,
+                              question_num        INT NOT NULL,
+                              question_text       VARCHAR(300) NOT NULL,
+                              choice1             VARCHAR(50) NOT NULL DEFAULT '',
+                              choice2             VARCHAR(50),
+                              choice3             VARCHAR(50),
+                              answer              ENUM('choice1', 'choice2', 'choice3') NOT NULL DEFAULT 'choice1',
+                              PRIMARY KEY (CID, content_num, question_num),
+                              FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+                              FOREIGN KEY (content_num) REFERENCES Quiz(content_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Note(
-Note_ID             INT AUTO_INCREMENT,
-SID                 INT NOT NULL,
-content_num         INT NOT NULL,
-time                TIME,
-text                VARCHAR(300) NOT NULL,
-PRIMARY KEY (Note_ID),
-FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (content_num) REFERENCES Lecture(content_num) ON DELETE CASCADE ON UPDATE CASCADE
+                     Note_ID             INT AUTO_INCREMENT,
+                     SID                 INT NOT NULL,
+                     content_num         INT NOT NULL,
+                     time                TIME,
+                     text                VARCHAR(300) NOT NULL,
+                     PRIMARY KEY (Note_ID),
+                     FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+                     FOREIGN KEY (content_num) REFERENCES Lecture(content_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Course_Announcement(
-Ann_ID              INT AUTO_INCREMENT,
-IID                 INT NOT NULL,
-CID                 INT NOT NULL,
-date                DATE,
-subject_name        VARCHAR(30) NOT NULL,
-text                VARCHAR(300) NOT NULL,
-PRIMARY KEY (Ann_ID),
-FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+                                    Ann_ID              INT AUTO_INCREMENT,
+                                    IID                 INT NOT NULL,
+                                    CID                 INT NOT NULL,
+                                    date                DATE,
+                                    subject_name        VARCHAR(30) NOT NULL,
+                                    text                VARCHAR(300) NOT NULL,
+                                    PRIMARY KEY (Ann_ID),
+                                    FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
+                                    FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE QnA_Entry_Student(
-QnA_ID              INT AUTO_INCREMENT,
-SID                 INT NOT NULL,
-CID                 INT NOT NULL,
-subject_name        VARCHAR(30) NOT NULL,
-text                VARCHAR(300) NOT NULL,
-date                DATE,
-PRIMARY KEY (QnA_ID),
-FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE NO ACTION ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+                                  QnA_ID              INT AUTO_INCREMENT,
+                                  SID                 INT NOT NULL,
+                                  CID                 INT NOT NULL,
+                                  subject_name        VARCHAR(30) NOT NULL,
+                                  text                VARCHAR(300) NOT NULL,
+                                  date                DATE,
+                                  PRIMARY KEY (QnA_ID),
+                                  FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE NO ACTION ON UPDATE CASCADE,
+                                  FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE QnA_Entry_Instructor(
-QnA_ID              INT AUTO_INCREMENT,
-IID                 INT NOT NULL,
-CID                 INT NOT NULL,
-subject_name        VARCHAR(30) NOT NULL,
-text                VARCHAR(300) NOT NULL,
-date                DATE,
-PRIMARY KEY(QnA_ID),
-FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+                                     QnA_ID              INT AUTO_INCREMENT,
+                                     IID                 INT NOT NULL,
+                                     CID                 INT NOT NULL,
+                                     subject_name        VARCHAR(30) NOT NULL,
+                                     text                VARCHAR(300) NOT NULL,
+                                     date                DATE,
+                                     PRIMARY KEY(QnA_ID),
+                                     FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
+                                     FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Complaint_Entry_Student(
-Complaint_ID        INT AUTO_INCREMENT,
-SID                 INT NOT NULL,
-CID                 INT NOT NULL,
-subject_title       VARCHAR(30) NOT NULL,
-text                VARCHAR(300) NOT NULL,
-date                DATE,
-refund_request      BOOLEAN,
-PRIMARY KEY (Complaint_ID),
-FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+                                        Complaint_ID        INT AUTO_INCREMENT,
+                                        SID                 INT NOT NULL,
+                                        CID                 INT NOT NULL,
+                                        subject_title       VARCHAR(30) NOT NULL,
+                                        text                VARCHAR(300) NOT NULL,
+                                        date                DATE,
+                                        refund_request      BOOLEAN,
+                                        PRIMARY KEY (Complaint_ID),
+                                        FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+                                        FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Complaint_Entry_Instructor(
-Complaint_ID        INT AUTO_INCREMENT,
-IID                 INT NOT NULL,
-CID                 INT NOT NULL,
-subject_name        VARCHAR(30) NOT NULL,
-text                VARCHAR(300) NOT NULL,
-date                DATE,
-PRIMARY KEY (Complaint_ID),
-FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+                                           Complaint_ID        INT AUTO_INCREMENT,
+                                           IID                 INT NOT NULL,
+                                           CID                 INT NOT NULL,
+                                           subject_name        VARCHAR(30) NOT NULL,
+                                           text                VARCHAR(300) NOT NULL,
+                                           date                DATE,
+                                           PRIMARY KEY (Complaint_ID),
+                                           FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
+                                           FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -262,12 +262,11 @@ FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
  Attributes: date
  */
 CREATE TABLE Wishlist(
-SID                 INT NOT NULL,
-CID                 INT NOT NULL,
-date                DATE,
-PRIMARY KEY (SID, CID),
-FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+                         SID                 INT NOT NULL,
+                         CID                 INT NOT NULL,
+                         PRIMARY KEY (SID, CID),
+                         FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+                         FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
@@ -275,14 +274,13 @@ FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
  Attributes: progress, rating
  */
 CREATE TABLE Enrolls(
-SID                 INT NOT NULL,
-CID                 INT NOT NULL,
-progress            NUMERIC(5, 2) DEFAULT 0.00,
-rating              NUMERIC(5, 2),
-date                DATE,
-PRIMARY KEY (SID, CID),
-FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+                        SID                 INT NOT NULL,
+                        CID                 INT NOT NULL,
+                        progress            NUMERIC(5, 2) DEFAULT 0.00,
+                        date                DATE,
+                        PRIMARY KEY (SID, CID),
+                        FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+                        FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
@@ -290,24 +288,26 @@ FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
  Attributes: date
  */
 CREATE TABLE Certificate(
-SID                 INT NOT NULL,
-CID                 INT NOT NULL,
-certificate_text    VARCHAR(300),
-date                DATE,
-PRIMARY KEY (SID, CID),
-FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+                            SID                 INT NOT NULL,
+                            CID                 INT NOT NULL,
+                            certificate_text    VARCHAR(300),
+                            rating              NUMERIC(5, 2),
+                            comment             VARCHAR(300),
+                            date                DATE,
+                            PRIMARY KEY (SID, CID),
+                            FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+                            FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
  Binary relationship between Instructor and Course
  */
 CREATE TABLE Teaches(
-IID                 INT NOT NULL,
-CID                 INT NOT NULL,
-PRIMARY KEY (IID, CID),
-FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+                        IID                 INT NOT NULL,
+                        CID                 INT NOT NULL,
+                        PRIMARY KEY (IID, CID),
+                        FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
+                        FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
@@ -315,13 +315,13 @@ FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
  Attention: FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE
  */
 CREATE TABLE Evaluates_Complaint_Entry_Student(
-AID                 INT NOT NULL,
-Complaint_ID        INT NOT NULL,
-response            VARCHAR(300),
-isRefund            BOOLEAN,
-PRIMARY KEY (AID, Complaint_ID),
-FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE,
-FOREIGN KEY (Complaint_ID) REFERENCES Complaint_Entry_Student(Complaint_ID) ON DELETE CASCADE ON UPDATE CASCADE
+                                                  AID                 INT NOT NULL,
+                                                  Complaint_ID        INT NOT NULL,
+                                                  response            VARCHAR(300),
+                                                  isRefund            BOOLEAN,
+                                                  PRIMARY KEY (AID, Complaint_ID),
+                                                  FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE,
+                                                  FOREIGN KEY (Complaint_ID) REFERENCES Complaint_Entry_Student(Complaint_ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
@@ -329,12 +329,12 @@ FOREIGN KEY (Complaint_ID) REFERENCES Complaint_Entry_Student(Complaint_ID) ON D
  Attention: FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE
  */
 CREATE TABLE Evaluates_Complaint_Entry_Instructor(
-AID                 INT NOT NULL,
-Complaint_ID        INT NOT NULL,
-response            VARCHAR(300),
-PRIMARY KEY (AID, Complaint_ID),
-FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE,
-FOREIGN KEY (Complaint_ID) REFERENCES Complaint_Entry_Instructor(Complaint_ID) ON DELETE CASCADE ON UPDATE CASCADE
+                                                     AID                 INT NOT NULL,
+                                                     Complaint_ID        INT NOT NULL,
+                                                     response            VARCHAR(300),
+                                                     PRIMARY KEY (AID, Complaint_ID),
+                                                     FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE,
+                                                     FOREIGN KEY (Complaint_ID) REFERENCES Complaint_Entry_Instructor(Complaint_ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
@@ -343,12 +343,12 @@ FOREIGN KEY (Complaint_ID) REFERENCES Complaint_Entry_Instructor(Complaint_ID) O
  Attention: FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE
  */
 CREATE TABLE Discount(
-AID                 INT NOT NULL,
-CID                 INT NOT NULL,
-rate                NUMERIC(5, 2),
-PRIMARY KEY (AID, CID),
-FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+                         AID                 INT NOT NULL,
+                         CID                 INT NOT NULL,
+                         rate                NUMERIC(5, 2),
+                         PRIMARY KEY (AID, CID),
+                         FOREIGN KEY (AID) REFERENCES Admin(AID) ON DELETE NO ACTION ON UPDATE CASCADE,
+                         FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
@@ -357,14 +357,14 @@ FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
  Attention: it uses its own key to allow instructors to create several links
  */
 CREATE TABLE Zoom_Session(
-Session_ID          INT AUTO_INCREMENT,
-IID                 INT NOT NULL,
-CID                 INT NOT NULL,
-invite_link         VARCHAR(1024),
-start_date          TIMESTAMP,
-PRIMARY KEY (Session_ID),
-FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+                             Session_ID          INT AUTO_INCREMENT,
+                             IID                 INT NOT NULL,
+                             CID                 INT NOT NULL,
+                             invite_link         VARCHAR(1024),
+                             start_date          TIMESTAMP,
+                             PRIMARY KEY (Session_ID),
+                             FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
@@ -373,14 +373,14 @@ FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
  Attention: its key is Student(SID) U Quiz(CID, QID)
  */
 CREATE TABLE Take_Quiz(
-SID                 INT NOT NULL,
-CID                 INT NOT NULL,
-content_num         INT NOT NULL,
-grade               NUMERIC(5, 2),
-PRIMARY KEY (SID, CID, content_num),
-FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (content_num) REFERENCES Quiz(content_num) ON DELETE CASCADE ON UPDATE CASCADE
+                          SID                 INT NOT NULL,
+                          CID                 INT NOT NULL,
+                          content_num         INT NOT NULL,
+                          grade               NUMERIC(5, 2),
+                          PRIMARY KEY (SID, CID, content_num),
+                          FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+                          FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE,
+                          FOREIGN KEY (content_num) REFERENCES Quiz(content_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
@@ -389,15 +389,15 @@ FOREIGN KEY (content_num) REFERENCES Quiz(content_num) ON DELETE CASCADE ON UPDA
  Attributes: isTrue
  */
 CREATE TABLE Take_Quiz_Question(
-SID                 INT NOT NULL,
-CID                 INT NOT NULL,
-content_num         INT NOT NULL,
-question_num        INT NOT NULL,
-answer              ENUM('choice1', 'choice2', 'choice3') NOT NULL,
-isTrue              BOOLEAN,
-PRIMARY KEY (SID, CID, content_num, question_num),
-FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (CID, content_num, question_num) REFERENCES Quiz_Question(CID, content_num, question_num) ON DELETE CASCADE ON UPDATE CASCADE
+                                   SID                 INT NOT NULL,
+                                   CID                 INT NOT NULL,
+                                   content_num         INT NOT NULL,
+                                   question_num        INT NOT NULL,
+                                   answer              ENUM('choice1', 'choice2', 'choice3') NOT NULL,
+                                   isTrue              BOOLEAN,
+                                   PRIMARY KEY (SID, CID, content_num, question_num),
+                                   FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+                                   FOREIGN KEY (CID, content_num, question_num) REFERENCES Quiz_Question(CID, content_num, question_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
@@ -406,22 +406,22 @@ FOREIGN KEY (CID, content_num, question_num) REFERENCES Quiz_Question(CID, conte
  Attributes: isCompleted
  */
 CREATE TABLE Take_Lecture(
-SID                 INT NOT NULL,
-CID                 INT NOT NULL,
-content_num         INT NOT NULL,
-isCompleted         BOOLEAN,
-PRIMARY KEY (SID, CID, content_num),
-FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (CID, content_num) REFERENCES Lecture(CID, content_num) ON DELETE CASCADE ON UPDATE CASCADE
+                             SID                 INT NOT NULL,
+                             CID                 INT NOT NULL,
+                             content_num         INT NOT NULL,
+                             isCompleted         BOOLEAN,
+                             PRIMARY KEY (SID, CID, content_num),
+                             FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY (CID, content_num) REFERENCES Lecture(CID, content_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Evaluations(
-SID                 INT NOT NULL,
-CID                 INT NOT NULL,
-evaluation          VARCHAR(300),
-PRIMARY KEY (SID, CID),
-FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
+                            SID                 INT NOT NULL,
+                            CID                 INT NOT NULL,
+                            evaluation          VARCHAR(300),
+                            PRIMARY KEY (SID, CID),
+                            FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
+                            FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
@@ -459,8 +459,8 @@ VALUES (1, 1, 2, 1, 'Quiz 1');
 INSERT INTO Quiz_Question (CID, content_num, question_num, question_text, choice1, choice2, choice3, answer)
 VALUES (1, 2, 1, 'Capital of Turkey', 'İstanbul', 'Ankara', 'İzmir', 'choice1');
 
-INSERT INTO Wishlist (SID, CID, date)
-VALUES (1, 1, CURDATE());
+INSERT INTO Wishlist (SID, CID)
+VALUES (1, 1);
 
 INSERT INTO Enrolls (SID, CID, rating, date)
 VALUES (1, 1, 89.00, CURDATE());
