@@ -46,6 +46,13 @@ if ($result->num_rows == 1) {
 
     $content_string = "Quiz:  " . $quiz_result->num_rows . ", Lecture: " . $lecture_result->num_rows;
 
+    $comments_sql = "select * 
+                        from  Student natural join Certificate
+                        where Certificate.CID = '$CID'";
+
+    $comments_result = mysqli_query($con, $comments_sql);
+    echo "<script type='text/javascript'>alert('$comments_result->num_rows');</script>";
+
 }
 else{
     echo "<script type='text/javascript'>alert('Database Error!');</script>";
@@ -197,24 +204,22 @@ if(isset($_POST['buy_button'])){
                 </colgroup>
                 <tbody class="u-table-alt-palette-1-light-3 u-table-body">
                 <tr style="height: 34px;">
-                    <td class="u-table-cell">Column 1 </td>
-                    <td class="u-table-cell">Column 2 </td>
+                    <td class="u-table-cell">Graduated Student Name </td>
+                    <td class="u-table-cell">Comment </td>
                 </tr>
-                <tr style="height: 34px;">
-                    <td class="u-table-cell">Row 1</td>
-                    <td class="u-table-cell">Description</td>
-                </tr>
-                <tr style="height: 34px;">
-                    <td class="u-table-cell">Row 2</td>
-                    <td class="u-table-cell">Description</td>
-                </tr>
-                <tr style="height: 34px;">
-                    <td class="u-table-cell">Row 3</td>
-                    <td class="u-table-cell">Description</td>
-                </tr>
-                <tr style="height: 34px;">
-                    <td class="u-table-cell">Row 4</td>
-                    <td class="u-table-cell">Description</td>
+
+                <?php
+                while($comments_row = mysqli_fetch_array($comments_result)) {
+                    $cur_student_name = $comments_row['name'];
+                    $cur_comment = $comments_row['comment'];
+
+                    echo "<tr style=\"height: 34px;\">";
+                    echo "<td class=\"u-table-cell\">" . $cur_student_name . "</td>";
+                    echo "<td class=\"u-table-cell\">" . $cur_comment . "</td>";
+                }
+
+                ?>
+
                 </tr>
                 </tbody>
             </table>
