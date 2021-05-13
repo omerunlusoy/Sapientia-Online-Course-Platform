@@ -211,8 +211,8 @@ if(isset($_POST['remove_button'])){
         </div>
         <form action="#" method="POST">
             <div class="u-form-group u-form-submit">
-                <button type="submit" name = "left_page" id = "btn" class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4">Left</button>
-                <button type="submit" name = "right_page" id = "btn" class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4">Right</button>
+                <button type="submit" name = "left_page" id = "btn" class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4-13">Left</button>
+                <button type="submit" name = "right_page" id = "btn" class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4-14">Right</button>
             </div>
         </form>
         <p class="u-text u-text-1"><?php echo $_SESSION['PAGENUM'] + 1; ?></p>

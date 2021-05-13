@@ -202,7 +202,43 @@
   border-style: solid;
   font-weight: 700;
   text-transform: uppercase;
-  padding: 1px 31px 2px 29px;
+  padding: 0px 31px 2px 29px;
+}
+
+.u-section-2 .u-btn-4-11 {
+  border-style: solid;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0px 31px 2px 29px;
+  margin-left: 430px;
+}
+
+.u-section-2 .u-btn-4-12 {
+  border-style: solid;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0px 31px 2px 29px;
+  margin-left: 550px;
+  margin-top: -51px;
+  margin-bottom: 51px;
+}
+
+.u-section-2 .u-btn-4-13 {
+  border-style: solid;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0px 31px 2px 29px;
+  margin-left: 580px;
+}
+
+.u-section-2 .u-btn-4-14 {
+  border-style: solid;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0px 31px 2px 29px;
+  margin-left: 700px;
+  margin-top: -51px;
+  margin-bottom: 51px;
 }
 
 .u-section-2 .u-btn-5 {
