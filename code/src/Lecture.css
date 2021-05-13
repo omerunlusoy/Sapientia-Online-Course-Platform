@@ -100,8 +100,8 @@
     margin-left: 0;
   }
 }.u-section-2 {
-  min-height: 934px;
   background-image: none;
+  min-height: 1046px;
 }
 
 .u-section-2 .u-video-1 {
@@ -149,12 +149,23 @@
 .u-section-2 .u-form-3 {
   height: 78px;
   margin-top: 80px;
-  margin-bottom: 60px;
+  margin-bottom: 0;
   margin-left: 0;
   width: 300px;
 }
 
 .u-section-2 .u-btn-3 {
+  background-image: none;
+  border-style: none;
+}
+
+.u-section-2 .u-form-4 {
+  width: 570px;
+  height: 401px;
+  margin: -217px calc(((100% - 1140px) / 2)) 21px calc(((100% - 1140px) / 2) + 570px);
+}
+
+.u-section-2 .u-btn-4 {
   background-image: none;
   border-style: none;
 }
@@ -195,7 +206,14 @@
   }
 
   .u-section-2 .u-form-3 {
-    margin: 154px calc(((100% - 1140px) / 2) + 920px) 0 calc(((100% - 1140px) / 2) + 20px);
+    margin-top: 154px;
+    margin-right: calc(((100% - 1140px) / 2) + 920px);
+    margin-left: calc(((100% - 1140px) / 2) + 20px);
+  }
+
+  .u-section-2 .u-form-4 {
+    margin-left: calc(((100% - 940px) / 2) + 370px);
+    margin-right: calc(((100% - 940px) / 2));
   }
 }
 
@@ -231,8 +249,12 @@
 
   .u-section-2 .u-form-3 {
     margin-top: 80px;
-    margin-bottom: 60px;
     margin-left: calc(((100% - 1140px) / 2) + 130px);
+  }
+
+  .u-section-2 .u-form-4 {
+    margin-left: calc(((100% - 720px) / 2) + 150px);
+    margin-right: calc(((100% - 720px) / 2));
   }
 }
 
@@ -265,11 +287,18 @@
   .u-section-2 .u-form-3 {
     margin-left: calc(((100% - 1140px) / 2) + 220px);
   }
+
+  .u-section-2 .u-form-4 {
+    width: 540px;
+    margin-left: calc(((100% - 540px) / 2));
+    margin-right: calc(((100% - 540px) / 2));
+  }
 }
 
 @media (max-width: 575px) {
   .u-section-2 .u-video-1 {
     width: 340px;
+    margin-top: 75px;
     margin-left: calc(((100% - 1140px) / 2) + 400px);
   }
 
@@ -296,5 +325,11 @@
   .u-section-2 .u-form-3 {
     margin-right: calc(((100% - 1140px) / 2) + 820px);
     margin-left: calc(((100% - 1140px) / 2) + 320px);
+  }
+
+  .u-section-2 .u-form-4 {
+    width: 340px;
+    margin-left: calc(((100% - 340px) / 2));
+    margin-right: calc(((100% - 340px) / 2));
   }
 }
