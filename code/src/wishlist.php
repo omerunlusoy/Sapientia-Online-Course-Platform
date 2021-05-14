@@ -73,7 +73,7 @@ if(isset($_POST['remove_button'])){
     <meta name="keywords" content="Learn Everyday, Join online courses today, Train Your Brain Today!, Learn to enjoyevery minute of your life., Online Learning, Innovations in Online Learning, Education and Learning, 01, 02, 03, 04, Contact Us">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>student main</title>
+    <title>whishlist</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
     <link rel="stylesheet" href="student-main.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
