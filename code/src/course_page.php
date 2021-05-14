@@ -59,42 +59,20 @@ else{
 
 
 
-if(isset($_POST['add_to_wishlist_button'])){
-
-    $CID = $_SESSION['CID'];
-    $SID = $_SESSION['SID'];
-
-
-    $sql_select = "select * 
-                   from  Wishlist 
-                   where SID = '$SID' and CID = '$CID'";
-
-    $result = mysqli_query($con, $sql_select);
-
-    if ($result->num_rows == 1) {
-        echo "<script type='text/javascript'>alert('Course is already in wishlist!');</script>";
-    }
-    else{
-        $wishlist_sql = "insert into Wishlist (SID, CID) VALUES  ($SID, $CID)";
-
-
-        $result = mysqli_query($con, $wishlist_sql);
-        if( $result)
-        {
-            echo "<script type='text/javascript'>alert('Course added to wishlist!');</script>";
-        }
-        else
-        {
-            echo "<script type='text/javascript'>alert('Database Error!');</script>";
-        }
-
-    }
-
+if(isset($_POST['view_contents_button'])){
+    echo "<script type='text/javascript'>alert('Database Error!');</script>";
 }
 
-if(isset($_POST['buy_button'])){
-    header("location: course_page.php");
+if(isset($_POST['post_question_button'])){
+    $subject = $_POST['subject'];
+    $question = $_POST['question'];
+
+
+    echo "<script type='text/javascript'>alert('$question');</script>";
 }
+
+
+
 
 ?>
 
@@ -107,9 +85,9 @@ if(isset($_POST['buy_button'])){
     <meta name="keywords" content="Learn Everyday, Join online courses today, Train Your Brain Today!, Learn to enjoyevery minute of your life., Online Learning, Innovations in Online Learning, Education and Learning, 01, 02, 03, 04, Contact Us">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>View Course</title>
+    <title>Course Page </title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
-    <link rel="stylesheet" href="View-Course.css" media="screen">
+    <link rel="stylesheet" href="Course-Page-.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.13.2, nicepage.com">
@@ -124,7 +102,7 @@ if(isset($_POST['buy_button'])){
             "url": "index.html",
             "logo": "images/SapientiaLogo.PNG"
         }</script>
-    <meta property="og:title" content="View Course">
+    <meta property="og:title" content="Course Page ">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#478ac9">
     <link rel="canonical" href="index.html">
@@ -135,94 +113,66 @@ if(isset($_POST['buy_button'])){
             <img src="images/SapientiaLogo.PNG" class="u-logo-image u-logo-image-1" data-image-width="196.129">
         </a>
     </div></header>
-<section class="u-clearfix u-section-1" id="sec-a686">
+<section class="u-clearfix u-section-1" id="sec-de06">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <a href="student_account.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
-        <a href="student_settings.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Settings</a>
-        <a href="student_my_courses.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
-        <a href="student_fill_complaint.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Fill a Complaint</a>
-        <a href="logout.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
-        <a href="certificates.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Certificates</a>
-        <a href="student_main.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-7">Main Page</a>
+        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
+        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Settings</a>
+        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
+        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Fill a Complaint</a>
+        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
+        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Statistics</a>
+        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-7">Main Page</a>
     </div>
 </section>
-<section class="u-border-12 u-border-palette-4-light-1 u-clearfix u-section-2" id="carousel_f056">
-    <div class="u-clearfix u-sheet u-sheet-1">
+<section class="u-border-12 u-border-palette-4-light-1 u-clearfix u-section-2" id="sec-fad2">
+    <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <h2 class="u-text u-text-1"><?php echo $row['course_name']; ?></h2>
         <h6 class="u-text u-text-2">Instructor(s) :&nbsp;</h6>
         <h6 class="u-text u-text-3"><?php echo $instructor_names_string; ?>&nbsp;</h6>
         <h6 class="u-text u-text-4">About the Course:<span style="font-weight: 700;"></span>
         </h6>
-        <h6 class="u-text u-text-5">Price :&nbsp;</h6>
-        <?php
-        if($cost == "Free"){
-            echo "<h6 class=\"u-text u-text-6\">".$cost."</h6>";
-        }
-        else if($discount_rate == 0.0){
-            echo "<h6 class=\"u-text u-text-6\">".$cost."₺</h6>";
-        }
-        else{
-            echo "<h6 class=\"u-text u-text-6\"><del>".$cost."₺</del><br>" .$new_price. "₺</h6>";
-        }
-        ?>
-        <h6 class="u-text u-text-7">Rating :&nbsp;</h6>
-        <h6 class="u-text u-text-8"><?php echo $rating; ?></h6>
+        <h6 class="u-text u-text-5">Rating :&nbsp;</h6>
+        <h6 class="u-text u-text-6"><?php echo $rating; ?></h6>
         <p class="u-text u-text-9"><?php echo $description; ?></p>
-        <h6 class="u-text u-text-10"><br>Category:&nbsp;</h6>
+        <h6 class="u-text u-text-10">Category:&nbsp;</h6>
         <h6 class="u-text u-text-11"><?php echo $category; ?></h6>
         <h6 class="u-text u-text-12"><?php echo $level; ?></h6>
         <h6 class="u-text u-text-13">Level:&nbsp;</h6>
         <h6 class="u-text u-text-14"><?php echo $content_string; ?><span style="font-weight: 700;"></span>
         </h6>
-
-
+        <h6 class="u-text u-text-15">Completeness: <span style="font-weight: 700;"></span>
+        </h6>
         <div class="u-form u-form-2">
             <form action="#" method="POST">
                 <div class="u-align-right u-form-group u-form-submit">
-                    <a class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-2">Buy<br>
+                    <a class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-2">View Lectures<br>
                     </a>
-                    <button name="buy_button" type="submit" value="submit" class="u-form-control-hidden">
+                    <button name="view_contents_button" type="submit" value="submit" class="u-form-control-hidden">
                 </div>
             </form>
         </div>
+        <h6 class="u-text u-text-16">
+            <span style="font-weight: 700;">Ask a Question </span>
+        </h6>
         <div class="u-form u-form-1">
             <form action="#" method="POST">
-                <div class="u-align-right u-form-group u-form-submit">
-                    <a class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-1">Add to Wishlist</a>
-                    <button name="add_to_wishlist_button" type="submit" value="submit" class="u-form-control-hidden">
+                <div class="u-form-group u-form-name">
+                    <label for="name-6797" class="u-label">Subject</label>
+                    <input type="text" placeholder="Question Subject" id="name-6797" name="subject" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required="">
+                </div>
+                <div class="u-form-group u-form-message">
+                    <label for="message-6797" class="u-label">Question</label>
+                    <textarea placeholder="Question" rows="4" cols="50" id="message-6797" name="question" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required=""></textarea>
+                </div>
+                <div class="u-align-left u-form-group u-form-submit">
+                    <a href="#" class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-2">Post Question</a>
+                    <input type="submit" name="post_question_button" value="submit" class="u-form-control-hidden">
                 </div>
             </form>
         </div>
-
-        <h6 class="u-text u-text-15">&nbsp;Course Comments</h6>
-        <div class="u-expanded-width u-table u-table-responsive u-table-1">
-            <table class="u-table-entity">
-                <colgroup>
-                    <col width="22.1%">
-                    <col width="77.9%">
-                </colgroup>
-                <tbody class="u-table-alt-palette-1-light-3 u-table-body">
-                <tr style="height: 34px;">
-                    <td class="u-table-cell">Graduated Student Name </td>
-                    <td class="u-table-cell">Comment </td>
-                </tr>
-
-                <?php
-                while($comments_row = mysqli_fetch_array($comments_result)) {
-                    $cur_student_name = $comments_row['name'];
-                    $cur_comment = $comments_row['comment'];
-
-                    echo "<tr style=\"height: 34px;\">";
-                    echo "<td class=\"u-table-cell\">" . $cur_student_name . "</td>";
-                    echo "<td class=\"u-table-cell\">" . $cur_comment . "</td>";
-                }
-
-                ?>
-
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <a href="https://nicepage.com/website-builder" class="u-btn u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-btn-3">Go to Course Forum</a>
+        <h6 class="u-text u-text-17">To see all Q&amp;A's :<span style="font-weight: 700;"></span>
+        </h6>
     </div>
 </section>
 
@@ -231,14 +181,14 @@ if(isset($_POST['buy_button'])){
         <p class="u-small-text u-text u-text-variant u-text-1">Wisdom is life...</p>
     </div></footer>
 <section class="u-backlink u-clearfix u-grey-80">
-    <a class="u-link" href="https://nicepage.com/website-mockup" target="_blank">
-        <span>Website Mockup</span>
+    <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
+        <span>Website Templates</span>
     </a>
     <p class="u-text">
         <span>created with</span>
     </p>
-    <a class="u-link" href="https://nicepage.com/website-builder" target="_blank">
-        <span>Website Builder</span>
+    <a class="u-link" href="https://nicepage.com/" target="_blank">
+        <span>WYSIWYG Web Builder</span>
     </a>.
 </section>
 </body>
