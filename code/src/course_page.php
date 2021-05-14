@@ -3,6 +3,7 @@
 include("connect.php");
 session_start();
 $CID = $_SESSION['CID'];
+$SID = $_SESSION['SID'];
 
 $course_sql = "select * 
                 from  Discount right join Course on Discount.CID = Course.CID
@@ -60,15 +61,21 @@ else{
 
 
 if(isset($_POST['view_contents_button'])){
-    echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    header("location: contents.php");
 }
 
 if(isset($_POST['post_question_button'])){
     $subject = $_POST['subject'];
     $question = $_POST['question'];
 
-
-    echo "<script type='text/javascript'>alert('$question');</script>";
+    $question_sql = "insert into QnA_Entry_Student (SID, CID, subject_name, text, date) values ('$SID', '$CID', '$subject', '$question', CURDATE())";
+    $comments_result = mysqli_query($con, $question_sql);
+    if($comments_result){
+        echo "<script type='text/javascript'>alert('Your question has been sent to the instructor.');</script>";
+    }
+    else{
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
 }
 
 
