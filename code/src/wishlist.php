@@ -28,7 +28,25 @@ if(isset($_POST['view_button'])){
 }
 
 if(isset($_POST['buy_button'])){
+    $_SESSION['CID'] = $_POST['buy_button'];
+    $CID = $_SESSION['CID'];
+    $SID = $_SESSION['SID'];
+    $sql_select = "select * 
+                   from  Wishlist 
+                   where SID = '$SID' and CID = '$CID'";
 
+    $result = mysqli_query($con, $sql_select);
+
+    if ($result->num_rows == 0) {
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
+    else{
+        $delete_sql = "DELETE FROM Wishlist WHERE CID='$CID' and SID='$SID'";
+        $result = mysqli_query($con, $delete_sql);
+        if( $result) {}
+        else {echo "<script type='text/javascript'>alert('Database Error!');</script>";}
+    }
+    header("location: course_page.php");
 }
 
 
