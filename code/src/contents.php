@@ -25,6 +25,18 @@ if(isset($_POST['view_button'])){
     header("location: view_course.php");
 }
 
+if(isset($_POST['view_quiz_button'])){
+    $a = $_POST['view_quiz_button'];
+    echo "<script type='text/javascript'>alert('$a');</script>";
+
+}
+
+if(isset($_POST['view_lecture_button'])){
+    $_SESSION['CID'] = $_POST['view_lecture_button'];
+
+}
+
+
 
 
 
@@ -67,13 +79,13 @@ if(isset($_POST['view_button'])){
     </div></header>
 <section class="u-clearfix u-section-1" id="sec-cb0a">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Settings</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Fill a Complaint</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Statistics</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-7">Main Page</a>
+        <a href="student_account.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
+        <a href="" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Settings</a>
+        <a href="student_my_courses.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
+        <a href="student_fill_complaint.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Fill a Complaint</a>
+        <a href="logout.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
+        <a href="" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Statistics</a>
+        <a href="student_main.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-7">Main Page</a>
     </div>
 </section>
 <section class="u-border-15 u-border-palette-2-light-3 u-clearfix u-section-2" id="carousel_f056">
@@ -81,14 +93,28 @@ if(isset($_POST['view_button'])){
         <h2 class="u-text u-text-1">Contents</h2>
         <div class="u-table u-table-responsive u-table-1">
             <table class="u-table-entity">
+
+                <colgroup>
+                    <col width="14.3%">
+                    <col width="14.3%">
+                    <col width="14.3%">
+                    <col width="14.3%">
+                    <col width="14.3%">
+                    <col width="12.7%">
+                    <col width="15.7%">
+                </colgroup>
                 <?php
                 while($comments_row = mysqli_fetch_array($sections_result)) {
                     $section_name = $comments_row['section'];
                     $section_title = $comments_row['title'];
 
-                    echo "<tr style=\"height: 34px;\">";
-                    echo "<td class=\"u-table-cell\">Section " . $section_name . "</td>";
-                    echo "<td class=\"u-table-cell\">" . $section_title . "</td>";
+
+                    echo "<thead class=\"u-palette-4-base u-table-header u-table-header-1\">
+                    <tr style=\"height: 58px;\">
+                    <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Section " . $section_name . "</th>
+                    <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">" . $section_title . "</th>
+                </tr>
+                </thead>";
 
                     $lectures_sql = "select * 
                                     from Lecture
@@ -103,113 +129,76 @@ if(isset($_POST['view_button'])){
 
                     $lectures_result = mysqli_query($con, $lectures_sql);
                     $quizes_result = mysqli_query($con, $quizes_sql);
+                    //echo "<script type='text/javascript'>alert($lectures_result->num_rows);</script>";
+                    //echo "<script type='text/javascript'>alert($quizes_result->num_rows);</script>";
 
                     if(!$lectures_result || !$quizes_result){
                         echo "<script type='text/javascript'>alert('Database Error!');</script>";
                     }
 
-                    while ($lectures_row = mysqli_fetch_array($lectures_result)){
-                        $lecture_content_num = $lectures_row['content_num'];
-                        $lecture_title = $lectures_row['title'];
+                    $lectures_row = mysqli_fetch_array($lectures_result);
+                    $quizes_row = mysqli_fetch_array($quizes_result);
 
-                        while($quizes_row = mysqli_fetch_array($quizes_result)){
+                    while($lectures_row != null || $quizes_row != null){
+
+                        if($lectures_row != null){
+                            $lecture_content_num = $lectures_row['content_num'];
+                            $lecture_title = $lectures_row['title'];
+                        }
+                        if($quizes_row != null){
                             $quiz_content_num = $quizes_row['content_num'];
                             $quiz_title = $quizes_row['title'];
-
-                            if($quiz_content_num < $lecture_content_num){
-                                echo "<tr style=\"height: 34px;\">";
-                                echo "<td class=\"u-table-cell\">Lecture " . $quiz_title . "</td>";
-                            }
-                            else{
-                                echo "<tr style=\"height: 34px;\">";
-                                echo "<td class=\"u-table-cell\">Quiz " . $lecture_title . "</td>";
-                            }
                         }
 
+                        if($lectures_row == null || ($quizes_row != null && $quiz_content_num < $lecture_content_num)){
 
+                            echo "<tbody class=\"u-table-body\">
 
+                            <tr style=\"height: 85px;\">
+                            <td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-29\">Quiz: " . $quiz_title . "</td>
+                            
+                            <td> <form action=\"#\" METHOD=\"POST\">
+                                    <button type=\"submit\" name = \"view_quiz_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$section_name .$lecture_content_num .">Solve Quiz</button>
+                                     </form>
+                            </td>
+                            </tr>
+                            </tbody>";
 
+                            if($quizes_row = mysqli_fetch_array($quizes_result)){
+                                $quiz_content_num = $quizes_row['content_num'];
+                                $quiz_title = $quizes_row['title'];
+                            }
+                            else{
+                                $quizes_row = null;
+                            }
+
+                        }
+                        else if($lectures_row != null){
+                            echo "<tbody class=\"u-table-body\">
+
+                            <tr style=\"height: 85px;\">
+                            <td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-29\">Lecture: " . $lecture_title . "</td>
+                            
+                            <td> <form action=\"#\" METHOD=\"POST\">
+                                    <button type=\"submit\" name = \"view_lecture_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$section_name.$lecture_content_num .">View Lecture</button>
+                                     </form>
+                            </td>
+                            </tr>
+                            </tbody>";
+
+                            if($lectures_row = mysqli_fetch_array($lectures_result)){
+                                $lecture_content_num = $lectures_row['content_num'];
+                                $lecture_title = $lectures_row['title'];
+                            }
+                            else{
+                                $lectures_row = null;
+                            }
+                        }
                     }
-
-
-
                 }
 
                 ?>
-                <colgroup>
-                    <col width="14.3%">
-                    <col width="14.3%">
-                    <col width="14.3%">
-                    <col width="14.3%">
-                    <col width="14.3%">
-                    <col width="12.7%">
-                    <col width="15.7%">
-                </colgroup>
-                <thead class="u-palette-4-base u-table-header u-table-header-1">
-                <tr style="height: 58px;">
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Course Name</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Price</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Level</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Category</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell">Instructor</th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell"></th>
-                    <th class="u-border-1 u-border-palette-4-base u-table-cell"></th>
-                </tr>
-                </thead>
-                <tbody class="u-table-body">
-                <tr style="height: 76px;">
-                    <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-8">Row 1</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-1" href="https://nicepage.com">Edit</a>
-                    </td>
-                    <td class="u-border-1 u-border-active-palette-2-base u-border-hover-palette-1-base u-btn-rectangle u-none u-table-cell u-text-palette-1-base u-table-cell-14">
-                        <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-2" href="https://nicepage.com">Add to Wishlist</a>
-                    </td>
-                </tr>
-                <tr style="height: 65px;">
-                    <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-15">Row 2</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-3" href="https://nicepage.com">Edit</a>
-                    </td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-4" href="https://nicepage.com">Add to Wishlist</a>
-                    </td>
-                </tr>
-                <tr style="height: 64px;">
-                    <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-22">Row 3</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-5" href="https://nicepage.com">Edit</a>
-                    </td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-6" href="https://nicepage.com">Add to Wishlist</a>
-                    </td>
-                </tr>
-                <tr style="height: 85px;">
-                    <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-29">Row 4</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-7" href="https://nicepage.com">Edit</a>
-                    </td>
-                    <td class="u-border-1 u-border-grey-30 u-table-cell">
-                        <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-8" href="https://nicepage.com">Add to Wishlist</a>
-                    </td>
-                </tr>
-                </tbody>
+
             </table>
         </div>
     </div>
