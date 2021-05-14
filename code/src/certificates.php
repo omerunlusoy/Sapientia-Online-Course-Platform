@@ -2,31 +2,6 @@
 
 include("connect.php");
 
-session_start();
-
-
-if(isset($_SESSION['PAGENUM'])){
-    $page_num = $_SESSION['PAGENUM'];}
-else{$_SESSION['PAGENUM'] = 0;}
-
-
-if(isset($_POST['right_page'])){
-    $_SESSION['PAGENUM'] = $_SESSION['PAGENUM'] + 1;
-
-}
-
-if(isset($_POST['left_page'])){
-    if($_SESSION['PAGENUM'] != 0){
-        $_SESSION['PAGENUM'] = $_SESSION['PAGENUM'] - 1;
-    }
-}
-
-if(isset($_POST['view_button'])){
-    $_SESSION['CID'] = $_POST['view_button'];
-
-    header("location: view_course.php");
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -88,12 +63,18 @@ if(isset($_POST['view_button'])){
 
                 $SID = $_SESSION['SID'];
 
+                $discount_max = 100;
+                $discount_min = 0;
 
-                $all_courses_sql = "select *
-                                    from ( select course_name, CID
-                                           from Course
-                                    ) as C_subquery natural join Certificate 
-                                    where SID = '$SID'";
+                $page_entry_num = 10;
+
+                $page_num = $_SESSION['PAGENUM'] * $page_entry_num;
+
+                $all_courses_sql = "select * 
+                                    from  Course natural join Certificate
+                                    where SID = '$SID'
+                                    limit $page_num, $page_entry_num";
+
 
 
                 $result = mysqli_query($con, $all_courses_sql);
@@ -104,12 +85,20 @@ if(isset($_POST['view_button'])){
             <tr class=\"u-palette-4-base u-table-header u-table-header-1\">
             <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Course Name</th>
             <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"></th>
+            
+            
             </tr>";
 
                     while($row = mysqli_fetch_array($result)) {
 
+                        $IID_cur = $row['IID'];
+                        $current_instructor_name_sql = "select name from Instructor where IID = '$IID_cur'";
+                        $result2 = mysqli_query($con, $current_instructor_name_sql);
+                        $row2 = mysqli_fetch_array($result2);
+                        $cur_int_name = $row2['name'];
+
                         echo "<tr>";
-                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7\">" . $row['course_name']. "</td>";
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7\">" .$row['course_name']. "</td>";
                         echo "<td> <form action=\"#\" METHOD=\"POST\">
                                     <button type=\"submit\" name = \"view_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">View Certificate</button>
                                      </form>
