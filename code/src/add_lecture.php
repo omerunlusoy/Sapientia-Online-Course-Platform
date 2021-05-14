@@ -27,34 +27,33 @@ if(isset($_POST['publish_button']))
 
             if ($result->num_rows == 1) {
 
-                $sql1 = "select * from Quiz where CID='$CID' and section='$lecture_section' and content_num = '$content_no'";
-                $sql2 = "select * from Lecture where CID='$CID' and section='$lecture_section' and content_num = '$content_no'";
+                $sql1 = "select content_num from Quiz where CID='$CID' and section='$lecture_section' and content_num = '$content_no'";
+                $sql2 = "select content_num from Lecture where CID='$CID' and section='$lecture_section' and content_num = '$content_no'";
 
-                if( $result1 = $con->query($sql1)) {
-                    if($result2 = $con->query($sql2)){
+                if( $result1 = $con->query($sql1) && $result2 = $con->query($sql2)) {
 
-                        if ($result1->num_rows < 1 && $result2->num_rows < 1) {
+                    if ($result1->num_rows == 0 && $result2->num_rows == 0) {
 
-                            $sql = "INSERT INTO Lecture (CID, content_num, IID, section, title, lecture_content)
-                                    VALUES ('$CID', '$content_no', '$IID', '$lecture_section', '$lecture_title', '$lecture_description');";
+                        $sql = "INSERT INTO Lecture (CID, content_num, IID, section, title, lecture_content)
+                        VALUES ('$CID', '$content_no', '$IID', '$lecture_section', '$lecture_title', '$lecture_description');";
 
-                            if ($result = $con->query($sql)) {
-                                echo "<script type='text/javascript'>alert('Lecture Added!');</script>";
-                                header("location: edit_course.php");
-                            }
-                            else {
-                                echo "<script type='text/javascript'>alert('Database Error!');</script>";
-                            }
+
+                        if ($result = $con->query($sql)) {
+                            echo "<script type='text/javascript'>alert('Lecture Added!');</script>";
+                            header("location: instructor_main_courses.php");
                         }
-                        else {
-                            echo "<script type='text/javascript'>alert('Given content number is already in use!');</script>";
+                        else
+                        {
+                            echo "<script type='text/javascript'>alert('Database Error!');</script>";
                         }
                     }
-                    else {
-                        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                    else
+                    {
+                        echo "<script type='text/javascript'>alert('Given content number is already in use!');</script>";
                     }
                 }
-                else {
+                else
+                {
                     echo "<script type='text/javascript'>alert('Database Error!');</script>";
                 }
 

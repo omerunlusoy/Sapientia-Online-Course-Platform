@@ -1324,8 +1324,7 @@ title</ColNames>
     <key id="357" parent="219" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CID
-content_num
-section</ColNames>
+content_num</ColNames>
       <Primary>1</Primary>
     </key>
     <key id="358" parent="219" name="CID">
@@ -1567,8 +1566,7 @@ title</ColNames>
     <key id="404" parent="223" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CID
-content_num
-section</ColNames>
+content_num</ColNames>
       <Primary>1</Primary>
     </key>
     <key id="405" parent="223" name="CID">
