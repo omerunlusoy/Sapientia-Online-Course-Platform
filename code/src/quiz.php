@@ -22,7 +22,6 @@ include("connect.php");
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
 
 
-
     <script type="application/ld+json">{
     "@context": "http://schema.org",
 		"@type": "Organization",
@@ -103,7 +102,6 @@ include("connect.php");
         </div>
       </div>
     </section>
-
 
     <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-266b"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <p class="u-small-text u-text u-text-variant u-text-1">Wisdom is life...</p>
