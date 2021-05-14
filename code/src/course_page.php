@@ -141,7 +141,7 @@ if(isset($_POST['post_question_button'])){
         </h6>
         <h6 class="u-text u-text-5">Rating :&nbsp;</h6>
         <h6 class="u-text u-text-6"><?php echo $rating; ?></h6>
-        <p class="u-text u-text-9"><?php echo $description; ?></p>
+        <p class="u-text u-text-9"><br><?php echo $description; ?></p>
         <h6 class="u-text u-text-10">Category:&nbsp;</h6>
         <h6 class="u-text u-text-11"><?php echo $category; ?></h6>
         <h6 class="u-text u-text-12"><?php echo $level; ?></h6>
