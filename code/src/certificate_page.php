@@ -2,11 +2,34 @@
 
 include("connect.php");
 session_start();
-if(isset($_POST['view_button']))
-{
-    $_SESSION['CID'] = $_POST['view_button'];
+$SID = $_SESSION['SID'];
+$CID = $_SESSION['CID'];
 
-    header("location: certificate_page.php");
+$sql = "select *
+        from Certificate
+        WHERE CID = '$CID' and SID = '$SID'";
+if( $result = $con->query($sql)) {
+    if($row = mysqli_fetch_array($result))
+    {
+        $yey = $row['comment'];
+        $_SESSION['comment'] = $row['comment'];
+
+    }
+
+}
+
+if(isset($_POST['send_comment_button']))
+{
+    $comment = $_POST['comment'];
+
+    $sql = "UPDATE Certificate SET comment = '$comment'
+                               WHERE CID = '$CID' and SID = '$SID';";
+    if( $result = $con->query($sql)) {
+        echo "<script type='text/javascript'>alert('Comment Added');</script>";
+        header("Location:student_my_courses.php");
+    }
+
+    header("location: student_my_courses.php");
 }
 ?>
 
@@ -18,9 +41,9 @@ if(isset($_POST['view_button']))
     <meta name="keywords" content="Learn Everyday, Join online courses today, Train Your Brain Today!, Learn to enjoyevery minute of your life., Online Learning, Innovations in Online Learning, Education and Learning, 01, 02, 03, 04, Contact Us">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>certificates</title>
+    <title>certificate page</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
-    <link rel="stylesheet" href="certificates.css" media="screen">
+    <link rel="stylesheet" href="certificate-page.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.13.2, nicepage.com">
@@ -36,7 +59,7 @@ if(isset($_POST['view_button']))
             "url": "index.html",
             "logo": "images/SapientiaLogo.PNG"
         }</script>
-    <meta property="og:title" content="certificates">
+    <meta property="og:title" content="certificate page">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#478ac9">
     <link rel="canonical" href="index.html">
@@ -47,7 +70,7 @@ if(isset($_POST['view_button']))
             <img src="images/SapientiaLogo.PNG" class="u-logo-image u-logo-image-1" data-image-width="196.129">
         </a>
     </div></header>
-<section class="u-clearfix u-section-1" id="sec-c118">
+<section class="u-clearfix u-section-1" id="sec-94fa">
     <div class="u-clearfix u-sheet u-sheet-1">
         <a href="student_account.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
         <a href="student_notifications.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Nofitications</a>
@@ -59,58 +82,43 @@ if(isset($_POST['view_button']))
         <a href="student_main.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-8">Main Page</a>
     </div>
 </section>
-<section class="u-align-center u-border-14 u-border-palette-2-light-2 u-clearfix u-section-2" id="carousel_b796">
+<section class="u-align-center u-border-13 u-border-palette-2-light-2 u-clearfix u-section-2" id="sec-0fef">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-text u-text-1"><b>My Certificates</b>
+        <h2 class="u-text u-text-1"><b>Congradulations !!</b>
         </h2>
-        <div class="u-table u-table-responsive u-table-1">
-            <table class="u-table-entity">
-                <?php
+        <?php
 
-                $SID = $_SESSION['SID'];
+        $SID = $_SESSION['SID'];
+        $CID = $_SESSION['CID'];
 
+        $course_sql = "select * 
+                       from Course 
+                       where CID = $CID";
 
-                $all_courses_sql = "select *
-                                    from ( select course_name, CID
-                                           from Course
-                                    ) as C_subquery natural join Certificate 
-                                    where SID = '$SID'";
+        $result = mysqli_query($con, $course_sql);
 
+        $row = mysqli_fetch_array($result)
 
+        ?>
 
-                $result = mysqli_query($con, $all_courses_sql);
-
-                if ($result) {
-
-                    echo "<table class=\"u-table-body\">
-            <tr class=\"u-palette-4-base u-table-header u-table-header-1\">
-            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Course Name</th>
-            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"></th>
-            
-            
-            </tr>";
-
-                    while($row = mysqli_fetch_array($result)) {
-
-
-                        echo "<tr>";
-                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7\">" .$row['course_name']. "</td>";
-                        echo "<td> <form action=\"#\" METHOD=\"POST\">
-                                    <button type=\"submit\" name = \"view_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">View Certificate</button>
-                                     </form>
-                            </td>";
-                        echo "</tr>";
-                    }
-
-                    echo "</table>";
-                }
-                else {
-                    echo "<script type='text/javascript'>alert('Database Error!');</script>";
-                    //header("Location:login.php");
-                }
-                ?>
-            </table>
-
+        <h3 class="u-text u-text-2"><?php echo $row['course_name']; ?><span style="font-weight: 700;"></span>
+        </h3>
+        <p class="u-text u-text-3">You have succesfully finished your course ! Now you can continue learning and master the topic!<br>
+            <span style="font-style: italic; font-weight: 400;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="font-size: 1.5rem;">Team Sapientia</span>
+          </span>
+        </p>
+        <div class="u-form u-form-1">
+            <form action="#" method="POST" >
+                <div class="u-form-group u-form-message">
+                    <label for="message-6797" class="u-label">Comment Course</label>
+                    <input value='<?php echo $_SESSION["comment"]; ?>' placeholder="Enter Your Comment"  rows="4" cols="50" id="message-6797" name="comment" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required=""></input>
+                </div>
+                <div class="u-align-center u-form-group u-form-submit">
+                    <a href="#" class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-1">Send Comment<br>
+                    </a>
+                    <input type="submit" name="send_comment_button" value="submit" class="u-form-control-hidden">
+                </div>
+            </form>
         </div>
     </div>
 </section>
