@@ -1,13 +1,18 @@
 <?php
 
 include("connect.php");
-
+session_start();
 if(isset($_POST['given_cid'])) {
-    session_start();
+
     $_SESSION['CID'] = $_POST['given_cid'];
     $print = $_POST['given_cid'];
     echo "<script type='text/javascript'>alert('$print');</script>";
     header("Location:edit_course.php");
+}
+
+if(isset($_POST['view_statistics_button'])){
+    $_SESSION['CID'] = $_POST['view_statistics_button'];
+    header("location: course_statistics.php");
 }
 
 ?>
@@ -64,7 +69,7 @@ if(isset($_POST['given_cid'])) {
         <div class="u-table u-table-responsive u-table-1">
             <table class="u-table-entity u-table-entity-1">
                 <?php
-                session_start();
+
 
                 $sql = "select CID, course_name, category, level from Course where IID = " .$_SESSION['IID'];
                 $result = mysqli_query($con, $sql);
@@ -86,8 +91,11 @@ if(isset($_POST['given_cid'])) {
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['level']. "</td>";
                         echo "<td> <form action=\"#\" METHOD=\"POST\">
                     <button type=\"submit\" name = \"given_cid\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">Edit</button>
-                    </form>
-                     
+                    </form     
+                  </td>";
+                        echo "<td> <form action=\"#\" METHOD=\"POST\">
+                    <button type=\"submit\" name = \"view_statistics_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">View Statistics</button>
+                    </form     
                   </td>";
                         echo "</tr>";
                     }

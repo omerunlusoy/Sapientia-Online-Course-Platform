@@ -2,6 +2,41 @@
 
 include("connect.php");
 
+if(isset($_POST['add_admin_button'])){
+    $e_mail = $_POST['email_s'];
+    $password = $_POST['password_s'];
+    $name = $_POST['name_s'];
+
+
+    if ($e_mail == "" | $password == "" | $name == "") {
+        echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
+    } else {
+        echo "<script type='text/javascript'>alert('yeyeyey');</script>";
+
+        $sql = "SELECT * FROM Admin WHERE e_mail ='$e_mail'";
+        $result = mysqli_query($con, $sql);
+
+        if ($result) {
+            $row = mysqli_fetch_array($result);
+
+            if ($result->num_rows == 0) {
+                $sql2 = "INSERT INTO Admin (name, e_mail, password) VALUES ('$name','$e_mail', '$password')";
+
+                if ($result = $con->query($sql2)) {
+                    header("location: admin_main.php");
+                }
+
+            } else {
+                //you already have an account
+            }
+
+        } else {
+
+        }
+
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +47,7 @@ include("connect.php");
     <meta name="keywords" content="Learn Everyday, Join online courses today, Train Your Brain Today!, Learn to enjoyevery minute of your life., Online Learning, Innovations in Online Learning, Education and Learning, 01, 02, 03, 04, Contact Us">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>Sign Up</title>
+    <title>add admin</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
     <link rel="stylesheet" href="Sign-Up.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
@@ -47,18 +82,17 @@ include("connect.php");
                         <h5 class="u-custom-font u-font-pt-sans u-text u-text-1">online learning</h5>
                         <h1 class="u-text u-text-2">Sapientia</h1>
                         <h1 class="u-text u-text-3">
-                            <span style="font-size: 2.5rem;">Sign Up for Wisdom</span>
+                            <span style="font-size: 2.5rem;">Add Admin</span>
                         </h1>
                         <div class="u-expanded-width u-form u-form-1">
-                            <form action="signUpS.php" method="POST">
+                            <form action="#" method="POST">
                                 <label for="name_s" class="u-form-control-hidden u-label">Name</label>
                                 <input type="text" placeholder="Enter your Name" id="name_s" name="name_s" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
                                 <label for="email_s" class="u-form-control-hidden u-label">Email</label>
                                 <input type="text" placeholder="Enter a valid email address" id="email_s" name="email_s" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
                                 <label for="password_s" class="u-form-control-hidden u-label"></label>
                                 <input type="password" placeholder="Enter a password" id="password_s" name="password_s" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
-                                <button type="submit"   class="u-btn u-btn-submit u-button-style" >Sign Up as Student</button>
-                                <button type="submit" class="u-btn u-button-style u-btn-2" formaction="signUpI.php">Sign Up as Instructor</button>
+                                <button type="submit" name="add_admin_button"  class="u-btn u-btn-submit u-button-style" >Add admin</button>
                             </form>
                         </div>
 
