@@ -148,10 +148,10 @@ if(isset($_POST['publish_button']))
                         <textarea placeholder="Enter Lecture Description..." rows="4" cols="50" id="textarea-4101" name="lecture_description" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle"></textarea>
                     </div>
                     <div class="u-align-right u-form-group u-form-submit">
-                        <a href="index.php" class="u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-radius-15 u-btn-1">PUBLISH LECTURE<br>
+                        <a href="index.php" class="u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-radius-15 u-btn-1">Publish Lecture<br>
                         </a>
                         <input type="submit" name="publish_button" value="submit" class="u-form-control-hidden">
-                        <a href="https://nicepage.com/c/sports-website-templates" class="u-btn u-btn-round u-button-style u-hover-palette-2-light-2 u-palette-2-light-2 u-radius-15 u-btn-2">Select Video</a>
+                        <a href="select_video.php" class="u-btn u-btn-round u-button-style u-hover-palette-2-light-2 u-palette-2-light-2 u-radius-15 u-btn-2">Select Video</a>
 
                     </div>
 

@@ -108,6 +108,8 @@
   .u-section-1 .u-btn-2 {
     margin-left: 49px;
   }
+
+
 }
 
 @media (max-width: 767px) {
@@ -145,6 +147,7 @@
   .u-section-1 .u-btn-2 {
     margin-left: 0;
   }
+
 }
 
 @media (max-width: 575px) {
