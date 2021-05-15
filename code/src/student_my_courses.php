@@ -24,7 +24,7 @@ if(isset($_POST['left_page'])){
 if(isset($_POST['view_button'])){
     $_SESSION['CID'] = $_POST['view_button'];
 
-    header("location: view_course.php");
+    header("location:course_page.php");
 }
 
 
@@ -86,8 +86,6 @@ if(isset($_POST['view_button'])){
 
             $SID = $_SESSION['SID'];
 
-            $discount_max = 100;
-            $discount_min = 0;
 
             $page_entry_num = 10;
 

@@ -93,7 +93,21 @@ if(isset($_POST['add_to_wishlist_button'])){
 }
 
 if(isset($_POST['buy_button'])){
-    header("location: course_page.php");
+    $CID = $_SESSION['CID'];
+    $SID = $_SESSION['SID'];
+
+    $sql_buy = "INSERT INTO Enrolls (SID, CID, date)
+                VALUES ('$SID', '$CID', CURDATE());";
+    $result = mysqli_query($con, $sql_buy);
+    if ($result) {
+        header("location: course_page.php");
+    }
+    else
+    {
+        echo "<script type='text/javascript'>alert('Course Could not be bought!');</script>";
+    }
+
+
 }
 
 ?>
