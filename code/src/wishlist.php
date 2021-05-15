@@ -28,6 +28,25 @@ if(isset($_POST['view_button'])){
 }
 
 if(isset($_POST['buy_button'])){
+    $CID = $_SESSION['CID'];
+    $SID = $_SESSION['SID'];
+
+    $sql_buy = "INSERT INTO Enrolls (SID, CID, date)
+                VALUES ('$SID', '$CID', CURDATE());";
+    $result = mysqli_query($con, $sql_buy);
+    if ($result) {
+        //remove course from wishlist
+        $sql_delete = "DELETE FROM Wishlist WHERE CID = '$CID' and SID = '$SID' ";
+        $result = mysqli_query($con, $sql_delete);
+        if ($result) {
+            header("location: course_page.php");
+        }
+    }
+    else
+    {
+        echo "<script type='text/javascript'>alert('Course Could not be bought!');</script>";
+    }
+
 
 }
 

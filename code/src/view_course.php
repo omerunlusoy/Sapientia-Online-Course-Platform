@@ -107,7 +107,6 @@ if(isset($_POST['buy_button'])){
         echo "<script type='text/javascript'>alert('Course Could not be bought!');</script>";
     }
 
-
 }
 
 ?>
