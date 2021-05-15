@@ -30,11 +30,11 @@ include("connect.php");
                 } else {
                     //you already have an account
                     echo "<script type='text/javascript'>alert('You already have an account');</script>";
+                    header("Location:signUp.php");
                 }
 
             } else {
                 header("Location:signUp.php");
             }
-
     }
 ?>

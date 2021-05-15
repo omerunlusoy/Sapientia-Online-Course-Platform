@@ -13,7 +13,6 @@ if($e_mail=="" | $password=="" | $name =="")
     echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
 }
 else {
-    echo "<script type='text/javascript'>alert('yeyeyey');</script>";
 
     $sql = "SELECT * FROM Instructor WHERE e_mail ='$e_mail'";
     $result = mysqli_query($con, $sql);
@@ -30,6 +29,8 @@ else {
 
         } else {
             //you already have an account
+            echo "<script type='text/javascript'>alert('You already have an account');</script>";
+            header("location: signUp.php");
         }
 
     } else {
