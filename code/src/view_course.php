@@ -99,7 +99,7 @@ if(isset($_POST['add_to_wishlist_button'])){
 
         }
     }
-    
+
 }
 
 if(isset($_POST['buy_button'])){
