@@ -62,31 +62,42 @@ if(isset($_POST['add_to_wishlist_button'])){
     $CID = $_SESSION['CID'];
     $SID = $_SESSION['SID'];
 
-
-    $sql_select = "select * 
+    $sql_buy_check = "select * 
+                   from  Enrolls 
+                   where SID = '$SID' and CID = '$CID'";
+    $result = mysqli_query($con, $sql_buy_check);
+    if ($result->num_rows == 1) {
+        echo "<script type='text/javascript'>alert('You already bought the course!');</script>";
+    }
+    else
+    {
+        $sql_select = "select * 
                    from  Wishlist 
                    where SID = '$SID' and CID = '$CID'";
 
-    $result = mysqli_query($con, $sql_select);
+        $result = mysqli_query($con, $sql_select);
 
-    if ($result->num_rows == 1) {
-        echo "<script type='text/javascript'>alert('Course is already in wishlist!');</script>";
-    }
-    else{
-        $wishlist_sql = "insert into Wishlist (SID, CID) VALUES  ($SID, $CID)";
-
-
-        $result = mysqli_query($con, $wishlist_sql);
-        if( $result)
-        {
-            echo "<script type='text/javascript'>alert('Course added to wishlist!');</script>";
+        if ($result->num_rows == 1) {
+            echo "<script type='text/javascript'>alert('Course is already in wishlist!');</script>";
         }
-        else
-        {
-            echo "<script type='text/javascript'>alert('Database Error!');</script>";
-        }
+        else{
+            $wishlist_sql = "insert into Wishlist (SID, CID) VALUES  ($SID, $CID)";
 
+
+            $result = mysqli_query($con, $wishlist_sql);
+            if( $result)
+            {
+                echo "<script type='text/javascript'>alert('Course added to wishlist!');</script>";
+            }
+            else
+            {
+                echo "<script type='text/javascript'>alert('Database Error!');</script>";
+            }
+
+        }
     }
+
+
 
 }
 

@@ -64,47 +64,68 @@ if(isset($_POST['add_to_wishlist_button'])){
     $CID = $_SESSION['CID'];
     $SID = $_SESSION['SID'];
 
+    $sql_buy_check = "select * 
+                   from  Enrolls 
+                   where SID = '$SID' and CID = '$CID'";
+    $result = mysqli_query($con, $sql_buy_check);
+    if ($result->num_rows == 1) {
+        echo "<script type='text/javascript'>alert('You already bought the course!');</script>";
 
-    $sql_select = "select * 
+    }
+    else
+    {
+        $sql_select = "select * 
                    from  Wishlist 
                    where SID = '$SID' and CID = '$CID'";
 
-    $result = mysqli_query($con, $sql_select);
+        $result = mysqli_query($con, $sql_select);
 
-    if ($result->num_rows == 1) {
-        echo "<script type='text/javascript'>alert('Course is already in wishlist!');</script>";
-    }
-    else{
-        $wishlist_sql = "insert into Wishlist (SID, CID) VALUES  ($SID, $CID)";
-
-
-        $result = mysqli_query($con, $wishlist_sql);
-        if( $result)
-        {
-            echo "<script type='text/javascript'>alert('Course added to wishlist!');</script>";
+        if ($result->num_rows == 1) {
+            echo "<script type='text/javascript'>alert('Course is already in wishlist!');</script>";
         }
-        else
-        {
-            echo "<script type='text/javascript'>alert('Database Error!');</script>";
+        else{
+            $wishlist_sql = "insert into Wishlist (SID, CID) VALUES  ($SID, $CID)";
+
+
+            $result = mysqli_query($con, $wishlist_sql);
+            if( $result)
+            {
+                echo "<script type='text/javascript'>alert('Course added to wishlist!');</script>";
+            }
+            else
+            {
+                echo "<script type='text/javascript'>alert('Database Error!');</script>";
+            }
+
         }
-
     }
-
+    
 }
 
 if(isset($_POST['buy_button'])){
     $CID = $_SESSION['CID'];
     $SID = $_SESSION['SID'];
 
-    $sql_buy = "INSERT INTO Enrolls (SID, CID, date)
-                VALUES ('$SID', '$CID', CURDATE());";
-    $result = mysqli_query($con, $sql_buy);
-    if ($result) {
-        header("location: course_page.php");
+    $sql_buy_check = "select * 
+                   from  Enrolls 
+                   where SID = '$SID' and CID = '$CID'";
+    $result = mysqli_query($con, $sql_buy_check);
+    if ($result->num_rows == 1) {
+        echo "<script type='text/javascript'>alert('You already bought the course!');</script>";
+
     }
     else
     {
-        echo "<script type='text/javascript'>alert('Course Could not be bought!');</script>";
+        $sql_buy = "INSERT INTO Enrolls (SID, CID, date)
+                VALUES ('$SID', '$CID', CURDATE());";
+        $result = mysqli_query($con, $sql_buy);
+        if ($result) {
+            header("location: course_page.php");
+        }
+        else
+        {
+            echo "<script type='text/javascript'>alert('Course Could not be bought!');</script>";
+        }
     }
 
 }
