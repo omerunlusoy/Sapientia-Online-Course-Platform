@@ -2,6 +2,7 @@
 
 include("connect.php");
 
+
 if(isset($_POST['publish_button']))
 {
 
@@ -34,8 +35,12 @@ if(isset($_POST['publish_button']))
 
                     if ($result1->num_rows == 0 && $result2->num_rows == 0) {
 
-                        $sql = "INSERT INTO Lecture (CID, content_num, IID, section, title, lecture_content)
-                        VALUES ('$CID', '$content_no', '$IID', '$lecture_section', '$lecture_title', '$lecture_description');";
+                        $target_file = $_SESSION['target_file'];
+
+                        echo "<script type='text/javascript'>alert('$target_file');</script>";
+
+                        $sql = "INSERT INTO Lecture (CID, content_num, IID, section, title, description, lecture_content)
+                        VALUES ('$CID', '$content_no', '$IID', '$lecture_section', '$lecture_title', '$lecture_description', '$target_file');";
 
 
                         if ($result = $con->query($sql)) {
@@ -151,16 +156,18 @@ if(isset($_POST['publish_button']))
                         <a href="index.php" class="u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-radius-15 u-btn-1">Publish Lecture<br>
                         </a>
                         <input type="submit" name="publish_button" value="submit" class="u-form-control-hidden">
-                        <a href="select_video.php" class="u-btn u-btn-round u-button-style u-hover-palette-2-light-2 u-palette-2-light-2 u-radius-15 u-btn-2">Select Video</a>
 
-                    </div>
+
+
 
 
                 </form>
+
             </div>
         </div>
     </div>
 </section>
+<a href="select_video.php" class="u-btn u-btn-round u-button-style u-hover-palette-2-light-2 u-palette-2-light-2 u-radius-15 u-btn-2">Submit Video</a>
 
 
 <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-266b"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">

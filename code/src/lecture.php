@@ -6,6 +6,7 @@ session_start();
 $section = $_SESSION['section'];
 $content_num = $_SESSION['content_num'];
 $CID = $_SESSION['CID'];
+$SID = $_SESSION['SID'];
 
 $lecture_sql = "select * 
                 from Lecture 
@@ -16,7 +17,8 @@ if($lecture_result){
     if($lecture_result->num_rows == 1){
         $row = mysqli_fetch_array($lecture_result);
         $lecture_title = $row['title'];
-        $description = $row['lecture_content'];
+        $description = $row['description'];
+        $target_file = $row['lecture_content'];
     }
     else{
         echo "<script type='text/javascript'>alert('Database Error!');</script>";
@@ -26,8 +28,55 @@ else{
     echo "<script type='text/javascript'>alert('Database Error!');</script>";
 }
 
+$note_sql = "select * 
+                from Note 
+                where CID = '$CID' and SID = '$SID' and section = '$section' and content_num = '$content_num'";
+$note_result = mysqli_query($con, $note_sql);
+if($note_result->num_rows == 0){
+    $initial_note = "";
+}
+else{
+    $note_row = mysqli_fetch_array($note_result);
+    $initial_note = $note_row['text'];
+}
+
+
+
 if(isset($_POST['back_button'])){
     header("location: contents.php");
+}
+
+
+if(isset($_POST['note_button'])){
+    $note_text = $_POST['note_text'];
+    // check if it exists
+
+    if($note_result){
+        if($note_result->num_rows == 0) {
+            // note exists
+            $update_sql = "insert into Note (SID, CID, section, content_num, text)
+                            values('$SID', '$CID', '$section', '$content_num', '$note_text')";
+            $update_result = mysqli_query($con, $update_sql);
+            if($update_result){
+            }
+            else{
+                echo "<script type='text/javascript'>alert('Database Error!');</script>";
+            }
+        }
+        else{
+            // create new note
+            $new_note_sql = "update Note 
+                            set text = '$note_text' 
+                            where CID = '$CID' and SID = '$SID' and section = '$section' and content_num = '$content_num'";
+            $update_result = mysqli_query($con, $new_note_sql);
+            if($update_result){
+            }
+            else{
+                echo "<script type='text/javascript'>alert('Database Error!');</script>";
+            }
+        }
+        header("location: lecture.php");
+    }
 }
 
 ?>
@@ -83,11 +132,14 @@ if(isset($_POST['back_button'])){
 <section class="u-clearfix u-palette-4-light-2 u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-section-2" id="sec-832e">
     <div class="u-uploaded-video u-video u-video-1">
         <div class="embed-responsive embed-responsive-1">
-            <iframe style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;" class="embed-responsive-item" src="https://www.youtube.com/embed/B9YKnNtFqds?mute=0&amp;showinfo=0&amp;controls=0&amp;start=0" frameborder="0" allowfullscreen=""></iframe>
+            <iframe style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;" class="embed-responsive-item" src=<?php echo $target_file ?> allowfullscreen="true"></iframe>
         </div>
     </div>
     <div class="u-form u-form-1">
         <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
+
+
+
             <div class="u-align-right u-form-group u-form-submit">
                 <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-1">
                     <svg class="u-svg-content" viewBox="0 0 492.004 492.004" x="0px" y="0px" style="width: 1em; height: 1em;"><g><g><path d="M382.678,226.804L163.73,7.86C158.666,2.792,151.906,0,144.698,0s-13.968,2.792-19.032,7.86l-16.124,16.12    c-10.492,10.504-10.492,27.576,0,38.064L293.398,245.9l-184.06,184.06c-5.064,5.068-7.86,11.824-7.86,19.028    c0,7.212,2.796,13.968,7.86,19.04l16.124,16.116c5.068,5.068,11.824,7.86,19.032,7.86s13.968-2.792,19.032-7.86L382.678,265    c5.076-5.084,7.864-11.872,7.848-19.088C390.542,238.668,387.754,231.884,382.678,226.804z"></path>
@@ -126,14 +178,14 @@ if(isset($_POST['back_button'])){
 
     </div>
     <div class="u-form u-form-4">
-        <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
+        <form action="#" method="POST">
             <div class="u-form-group u-form-message">
                 <label for="message-6797" class="u-label">Notepad</label>
-                <textarea placeholder="Notes" rows="10" cols="50" id="message-6797" name="notes" class="u-border-4 u-border-palette-2-light-2 u-input u-input-rectangle" required="required"></textarea>
+                <textarea placeholder="Notes" rows="10" cols="50" id="message-6797" name="note_text" class="u-border-4 u-border-palette-2-light-2 u-input u-input-rectangle" required="required"><?php echo $initial_note ?></textarea>
             </div>
             <div class="u-align-right u-form-group u-form-submit">
                 <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-26 u-btn-4">Save</a>
-                <input type="submit" value="submit" class="u-form-control-hidden">
+                <input type="submit" name="note_button" value="submit" class="u-form-control-hidden">
             </div>
         </form>
     </div>
