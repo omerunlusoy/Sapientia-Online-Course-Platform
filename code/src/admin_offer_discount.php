@@ -22,7 +22,9 @@ if($result1 && $result2 )
 {
     $row1= mysqli_fetch_array($result1);
     $price = $row1['cost'];
-    $_SESSION['price'] = $price;
+    $_SESSION['cost'] = $price;
+    $_SESSION['course_name'] = $row1['course_name'];
+
 
     $row2 = mysqli_fetch_array($result2);
     if($result2->num_rows != 0)
@@ -45,13 +47,27 @@ if(isset($_POST['save_button'])){
 
     if(isset($_POST['new_discount_rate']) && isset($_POST['radiobutton1']))
     {
-        $new_rate = $_POST['new_discount_rate'];
         //apply new rate
-        $sql = "INSERT INTO Discount (AID, CID, rate)
+        $new_rate = $_POST['new_discount_rate'];
+
+        if($result2->num_rows != 0)
+        {
+            $sql_update = "UPDATE Discount SET rate = '$new_rate' WHERE CID = '$CID' and AID = '$AID';";
+
+            if ($result = $con->query($sql_update)) {
+                $_SESSION['course_rate'] = $new_rate;
+                echo "<script type='text/javascript'>alert('Discount applied!');</script>";
+            }
+
+        }
+        else {
+            $sql_insert = "INSERT INTO Discount (AID, CID, rate)
                 VALUES ('$AID','$CID', '$new_rate');";
-        if( $result = $con->query($sql)) {
-            $_SESSION['course_rate'] = $new_rate;
-            echo "<script type='text/javascript'>alert('Discount applied!');</script>";
+
+            if ($result = $con->query($sql_insert)) {
+                $_SESSION['course_rate'] = $new_rate;
+                echo "<script type='text/javascript'>alert('Discount applied!');</script>";
+            }
         }
     }
     else if(isset($_POST['radiobutton2']))
@@ -116,14 +132,14 @@ if(isset($_POST['save_button'])){
     </div>
 </section>
 <section class="u-border-15 u-border-palette-2-light-3 u-clearfix u-section-2" id="carousel_f056">
-    <h3 class="u-align-center u-text u-text-1">Course Name Here</h3>
+    <h3 class="u-align-center u-text u-text-1"><?php echo $_SESSION["course_name"]; ?></h3>
     <div class="u-form u-form-1">
         <form action="#" method="POST"  style="padding: 10px" >
             <input type="hidden" id="siteId" name="siteId" value="974128024">
             <input type="hidden" id="pageId" name="pageId" value="212977796">
             <div class="u-form-group u-form-name u-form-group-1">
                 <label for="name-2c18" class="u-form-control- u-label">Determined Price by Instructor</label>
-                <input type="text" id="name-2c18" disabled value='<?php echo $_SESSION["price"]; ?>' name="price" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="" placeholder="Determined Price">
+                <input type="text" id="name-2c18" disabled value='<?php echo $_SESSION["cost"]; ?>' name="price" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="" placeholder="Determined Price">
             </div>
             <div class="u-form-group u-form-group-2">
                 <label for="email-2c18" class="u-form-control- u-label">Applied Discount Rate</label>
