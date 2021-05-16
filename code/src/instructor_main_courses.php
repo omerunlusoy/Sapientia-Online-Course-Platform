@@ -15,6 +15,18 @@ if(isset($_POST['view_statistics_button'])){
     header("location: course_statistics.php");
 }
 
+if(isset($_POST['complaint_button'])){
+    $_SESSION['CID'] = $_POST['complaint_button'];
+
+    header("location:instructor_fill_complaint.php");
+}
+
+if(isset($_POST['announcement_button'])){
+    $_SESSION['CID'] = $_POST['announcement_button'];
+
+    header("location:make_announcement.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -81,6 +93,11 @@ if(isset($_POST['view_statistics_button'])){
             <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Course Name</th>
             <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"> Category</th>
             <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Level</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"></th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"></th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"></th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"></th>
+            
             
             </tr>";
 
@@ -94,7 +111,15 @@ if(isset($_POST['view_statistics_button'])){
                     </form     
                   </td>";
                         echo "<td> <form action=\"#\" METHOD=\"POST\">
-                    <button type=\"submit\" name = \"view_statistics_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">View Statistics</button>
+                    <button type=\"submit\" name = \"view_statistics_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">Statistics</button>
+                    </form     
+                  </td>";
+                        echo "<td> <form action=\"#\" METHOD=\"POST\">
+                    <button type=\"submit\" name = \"complaint_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">Complaint</button>
+                    </form     
+                  </td>";
+                        echo "<td> <form action=\"#\" METHOD=\"POST\">
+                    <button type=\"submit\" name = \"announcement_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">Announce</button>
                     </form     
                   </td>";
                         echo "</tr>";

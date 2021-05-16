@@ -1,7 +1,29 @@
 <?php
 
 include("connect.php");
+session_start();
+$CID = $_SESSION['CID'];
+$IID = $_SESSION['IID'];
+if(isset($_POST['send_button'])){
 
+
+    $subject= $_POST['subject'];
+    $date = $_POST['date'];
+    $description = $_POST['description'];
+
+
+    $sql = "INSERT INTO Complaint_Entry_Instructor (IID, CID, subject_name,text,date) 
+            VALUES ('$IID','$CID', '$subject', '$description', '$date')";
+
+    $result = mysqli_query($con, $sql);
+
+    if ($result) {
+
+        header("location:instructor_main_courses.php");
+    }
+    echo "<script type='text/javascript'>alert('database error!');</script>";
+
+}
 
 ?>
 
@@ -71,7 +93,7 @@ include("connect.php");
         <div class="u-border-12 u-border-palette-2-light-2 u-container-style u-group u-shape-rectangle u-white u-group-1">
             <div class="u-container-layout u-container-layout-1">
                 <div class="u-form u-form-1">
-                    <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
+                    <form action="#" method="POST" >
                         <div class="u-form-group u-form-name">
                             <label for="name-6797" class="u-label">Subject</label>
                             <input type="text" placeholder="subject" id="name-6797" name="subject" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required="">
@@ -87,7 +109,7 @@ include("connect.php");
                         <div class="u-align-center u-form-group u-form-submit">
                             <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-2 u-radius-27 u-btn-1">Send Complaint<br>
                             </a>
-                            <input type="submit" value="submit" class="u-form-control-hidden">
+                            <input type="submit" name="send_button" value="submit" class="u-form-control-hidden">
                         </div>
                     </form>
                 </div>

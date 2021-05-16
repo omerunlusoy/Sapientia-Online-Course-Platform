@@ -38,13 +38,23 @@ if(isset($_POST['edit_course_button'])){
         echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
     }
 
+    $select = 0;
+    if(isset($_POST['radiobutton']))
+    {
+        $select = 1;
+    }
+    else
+    {
+        $select = 0;
+    }
+
     $IID = $_SESSION['IID'];
     $sql = "select * from Course where IID='$IID' and course_name='$course_name'";
 
     if( $result = $con->query($sql)) {
         if ($result->num_rows == 0 || $_SESSION['course_name'] == $course_name){
             $sql = "UPDATE Course SET course_name = '$course_name', description = '$description', category = '$category',
-                    level = '$level', cost = '$price', quiz_threshold = '$quiz_avg' WHERE CID = '$CID';";
+                    level = '$level', cost = '$price', quiz_threshold = '$quiz_avg', discount_allowed = '$select' WHERE CID = '$CID';";
             if( $result = $con->query($sql)) {
                 echo "<script type='text/javascript'>alert('Course Updated');</script>";
                 header("Location:instructor_main_courses.php");
@@ -61,7 +71,11 @@ if(isset($_POST['edit_course_button'])){
     else{
         echo "<script type='text/javascript'>alert('Database Error!');</script>";
     }
+
+
 }
+
+
 
 ?>
 
@@ -179,6 +193,10 @@ if(isset($_POST['edit_course_button'])){
                 <div class="u-form-group u-form-partition-factor-2 u-form-group-9">
                     <label for="text-7e07" class="u-label">Time</label>
                     <input placeholder="" id="text-7e07" name="time" class="u-border-2 u-border-palette-4-base u-input u-input-rectangle" type="text">
+                </div>
+                <div>
+                    <input type="radio" name="radiobutton"  value="Allow Discount">
+                    <label class="u-label" for="radiobutton">Allow Discount</label>
                 </div>
                 <div class="u-align-center u-form-group u-form-submit">
                     <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-2 u-radius-12 u-btn-1">Edit Course</a>

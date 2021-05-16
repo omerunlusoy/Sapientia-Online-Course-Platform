@@ -27,6 +27,12 @@ if(isset($_POST['view_button'])){
     header("location:course_page.php");
 }
 
+if(isset($_POST['complaint_button'])){
+    $_SESSION['CID'] = $_POST['complaint_button'];
+
+    header("location:student_fill_complaint.php");
+}
+
 
 ?>
 
@@ -104,6 +110,8 @@ if(isset($_POST['view_button'])){
             <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Level</th>
             <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Instructor</th>
             <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"></th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"></th>
+            
        
             
             
@@ -128,6 +136,10 @@ if(isset($_POST['view_button'])){
                         
                         
                                     <button type=\"submit\" name = \"view_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">View</button>
+                                     </form>
+                            </td>";
+                    echo "<td> <form action=\"#\" METHOD=\"POST\">
+                                    <button type=\"submit\" name = \"complaint_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">Complaint</button>
                                      </form>
                             </td>";
                     echo "</tr>";
