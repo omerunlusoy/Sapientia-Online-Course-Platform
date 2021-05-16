@@ -13,7 +13,7 @@ if( $result = $con->query($sql)) {
     {
         $yey = $row['comment'];
         $_SESSION['comment'] = $row['comment'];
-
+        $_SESSION['rating'] = $row['rating'];
     }
 
 }
@@ -30,6 +30,55 @@ if(isset($_POST['send_comment_button']))
     }
 
     header("location: student_my_courses.php");
+}
+
+if(isset($_POST['rate_button']))
+{
+    $rating= $_POST['rating'];
+    $_SESSION['rating'] = $rating;
+
+    $sql = "UPDATE Certificate SET rating = '$rating'
+                               WHERE CID = '$CID' and SID = '$SID';";
+    if( $result1 = $con->query($sql)) {
+
+        $sql_finished_student_num = "select count(*) as total
+                         from Certificate
+                         WHERE CID = '$CID' and rating<>0";
+        if( $result2 = $con->query($sql_finished_student_num)) {
+
+            $row = mysqli_fetch_assoc($result2);
+            $count = $row['total'];
+
+            $sql_get_course_rating = $sql = "select *
+                                         from Course
+                                         WHERE CID = '$CID'";
+            if( $result3 = $con->query($sql_get_course_rating)) {
+
+                $row = mysqli_fetch_array($result3);
+                $course_rating_now = $row['rating'];
+                $course_rating_now = (($course_rating_now*($count-1)) + $rating)/$count;
+
+                $sql_update_course_rating = "UPDATE Course SET rating = '$course_rating_now'
+                               WHERE CID = '$CID';";
+
+                if( $result3 = $con->query($sql_update_course_rating)) {
+                    echo "<script type='text/javascript'>alert('Course Rated');</script>";
+                }
+
+            }
+            else {
+                echo "<script type='text/javascript'>alert('Database Error');</script>";
+
+            }
+        }
+        else {
+            echo "<script type='text/javascript'>alert('Database Error');</script>";
+        }
+    }
+    else {
+        echo "<script type='text/javascript'>alert('Database Error');</script>";
+    }
+
 }
 ?>
 
@@ -117,6 +166,17 @@ if(isset($_POST['send_comment_button']))
                     <a href="#" class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-1">Send Comment<br>
                     </a>
                     <input type="submit" name="send_comment_button" value="submit" class="u-form-control-hidden">
+                </div>
+            </form>
+            <form action="#" method="POST" >
+                <div class="u-form-group u-form-message">
+                    <label for="message-6797" class="u-label">Rate Course</label>
+                    <input value='<?php echo $_SESSION["rating"]; ?>' placeholder="Enter Rating (.../100)"  rows="4" cols="50" id="message-6797" name="rating" class="u-border-1 u-border-grey-30 u-input u-input-rectangle" required=""></input>
+                </div>
+                <div class="u-align-center u-form-group u-form-submit">
+                    <a href="#" class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-1">Rate<br>
+                    </a>
+                    <input type="submit" name="rate_button" value="submit" class="u-form-control-hidden">
                 </div>
             </form>
         </div>

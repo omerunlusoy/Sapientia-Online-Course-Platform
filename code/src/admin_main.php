@@ -57,7 +57,7 @@ if(isset($_POST['offer_discount_button'])){
 
 if(isset($_POST['view_statistics_button'])){
     $_SESSION['CID'] = $_POST['view_statistics_button'];
-    header("location: course_statistics.php");
+    header("location: admin_course_statistics.php");
 }
 
 ?>

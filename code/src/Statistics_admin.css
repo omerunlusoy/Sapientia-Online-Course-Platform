@@ -33,24 +33,30 @@
 .u-section-1 .u-btn-5 {
   background-image: none;
   border-style: none none solid;
-  margin: -23px 68px 0 auto;
+  margin: -27px 59px 0 auto;
   padding: 0;
 }
 
 .u-section-1 .u-btn-6 {
   background-image: none;
   border-style: none none solid;
-  margin: -31px auto 0 489px;
+  margin: -27px auto 0 489px;
   padding: 0;
 }
 
 .u-section-1 .u-btn-7 {
   background-image: none;
   border-style: none none solid;
-  margin: -23px 143px 45px auto;
+  margin: -27px 471px 0 auto;
   padding: 0;
 }
 
+.u-section-1 .u-btn-8 {
+  background-image: none;
+  border-style: none none solid;
+  margin: -27px 149px 43px auto;
+  padding: 0;
+}
 @media (max-width: 1199px) {
   .u-section-1 .u-btn-1 {
     margin-left: 0;

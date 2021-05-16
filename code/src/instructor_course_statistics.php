@@ -1,5 +1,45 @@
 <?php
+include("connect.php");
+session_start();
+$CID = $_SESSION['CID'];
 
+//enroll count
+$sql_student_count = "select count(*) as student_count
+       from Enrolls 
+       where CID = '$CID'";
+
+$result1 = mysqli_query($con, $sql_student_count);
+
+//rating
+$sql_rating = "select *
+               from Course
+               where CID = '$CID'";
+$result2 = mysqli_query($con, $sql_rating);
+
+//refund request
+$sql_refund = "select count(*) as refund_count
+               from Complaint_Entry_Student
+               where CID = '$CID' and refund_request = 1";
+$result3 = mysqli_query($con, $sql_refund);
+
+if($result1 && $result2 && $result3 )
+{
+    $row1= mysqli_fetch_array($result1);
+    $student_count = $row1['student_count'];
+    $_SESSION['student_count'] = $student_count;
+    $row2 = mysqli_fetch_array($result2);
+    $course_rating = $row2['rating'];
+    $course_name = $row2['course_name'];
+    $_SESSION['course_rating'] = $course_rating;
+    $_SESSION['course_name'] = $course_name;
+    $row3 = mysqli_fetch_array($result3);
+    $refund_request = $row3['refund_count'];
+    $_SESSION['refund_request'] = $refund_request;
+}
+else
+{
+    echo "<script type='text/javascript'>alert('Database Error!');</script>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +52,7 @@
     <meta name="page_type" content="np-template-header-footer-from-plugin">
     <title>Statistics</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
-<link rel="stylesheet" href="Statistics.css" media="screen">
+<link rel="stylesheet" href="Statistics_instructor.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.13.2, nicepage.com">
@@ -40,13 +80,12 @@
       </div></header>
     <section class="u-clearfix u-section-1" id="sec-cb0a">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Settings</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Fill a Complaint</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Statistics</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-7">Main Page</a>
+          <a href="instructor_account.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
+          <a href="instructor_settings.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Settings</a>
+          <a href="instructor_main_courses.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
+          <a href="instructor_notifications.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Notifications</a>
+          <a href="logout.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
+          <a href="instructor_statistics.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Statistics</a>
       </div>
     </section>
     <section class="u-border-15 u-border-palette-2-light-3 u-clearfix u-section-2" id="carousel_f056">
@@ -65,14 +104,14 @@
 </g>
 </g><g><g><path d="M472,424.232H8c-4.418,0-8,3.582-8,8v32c0,4.418,3.582,8,8,8h464c4.418,0,8-3.582,8-8v-32    C480,427.813,476.418,424.232,472,424.232z M464,456.232H16v-16h448V456.232z"></path>
 </g>
-</g></svg><img></span>&nbsp;Course Name Here Statistics
+</g></svg><img></span>&nbsp;<?php echo $_SESSION['course_name']; ?>  Statistics
 </h2>
         <h6 class="u-text u-text-2">Number of Enrolled Students&nbsp; :</h6>
-        <h6 class="u-text u-text-3">Number here</h6>
+        <h6 class="u-text u-text-3"><?php echo $_SESSION['student_count']; ?></h6>
         <h6 class="u-text u-text-4">Rating&nbsp; :</h6>
-        <h6 class="u-text u-text-5">Rating here</h6>
+        <h6 class="u-text u-text-5"><?php echo $_SESSION['course_rating']; ?></h6>
         <h6 class="u-text u-text-6">Number Of Refund Requests:</h6>
-        <h6 class="u-text u-text-7">Refund Number here</h6>
+        <h6 class="u-text u-text-7"><?php echo $_SESSION['refund_request']; ?></h6>
       </div>
     </section>
 
