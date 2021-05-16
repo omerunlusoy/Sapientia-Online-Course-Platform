@@ -24,6 +24,7 @@ if(isset($_POST['view_quiz_button'])){
     $array = explode(" ", $_POST['view_quiz_button']);
     $_SESSION['section'] = $array[0];
     $_SESSION['content_num'] = $array[1];
+    $_SESSION['current_question_number'] = 1;
 
     header("location: quiz.php");
 }
