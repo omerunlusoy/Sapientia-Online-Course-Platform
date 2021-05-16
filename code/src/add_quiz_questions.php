@@ -4,22 +4,20 @@ include("connect.php");
 
 if(isset($_POST['add_question_button']))
 {
-
+    session_start();
     $question = $_POST['question'];
     $Opt1 = $_POST['Q1_O1'];
     $Opt2 = $_POST['Q1_O2'];
     $Opt3 = $_POST['Q1_O3'];
     $select_correct_answer = $_POST['select_correct_answer'];
+    $section = $_SESSION['section'];
 
 
-    if($question=="" | $Opt1=="" | $Opt2=="" | $Opt3=="")
-    {
+    if($question=="" | $Opt1=="" | $Opt2=="" | $Opt3=="") {
         echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
     }
-    else
-    {
 
-        session_start();
+    else {
         $CID = $_SESSION['CID'];
         $IID = $_SESSION['IID'];
         $quiz_content_no = $_SESSION['quiz_content_no'];
@@ -31,8 +29,8 @@ if(isset($_POST['add_question_button']))
             $question_num = $row['COUNT1'] + 1;
 
             if($select_correct_answer == "choice1"){
-                $sql = "INSERT INTO Quiz_Question (CID, content_num, question_num, question_text, choice1, choice2, choice3, answer)
-                    VALUES ('$CID', '$quiz_content_no', '$question_num', '$question', '$Opt1', '$Opt2', '$Opt3', 'choice1');";
+                $sql = "INSERT INTO Quiz_Question (CID, section, content_num, question_num, question_text, choice1, choice2, choice3, answer)
+                    VALUES ('$CID', '$section', '$quiz_content_no', '$question_num', '$question', '$Opt1', '$Opt2', '$Opt3', 'choice1');";
 
                 if ($result = $con->query($sql)) {
                     echo "<script type='text/javascript'>alert('Question Added!');</script>";
@@ -42,8 +40,8 @@ if(isset($_POST['add_question_button']))
                 }
             }
             else if($select_correct_answer == "choice2"){
-                $sql = "INSERT INTO Quiz_Question (CID, content_num, question_num, question_text, choice1, choice2, choice3, answer)
-                    VALUES ('$CID', '$quiz_content_no', '$question_num', '$question', '$Opt1', '$Opt2', '$Opt3', 'choice2');";
+                $sql = "INSERT INTO Quiz_Question (CID, section, content_num, question_num, question_text, choice1, choice2, choice3, answer)
+                    VALUES ('$CID', '$section', '$quiz_content_no', '$question_num', '$question', '$Opt1', '$Opt2', '$Opt3', 'choice2');";
 
                 if ($result = $con->query($sql)) {
                     echo "<script type='text/javascript'>alert('Question Added!');</script>";
@@ -53,8 +51,8 @@ if(isset($_POST['add_question_button']))
                 }
             }
             else{
-                $sql = "INSERT INTO Quiz_Question (CID, content_num, question_num, question_text, choice1, choice2, choice3, answer)
-                    VALUES ('$CID', '$quiz_content_no', '$question_num', '$question', '$Opt1', '$Opt2', '$Opt3', 'choice3');";
+                $sql = "INSERT INTO Quiz_Question (CID, section, content_num, question_num, question_text, choice1, choice2, choice3, answer)
+                    VALUES ('$CID', '$section', '$quiz_content_no', '$question_num', '$question', '$Opt1', '$Opt2', '$Opt3', 'choice3');";
 
                 if ($result = $con->query($sql)) {
                     echo "<script type='text/javascript'>alert('Question Added!');</script>";

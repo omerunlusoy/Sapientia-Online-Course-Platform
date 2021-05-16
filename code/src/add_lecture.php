@@ -39,8 +39,8 @@ if(isset($_POST['publish_button']))
 
                         echo "<script type='text/javascript'>alert('$target_file');</script>";
 
-                        $sql = "INSERT INTO Lecture (CID, content_num, IID, section, title, description, lecture_content)
-                        VALUES ('$CID', '$content_no', '$IID', '$lecture_section', '$lecture_title', '$lecture_description', '$target_file');";
+                        $sql = "INSERT INTO Lecture (CID, content_num, section, title, description, lecture_content)
+                        VALUES ('$CID', '$content_no', '$lecture_section', '$lecture_title', '$lecture_description', '$target_file');";
 
 
                         if ($result = $con->query($sql)) {

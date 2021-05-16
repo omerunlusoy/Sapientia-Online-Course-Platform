@@ -22,9 +22,9 @@ if(isset($_POST['add_course_button']))
 
         session_start();
         $IID = $_SESSION['IID'];
-        $sql = "INSERT INTO Course (IID, course_name, course_photo, description, category,
-                    level, cost, discount_allowed, quiz_threshold, lecture_completed_threshold)
-                VALUES ('$IID', '$course_name', NULL, '$description', '$category', '$level', '$price', FALSE, '$quiz_avg', NULL);";
+        $sql = "INSERT INTO Course (IID, course_name, description, category,
+                    level, cost, discount_allowed, quiz_threshold)
+                VALUES ('$IID', '$course_name', '$description', '$category', '$level', '$price', FALSE, '$quiz_avg');";
         if( $result = $con->query($sql))
         {
 

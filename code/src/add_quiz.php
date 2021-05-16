@@ -8,6 +8,7 @@ if(isset($_POST['add_quiz_button']))
     $quiz_title = $_POST['quiz_title'];
     $quiz_section = $_POST['quiz_section'];
     $quiz_content_no = $_POST['quiz_content_no'];
+    $_SESSION['section'] = $quiz_section;
 
 
     if($quiz_title=="" | $quiz_section=="" | $quiz_content_no=="")

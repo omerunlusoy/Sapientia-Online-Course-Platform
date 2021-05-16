@@ -30,15 +30,21 @@ else{
 
 $note_sql = "select * 
                 from Note 
-                where CID = '$CID' and SID = '$SID' and section = '$section' and content_num = '$content_num'";
+                where SID = '$SID' and section = '$section' and content_num = '$content_num'";
 $note_result = mysqli_query($con, $note_sql);
-if($note_result->num_rows == 0){
-    $initial_note = "";
+if($note_result){
+    if($note_result->num_rows == 0){
+        $initial_note = "";
+    }
+    else{
+        $note_row = mysqli_fetch_array($note_result);
+        $initial_note = $note_row['text'];
+    }
 }
 else{
-    $note_row = mysqli_fetch_array($note_result);
-    $initial_note = $note_row['text'];
+    echo "<script type='text/javascript'>alert('Database Error!');</script>";
 }
+
 
 
 
@@ -63,8 +69,8 @@ if(isset($_POST['note_button'])){
     if($note_result){
         if($note_result->num_rows == 0) {
             // note exists
-            $update_sql = "insert into Note (SID, CID, section, content_num, text)
-                            values('$SID', '$CID', '$section', '$content_num', '$note_text')";
+            $update_sql = "insert into Note (SID, section, content_num, text)
+                            values('$SID', '$section', '$content_num', '$note_text')";
             $update_result = mysqli_query($con, $update_sql);
             if($update_result){
             }
@@ -76,7 +82,7 @@ if(isset($_POST['note_button'])){
             // create new note
             $new_note_sql = "update Note 
                             set text = '$note_text' 
-                            where CID = '$CID' and SID = '$SID' and section = '$section' and content_num = '$content_num'";
+                            where SID = '$SID' and section = '$section' and content_num = '$content_num'";
             $update_result = mysqli_query($con, $new_note_sql);
             if($update_result){
             }
