@@ -56,14 +56,95 @@ else{
 
 if(isset($_POST['submit_quiz_button'])){
     if (empty($_POST["radiobutton"])) {
-        $genderErr = "Gender is required";
         echo "<script type='text/javascript'>alert('Answer required');</script>";
     } else {
-        $ans = $_POST["radiobutton"];
-        echo "<script type='text/javascript'>alert('$ans');</script>";
-        echo "<script type='text/javascript'>alert('$answer');</script>";
+        $student_answer = $_POST["radiobutton"];
+
+        $is_true = ($student_answer == $answer);
+        if($is_true != 1){
+            $is_true = 0;
+        }
+
+        $exists_sql = "select * from  Take_Quiz_Question
+                    where SID = '$SID' and CID = '$CID' and section = '$section' and content_num = '$content_num' and question_num = '$current_question_number'";
+
+        if ($result = $con->query($exists_sql)) {
+            if($result->num_rows > 0){
+                // update
+                $update_sql = "update Take_Quiz_Question
+                                set answer = '$student_answer'
+                                where SID = '$SID' and CID = '$CID' and section = '$section' and content_num = '$content_num' and question_num = '$current_question_number'";
+
+                $result = $con->query($update_sql);
+
+                $update_sql = "update Take_Quiz_Question
+                                set isTrue = '$is_true'
+                                where SID = '$SID' and CID = '$CID' and section = '$section' and content_num = '$content_num' and question_num = '$current_question_number'";
+
+                $result = $con->query($update_sql);
+
+                if (!$result) {
+                    echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                }
+            }
+            else{
+                // create new take qq
+                $insert_sql = "INSERT INTO Take_Quiz_Question (SID, CID, section, content_num, question_num, answer, isTrue)
+                                VALUES ('$SID', '$CID', '$section', '$content_num', '$current_question_number', '$student_answer', $is_true);";
+
+                $result = $con->query($insert_sql);
+
+                if (!$result) {
+                    echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                }
+            }
+        }
+        else {
+            echo "<script type='text/javascript'>alert('Database Error!');</script>";
+        }
     }
 }
+
+
+if(isset($_POST['next_button'])){
+    $current_question_number = $_SESSION['current_question_number'];
+    $current_question_number = $current_question_number + 1;
+    $exists_sql = "select * from  Take_Quiz_Question
+                    where SID = '$SID' and CID = '$CID' and section = '$section' and 
+                          content_num = '$content_num' and question_num = '$current_question_number'";
+
+    if ($result = $con->query($exists_sql)) {
+        if ($result->num_rows > 0) {
+            $_SESSION['current_question_number'] = $current_question_number + 1;
+            header("location: quiz.php");
+        }
+        else{
+            echo "<script type='text/javascript'>alert('This is last question in the quiz!');</script>";
+        }
+    }
+    else{
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
+
+
+}
+
+if(isset($_POST['previous_button'])){
+    $current_question_number = $_SESSION['current_question_number'];
+    if($current_question_number == 1){
+        echo "<script type='text/javascript'>alert('This is first question!');</script>";
+    }
+    else{
+        $_SESSION['current_question_number'] = $current_question_number - 1;
+        header("location: quiz.php");
+    }
+}
+
+if(isset($_POST['back_button'])){
+    header("location: contents.php");
+}
+
+
 
 
 
@@ -145,22 +226,37 @@ if(isset($_POST['submit_quiz_button'])){
                   <a href="#" class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-1">Submit Quiz</a>
                   <input type="submit" name="submit_quiz_button" value="submit" class="u-form-control-hidden">
                 </div>
-                <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
-                <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
-                <input type="hidden" value="" name="recaptchaResponse">
+
+
               </form>
+                <div>
+                    <form action="#" method="POST">
+                        <div class="u-align-left u-form-group u-form-submit">
+                            <a href="#" class="u-btn u-button-style u-palette-2-light-2 u-btn-2">Next&nbsp;</a>
+                            <input type="submit" name="next_button" value="submit" class="u-form-control-hidden">
+                        </div>
+                    </form>
+
+                    <form action="#" method="POST">
+                        <div class="u-align-left u-form-group u-form-submit">
+                            <a href="#" class="u-btn u-button-style u-palette-2-light-2 u-btn-3">Previous&nbsp;</a>
+                            <input type="submit" name="previous_button" value="submit" class="u-form-control-hidden">
+                        </div>
+                    </form>
+                </div>
             </div>
-            <a href="https://nicepage.com/k/result-html-templates" class="u-btn u-button-style u-palette-2-light-2 u-btn-2">Next&nbsp;</a>
-            <a href="https://nicepage.com/k/result-html-templates" class="u-btn u-button-style u-palette-2-light-2 u-btn-3">Previous&nbsp;</a>
+
+
+
           </div>
         </div>
         <p class="u-text u-text-3">Grade : .../ 10</p>
         <div class="u-form u-form-2">
-          <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
+          <form action="#" method="POST">
             <div class="u-align-right u-form-group u-form-submit">
-              <a href="#" class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-4">Back to Contents<br>
+              <a href="contents.php" class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-4">Back to Contents<br>
               </a>
-              <input type="submit" value="submit" class="u-form-control-hidden">
+              <input type="submit" name="back_button" value="submit" class="u-form-control-hidden">
             </div>
           </form>
         </div>
