@@ -220,7 +220,7 @@ if(isset($_POST['view_statistics_button'])){
             </form>
         </div>
         <div class="u-table u-table-responsive u-table-1">
-            <h2>Popular Courses</h2>
+            <h2>Courses</h2>
             <table class="u-table-entity u-table-entity-1">
                 <?php
 
@@ -366,6 +366,7 @@ if(isset($_POST['view_statistics_button'])){
 
                     while($row = mysqli_fetch_array($result)) {
                         $IID_cur = $row['IID'];
+                        $discount_allowed = $row['discount_allowed'];
                         $current_instructor_name_sql = "select name from Instructor where IID = '$IID_cur'";
                         $result2 = mysqli_query($con, $current_instructor_name_sql);
                         $row2 = mysqli_fetch_array($result2);
@@ -394,14 +395,18 @@ if(isset($_POST['view_statistics_button'])){
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['category']. "</td>";
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['level']. "</td>";
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$cur_int_name. "</td>";
-                        echo "<td> <form action=\"#\" METHOD=\"POST\">
-                                    <button type=\"submit\" name = \"offer_discount_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">Offer Discount</button>
-                                     </form>
-                            </td>";
+
                         echo "<td> <form action=\"#\" METHOD=\"POST\">
                                     <button type=\"submit\" name = \"view_statistics_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">View Statistics</button>
                                      </form>
                             </td>";
+                        if($discount_allowed)
+                        {
+                            echo "<td> <form action=\"#\" METHOD=\"POST\">
+                                    <button type=\"submit\" name = \"offer_discount_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">Offer Discount</button>
+                                     </form>
+                            </td>";
+                        }
                         echo "</tr>";
                     }
 

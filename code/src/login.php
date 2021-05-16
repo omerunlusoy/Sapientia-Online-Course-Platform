@@ -4,7 +4,7 @@ include("connect.php");
 session_start();
 
 if(isset($_POST['e_mail'])) {
-    echo "<script type='text/javascript'>alert('12!');</script>";
+
     $e_mail = $_POST['e_mail'];
     $password = $_POST['password'];
 
@@ -12,13 +12,13 @@ if(isset($_POST['e_mail'])) {
         echo "<script type='text/javascript'>alert('Fill all the fields!');</script>";
     }
     else {
-        echo "<script type='text/javascript'>alert('1');</script>";
+
         $student_sql = "select SID from Student where e_mail='$e_mail' and password='$password'";
         if( $result = $con->query($student_sql)) {
-            echo "<script type='text/javascript'>alert('2');</script>";
+
             // Student Login
             if($result->num_rows==1) {
-                echo "<script type='text/javascript'>alert('3');</script>";
+
 
                 $row = mysqli_fetch_array($result);
                 $_SESSION['SID'] = $row['SID'];
@@ -51,6 +51,12 @@ if(isset($_POST['e_mail'])) {
                     if($result->num_rows==1) {
                         $row = mysqli_fetch_array($result);
                         $_SESSION['AID'] = $row['AID'];
+                        $_SESSION['level'] = "All";
+                        $_SESSION['category'] = "All";
+                        $_SESSION['price'] = "All";
+                        $_SESSION['discount'] = "All";
+                        $_SESSION['search'] = "";
+                        $_SESSION['PAGENUM'] = 0;
                         header("location: admin_main.php");
                     }
 
