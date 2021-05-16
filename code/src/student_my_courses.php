@@ -5,22 +5,6 @@ include("connect.php");
 session_start();
 
 
-if(isset($_SESSION['PAGENUM'])){
-    $page_num = $_SESSION['PAGENUM'];}
-else{$_SESSION['PAGENUM'] = 0;}
-
-
-if(isset($_POST['right_page'])){
-    $_SESSION['PAGENUM'] = $_SESSION['PAGENUM'] + 1;
-
-}
-
-if(isset($_POST['left_page'])){
-    if($_SESSION['PAGENUM'] != 0){
-        $_SESSION['PAGENUM'] = $_SESSION['PAGENUM'] - 1;
-    }
-}
-
 if(isset($_POST['view_button'])){
     $_SESSION['CID'] = $_POST['view_button'];
 
@@ -155,13 +139,7 @@ if(isset($_POST['complaint_button'])){
         </table>
 
     </div>
-    <form action="#" method="POST">
-        <div class="u-form-group u-form-submit">
-            <button type="submit" name = "left_page" id = "btn" class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4-13">Left</button>
-            <button type="submit" name = "right_page" id = "btn" class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4-14">Right</button>
-        </div>
-    </form>
-    <p class="u-text u-text-1"><?php echo $_SESSION['PAGENUM'] + 1; ?></p>
+
 </section>
 
 

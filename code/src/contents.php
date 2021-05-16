@@ -6,6 +6,7 @@ session_start();
 $CID = $_SESSION['CID'];
 $SID = $_SESSION['SID'];
 
+
 $sections_sql = "select * 
                 from Section 
                 where CID = '$CID'";
@@ -23,6 +24,8 @@ if(isset($_POST['view_quiz_button'])){
     $array = explode(" ", $_POST['view_quiz_button']);
     $_SESSION['section'] = $array[0];
     $_SESSION['content_num'] = $array[1];
+
+    header("location: quiz.php");
 }
 
 if(isset($_POST['view_lecture_button'])){
@@ -74,7 +77,6 @@ if(isset($_POST['view_lecture_button'])){
 <section class="u-clearfix u-section-1" id="sec-cb0a">
     <div class="u-clearfix u-sheet u-sheet-1">
         <a href="student_account.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
-<<<<<<< HEAD
         <a href="student_notifications.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Nofitications</a>
         <a href="student_my_courses.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
         <a href="student_fill_complaint.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Fill a Complaint</a>
@@ -82,14 +84,6 @@ if(isset($_POST['view_lecture_button'])){
         <a href="certificates.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Certificates</a>
         <a href="wishlist.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-7">Wishlist</a>
         <a href="student_main.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-8">Main Page</a>
-=======
-        <a href="" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Settings</a>
-        <a href="student_my_courses.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
-        <a href="student_fill_complaint.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Fill a Complaint</a>
-        <a href="logout.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
-        <a href="" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Statistics</a>
-        <a href="student_main.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-7">Main Page</a>
->>>>>>> fafb12773ac6f4fa74682b5959ce983b9b26de33
     </div>
 </section>
 <section class="u-border-15 u-border-palette-2-light-3 u-clearfix u-section-2" id="carousel_f056">

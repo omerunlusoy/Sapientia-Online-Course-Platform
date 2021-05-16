@@ -2,6 +2,70 @@
 
 include("connect.php");
 
+session_start();
+$section = $_SESSION['section'];
+$content_num = $_SESSION['content_num'];
+$CID = $_SESSION['CID'];
+$SID = $_SESSION['SID'];
+
+if(isset($_SESSION['current_question_number'])){
+    $current_question_number = $_SESSION['current_question_number'];
+}
+else{
+    $_SESSION['current_question_number'] = 1;
+    $current_question_number = $_SESSION['current_question_number'];
+}
+
+
+$course_sql = "select * 
+                from Course 
+                where CID = '$CID'";
+$course_result = mysqli_query($con, $course_sql);
+if($course_result){
+    if($course_result->num_rows == 1) {
+        $row1 = mysqli_fetch_array($course_result);
+        $course_name = $row1['course_name'];
+    }
+}
+
+
+$quiz_sql = "select * 
+                from Quiz natural join Quiz_Question
+                where Quiz.CID = '$CID' and Quiz.section = '$section' and Quiz.content_num = '$content_num'
+                and question_num = '$current_question_number'";
+
+$quiz_result = mysqli_query($con, $quiz_sql);
+if($quiz_result){
+    if($quiz_result->num_rows == 1){
+        $row = mysqli_fetch_array($quiz_result);
+        $quiz_title = $row['title'];
+        $question_text = $row['question_text'];
+        $opt1 = $row['choice1'];
+        $opt2 = $row['choice2'];
+        $opt3 = $row['choice3'];
+        $answer = $row['answer'];
+    }
+    else{
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
+}
+else{
+    echo "<script type='text/javascript'>alert('Database Error!');</script>";
+}
+
+
+if(isset($_POST['submit_quiz_button'])){
+    if (empty($_POST["radiobutton"])) {
+        $genderErr = "Gender is required";
+        echo "<script type='text/javascript'>alert('Answer required');</script>";
+    } else {
+        $ans = $_POST["radiobutton"];
+        echo "<script type='text/javascript'>alert('$ans');</script>";
+        echo "<script type='text/javascript'>alert('$answer');</script>";
+    }
+}
+
+
 
 ?>
 
@@ -54,32 +118,32 @@ include("connect.php");
     </section>
     <section class="u-clearfix u-section-2" id="carousel_f056">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-text u-text-1">Course Title Here</h2>
+        <h2 class="u-text u-text-1"><?php echo $course_name; ?></h2>
         <div class="u-border-14 u-border-palette-4-light-2 u-container-style u-group u-white u-group-1">
           <div class="u-container-layout u-container-layout-1">
-            <h5 class="u-text u-text-2">Quiz Title Here</h5>
+            <h5 class="u-text u-text-2"><?php echo $quiz_title; ?></h5>
             <div class="u-form u-form-1">
-              <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px" source="custom" name="form">
+              <form action="#" method="POST">
                 <div class="u-form-group u-form-group-1">
                   <label for="text-25b6" class="u-label">Question </label>
-                  <input type="text" id="text-25b6" name="q1" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white">
+                    <textarea rows="2" cols="50" id="message-6797" name="note_text" class="u-border-4 u-border-palette-2-light-2 u-input u-input-rectangle" required="required" readonly><?php echo $question_text ?></textarea>
                 </div>
                 <div class="u-form-group u-form-radiobutton u-form-group-2">
                   <div class="u-form-radio-button-wrapper">
-                    <input type="radio" name="radiobutton_1" value="Item 1">
-                    <label class="u-label" for="radiobutton">Item 1</label>
+                    <input type="radio" name="radiobutton" value="choice1">
+                    <label class="u-label" for="radiobutton"><?php echo $opt1 ?></label>
                     <br>
-                    <input type="radio" name="radiobutton_1" value="Item 2">
-                    <label class="u-label" for="radiobutton">Item 2</label>
+                    <input type="radio" name="radiobutton" value="choice2">
+                    <label class="u-label" for="radiobutton"><?php echo $opt2 ?></label>
                     <br>
-                    <input type="radio" name="radiobutton_1" value="Item 3">
-                    <label class="u-label" for="radiobutton">Item 3</label>
+                    <input type="radio" name="radiobutton" value="choice3">
+                    <label class="u-label" for="radiobutton"><?php echo $opt3 ?></label>
                     <br>
                   </div>
                 </div>
                 <div class="u-align-right u-form-group u-form-submit">
                   <a href="#" class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-1">Submit Quiz</a>
-                  <input type="submit" value="submit" class="u-form-control-hidden">
+                  <input type="submit" name="submit_quiz_button" value="submit" class="u-form-control-hidden">
                 </div>
                 <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
                 <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>

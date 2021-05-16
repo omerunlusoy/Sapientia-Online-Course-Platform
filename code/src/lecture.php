@@ -46,6 +46,15 @@ if(isset($_POST['back_button'])){
     header("location: contents.php");
 }
 
+if(isset($_POST['left_button'])){
+    header("location: contents.php");
+}
+if(isset($_POST['right_button'])){
+    header("location: contents.php");
+}
+
+
+
 
 if(isset($_POST['note_button'])){
     $note_text = $_POST['note_text'];
@@ -86,7 +95,7 @@ if(isset($_POST['note_button'])){
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Learn Everyday, Join online courses today, Train Your Brain Today!, Learn to enjoyevery minute of your life., Online Learning, Innovations in Online Learning, Education and Learning, 01, 02, 03, 04, Contact Us">
+    <meta name="keywords" content="Learn Everyday, Join online courses today, Train Your Brain Today!, Learn to enjoy every minute of your life., Online Learning, Innovations in Online Learning, Education and Learning, 01, 02, 03, 04, Contact Us">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
     <title>Lecture</title>
@@ -147,14 +156,14 @@ if(isset($_POST['note_button'])){
                         </g></svg>
                     <img>
                 </a>
-                <input type="submit" value="submit" class="u-form-control-hidden">
+                <input type="submit" name="left_button" value="submit" class="u-form-control-hidden">
             </div>
         </form>
     </div>
     <div class="u-form u-form-2">
         <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
             <div class="u-align-right u-form-group u-form-submit">
-                <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-2">
+                <a href="#" name="left_button" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-2">
                     <svg class="u-svg-content" viewBox="0 0 55.753 55.753" x="0px" y="0px" style="width: 1em; height: 1em;"><g><path d="M12.745,23.915c0.283-0.282,0.59-0.52,0.913-0.727L35.266,1.581c2.108-2.107,5.528-2.108,7.637,0.001   c2.109,2.108,2.109,5.527,0,7.637L24.294,27.828l18.705,18.706c2.109,2.108,2.109,5.526,0,7.637   c-1.055,1.056-2.438,1.582-3.818,1.582s-2.764-0.526-3.818-1.582L13.658,32.464c-0.323-0.207-0.632-0.445-0.913-0.727   c-1.078-1.078-1.598-2.498-1.572-3.911C11.147,26.413,11.667,24.994,12.745,23.915z"></path>
                         </g></svg>
                     <img>
@@ -163,8 +172,12 @@ if(isset($_POST['note_button'])){
             </div>
         </form>
     </div>
-    <h2 class="u-text u-text-1"><?php echo $lecture_title ?></h2>
-    <p class="u-text u-text-2"><?php echo $description ?></p>
+    <h3 class="u-text u-text-1"><?php echo $lecture_title ?></h3>
+    <p class="u-text u-text-2"><?php echo $description ?><br>
+        <br>
+        <br>
+        <br></p>
+
     <div class="u-form u-form-3">
 
 
