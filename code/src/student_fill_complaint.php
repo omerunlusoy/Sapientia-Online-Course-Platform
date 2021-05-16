@@ -6,17 +6,10 @@ $CID = $_SESSION['CID'];
 $SID = $_SESSION['SID'];
 if(isset($_POST['send_button'])){
 
-    echo "<script type='text/javascript'>alert('$CID!');</script>";
-    echo "<script type='text/javascript'>alert('$SID!');</script>";
-
 
     $subject= $_POST['subject'];
     $date = $_POST['date'];
     $description = $_POST['description'];
-
-    echo "<script type='text/javascript'>alert('$subject!');</script>";
-    echo "<script type='text/javascript'>alert('$date');</script>";
-    echo "<script type='text/javascript'>alert('$description');</script>";
 
     $select = 0;
     if(isset($_POST['radiobutton1']))
@@ -35,10 +28,10 @@ if(isset($_POST['send_button'])){
 
 
     if ($result) {
-        echo "<script type='text/javascript'>alert('if result!');</script>";
+
         header("location:student_my_courses.php");
     }
-    echo "<script type='text/javascript'>alert('no result!');</script>";
+    echo "<script type='text/javascript'>alert('database error!');</script>";
 
 }
 
