@@ -19,26 +19,20 @@ else{
 
 
 
-if(isset($_POST['view_button'])){
-    $_SESSION['CID'] = $_POST['view_button'];
-
-    header("location: view_course.php");
-}
-
 if(isset($_POST['view_quiz_button'])){
-    $a = $_POST['view_quiz_button'];
-    echo "<script type='text/javascript'>alert('$a');</script>";
-
+    $array = explode(" ", $_POST['view_quiz_button']);
+    $_SESSION['section'] = $array[0];
+    $_SESSION['content_num'] = $array[1];
 }
 
 if(isset($_POST['view_lecture_button'])){
-    $_SESSION['CID'] = $_POST['view_lecture_button'];
+    $array = explode(" ", $_POST['view_lecture_button']);
+    $_SESSION['section'] = $array[0];
+    $_SESSION['content_num'] = $array[1];
+
+    header("location: lecture.php");
 
 }
-
-
-
-
 
 ?>
 <!DOCTYPE html>
@@ -153,13 +147,14 @@ if(isset($_POST['view_lecture_button'])){
 
                         if($lectures_row == null || ($quizes_row != null && $quiz_content_num < $lecture_content_num)){
 
+
                             echo "<tbody class=\"u-table-body\">
 
                             <tr style=\"height: 85px;\">
                             <td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-29\">Quiz: " . $quiz_title . "</td>
                             
                             <td> <form action=\"#\" METHOD=\"POST\">
-                                    <button type=\"submit\" name = \"view_quiz_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$section_name .$lecture_content_num .">Solve Quiz</button>
+                                    <button type=\"submit\" name = \"view_quiz_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value ='$section_name $quiz_content_num'>Solve Quiz</button>
                                      </form>
                             </td>
                             </tr>
@@ -181,7 +176,7 @@ if(isset($_POST['view_lecture_button'])){
                             <td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-29\">Lecture: " . $lecture_title . "</td>
                             
                             <td> <form action=\"#\" METHOD=\"POST\">
-                                    <button type=\"submit\" name = \"view_lecture_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$section_name.$lecture_content_num .">View Lecture</button>
+                                    <button type=\"submit\" name = \"view_lecture_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value ='$section_name $lecture_content_num'>View Lecture</button>
                                      </form>
                             </td>
                             </tr>

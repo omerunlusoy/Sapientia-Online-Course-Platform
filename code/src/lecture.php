@@ -2,6 +2,33 @@
 
 include("connect.php");
 
+session_start();
+$section = $_SESSION['section'];
+$content_num = $_SESSION['content_num'];
+$CID = $_SESSION['CID'];
+
+$lecture_sql = "select * 
+                from Lecture 
+                where CID = '$CID' and section = '$section' and content_num = '$content_num'";
+
+$lecture_result = mysqli_query($con, $lecture_sql);
+if($lecture_result){
+    if($lecture_result->num_rows == 1){
+        $row = mysqli_fetch_array($lecture_result);
+        $lecture_title = $row['title'];
+        $description = $row['lecture_content'];
+    }
+    else{
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
+}
+else{
+    echo "<script type='text/javascript'>alert('Database Error!');</script>";
+}
+
+if(isset($_POST['back_button'])){
+    header("location: contents.php");
+}
 
 ?>
 
@@ -70,9 +97,6 @@ include("connect.php");
                 </a>
                 <input type="submit" value="submit" class="u-form-control-hidden">
             </div>
-            <div class="u-form-send-message u-form-send-success">Thank you! Your message has been sent.</div>
-            <div class="u-form-send-error u-form-send-message">Unable to send your message. Please fix errors then try again.</div>
-            <input type="hidden" value="" name="recaptchaResponse">
         </form>
     </div>
     <div class="u-form u-form-2">
@@ -85,20 +109,21 @@ include("connect.php");
                 </a>
                 <input type="submit" value="submit" class="u-form-control-hidden">
             </div>
-            <div class="u-form-send-message u-form-send-success">Thank you! Your message has been sent.</div>
-            <div class="u-form-send-error u-form-send-message">Unable to send your message. Please fix errors then try again.</div>
-            <input type="hidden" value="" name="recaptchaResponse">
         </form>
     </div>
-    <h2 class="u-text u-text-1">Title Here</h2>
-    <p class="u-text u-text-2">Description here</p>
+    <h2 class="u-text u-text-1"><?php echo $lecture_title ?></h2>
+    <p class="u-text u-text-2"><?php echo $description ?></p>
     <div class="u-form u-form-3">
-        <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
+
+
+        <form action="#" method="POST">
             <div class="u-align-right u-form-group u-form-submit">
-                <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-3">Back to Contents</a>
-                <input type="submit" value="submit" class="u-form-control-hidden">
+                <a href="contents.php" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-3">Back to Contents</a>
+                <input type="submit" name="back_button" value="submit" class="u-form-control-hidden">
             </div>
         </form>
+
+
     </div>
     <div class="u-form u-form-4">
         <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">

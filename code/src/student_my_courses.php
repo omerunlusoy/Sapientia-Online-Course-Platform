@@ -87,18 +87,13 @@ if(isset($_POST['view_button'])){
             $SID = $_SESSION['SID'];
 
 
-            $page_entry_num = 10;
 
-            $page_num = $_SESSION['PAGENUM'] * $page_entry_num;
+            $my_courses_sql = "select * 
+                                    from  Course join Enrolls on Course.CID = Enrolls.CID
+                                    where Enrolls.SID = '$SID'";
 
-            $all_courses_sql = "select * 
-                                    from  Course natural join Enrolls 
-                                    where SID = '$SID'
-                                    limit $page_num, $page_entry_num";
+            $result = mysqli_query($con, $my_courses_sql);
 
-
-
-            $result = mysqli_query($con, $all_courses_sql);
 
             if ($result) {
 
@@ -130,6 +125,8 @@ if(isset($_POST['view_button'])){
                     echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['level']. "</td>";
                     echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$cur_int_name. "</td>";
                     echo "<td> <form action=\"#\" METHOD=\"POST\">
+                        
+                        
                                     <button type=\"submit\" name = \"view_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">View</button>
                                      </form>
                             </td>";
