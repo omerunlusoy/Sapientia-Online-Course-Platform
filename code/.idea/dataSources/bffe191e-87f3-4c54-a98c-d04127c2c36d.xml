@@ -1346,237 +1346,252 @@ section</RefColNames>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="357" parent="220" name="IID">
+    <column id="357" parent="220" name="QnA_ID_S">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="358" parent="220" name="CID">
+    <column id="358" parent="220" name="IID">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="359" parent="220" name="subject_name">
+    <column id="359" parent="220" name="CID">
       <Position>4</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="360" parent="220" name="subject_name">
+      <Position>5</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="360" parent="220" name="text">
-      <Position>5</Position>
+    <column id="361" parent="220" name="text">
+      <Position>6</Position>
       <DataType>varchar(300)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="361" parent="220" name="date">
-      <Position>6</Position>
+    <column id="362" parent="220" name="date">
+      <Position>7</Position>
       <DataType>date|0s</DataType>
     </column>
-    <index id="362" parent="220" name="IID">
+    <index id="363" parent="220" name="QnA_ID_S">
+      <ColNames>QnA_ID_S</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="364" parent="220" name="IID">
       <ColNames>IID</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="363" parent="220" name="CID">
+    <index id="365" parent="220" name="CID">
       <ColNames>CID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="364" parent="220" name="PRIMARY">
+    <key id="366" parent="220" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>QnA_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="365" parent="220" name="QnA_Entry_Instructor_ibfk_1">
+    <foreign-key id="367" parent="220" name="QnA_Entry_Instructor_ibfk_1">
+      <ColNames>QnA_ID_S</ColNames>
+      <RefTableName>QnA_Entry_Student</RefTableName>
+      <RefColNames>QnA_ID_S</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <foreign-key id="368" parent="220" name="QnA_Entry_Instructor_ibfk_2">
       <ColNames>IID</ColNames>
       <RefTableName>Instructor</RefTableName>
       <RefColNames>IID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <foreign-key id="366" parent="220" name="QnA_Entry_Instructor_ibfk_2">
+    <foreign-key id="369" parent="220" name="QnA_Entry_Instructor_ibfk_3">
       <ColNames>CID</ColNames>
       <RefTableName>Course</RefTableName>
       <RefColNames>CID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="367" parent="221" name="QnA_ID">
+    <column id="370" parent="221" name="QnA_ID_S">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="368" parent="221" name="SID">
+    <column id="371" parent="221" name="SID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="369" parent="221" name="CID">
+    <column id="372" parent="221" name="CID">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="370" parent="221" name="subject_name">
+    <column id="373" parent="221" name="subject_name">
       <Position>4</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="371" parent="221" name="text">
+    <column id="374" parent="221" name="text">
       <Position>5</Position>
       <DataType>varchar(300)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="372" parent="221" name="date">
+    <column id="375" parent="221" name="date">
       <Position>6</Position>
       <DataType>date|0s</DataType>
     </column>
-    <index id="373" parent="221" name="SID">
+    <index id="376" parent="221" name="SID">
       <ColNames>SID</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="374" parent="221" name="CID">
+    <index id="377" parent="221" name="CID">
       <ColNames>CID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="375" parent="221" name="PRIMARY">
+    <key id="378" parent="221" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>QnA_ID</ColNames>
+      <ColNames>QnA_ID_S</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="376" parent="221" name="QnA_Entry_Student_ibfk_1">
+    <foreign-key id="379" parent="221" name="QnA_Entry_Student_ibfk_1">
       <ColNames>SID</ColNames>
       <RefTableName>Student</RefTableName>
       <RefColNames>SID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <foreign-key id="377" parent="221" name="QnA_Entry_Student_ibfk_2">
+    <foreign-key id="380" parent="221" name="QnA_Entry_Student_ibfk_2">
       <ColNames>CID</ColNames>
       <RefTableName>Course</RefTableName>
       <RefColNames>CID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="378" parent="222" name="CID">
+    <column id="381" parent="222" name="CID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="379" parent="222" name="section">
+    <column id="382" parent="222" name="section">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="380" parent="222" name="content_num">
+    <column id="383" parent="222" name="content_num">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="381" parent="222" name="IID">
+    <column id="384" parent="222" name="IID">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="382" parent="222" name="title">
+    <column id="385" parent="222" name="title">
       <Position>5</Position>
       <DataType>varchar(300)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="383" parent="222" name="CID">
+    <index id="386" parent="222" name="CID">
       <ColNames>CID
 title</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="384" parent="222" name="CID_2">
+    <index id="387" parent="222" name="CID_2">
       <ColNames>CID</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="385" parent="222" name="section">
+    <index id="388" parent="222" name="section">
       <ColNames>section</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="386" parent="222" name="content_num">
+    <index id="389" parent="222" name="content_num">
       <ColNames>content_num</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="387" parent="222" name="IID">
+    <index id="390" parent="222" name="IID">
       <ColNames>IID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="388" parent="222" name="PRIMARY">
+    <key id="391" parent="222" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CID
 section
 content_num</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="389" parent="222" name="CID">
+    <key id="392" parent="222" name="CID">
       <ColNames>CID
 title</ColNames>
       <UnderlyingIndexName>CID</UnderlyingIndexName>
     </key>
-    <foreign-key id="390" parent="222" name="Quiz_ibfk_1">
+    <foreign-key id="393" parent="222" name="Quiz_ibfk_1">
       <ColNames>CID</ColNames>
       <RefTableName>Course</RefTableName>
       <RefColNames>CID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="391" parent="222" name="Quiz_ibfk_2">
+    <foreign-key id="394" parent="222" name="Quiz_ibfk_2">
       <ColNames>section</ColNames>
       <RefTableName>Section</RefTableName>
       <RefColNames>section</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="392" parent="222" name="Quiz_ibfk_3">
+    <foreign-key id="395" parent="222" name="Quiz_ibfk_3">
       <ColNames>IID</ColNames>
       <RefTableName>Instructor</RefTableName>
       <RefColNames>IID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="393" parent="223" name="CID">
+    <column id="396" parent="223" name="CID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="394" parent="223" name="section">
+    <column id="397" parent="223" name="section">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="395" parent="223" name="content_num">
+    <column id="398" parent="223" name="content_num">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="396" parent="223" name="question_num">
+    <column id="399" parent="223" name="question_num">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="397" parent="223" name="question_text">
+    <column id="400" parent="223" name="question_text">
       <Position>5</Position>
       <DataType>varchar(300)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="398" parent="223" name="choice1">
+    <column id="401" parent="223" name="choice1">
       <Position>6</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="399" parent="223" name="choice2">
+    <column id="402" parent="223" name="choice2">
       <Position>7</Position>
       <DataType>varchar(50)|0s</DataType>
     </column>
-    <column id="400" parent="223" name="choice3">
+    <column id="403" parent="223" name="choice3">
       <Position>8</Position>
       <DataType>varchar(50)|0s</DataType>
     </column>
-    <column id="401" parent="223" name="answer">
+    <column id="404" parent="223" name="answer">
       <Position>9</Position>
       <DataType>enum(&apos;choice1&apos;, &apos;choice2&apos;, &apos;choice3&apos;)|0e</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;choice1&apos;</DefaultExpression>
     </column>
-    <key id="402" parent="223" name="PRIMARY">
+    <key id="405" parent="223" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CID
 section
@@ -1584,7 +1599,7 @@ content_num
 question_num</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="403" parent="223" name="Quiz_Question_ibfk_1">
+    <foreign-key id="406" parent="223" name="Quiz_Question_ibfk_1">
       <ColNames>CID
 section
 content_num</ColNames>
@@ -1595,123 +1610,123 @@ content_num</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="404" parent="224" name="CID">
+    <column id="407" parent="224" name="CID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="405" parent="224" name="section">
+    <column id="408" parent="224" name="section">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="406" parent="224" name="title">
+    <column id="409" parent="224" name="title">
       <Position>3</Position>
       <DataType>varchar(300)|0s</DataType>
     </column>
-    <index id="407" parent="224" name="section">
+    <index id="410" parent="224" name="section">
       <ColNames>section</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="408" parent="224" name="PRIMARY">
+    <key id="411" parent="224" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CID
 section</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="409" parent="224" name="Section_ibfk_1">
+    <foreign-key id="412" parent="224" name="Section_ibfk_1">
       <ColNames>CID</ColNames>
       <RefTableName>Course</RefTableName>
       <RefColNames>CID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="410" parent="225" name="SID">
+    <column id="413" parent="225" name="SID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="411" parent="225" name="name">
+    <column id="414" parent="225" name="name">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="412" parent="225" name="e_mail">
+    <column id="415" parent="225" name="e_mail">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="413" parent="225" name="password">
+    <column id="416" parent="225" name="password">
       <Position>4</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="414" parent="225" name="membership_type">
+    <column id="417" parent="225" name="membership_type">
       <Position>5</Position>
       <DataType>enum(&apos;BRZ&apos;, &apos;SLV&apos;, &apos;GLD&apos;)|0e</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;BRZ&apos;</DefaultExpression>
     </column>
-    <index id="415" parent="225" name="e_mail">
+    <index id="418" parent="225" name="e_mail">
       <ColNames>e_mail</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="416" parent="225" name="PRIMARY">
+    <key id="419" parent="225" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>SID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="417" parent="225" name="e_mail">
+    <key id="420" parent="225" name="e_mail">
       <ColNames>e_mail</ColNames>
       <UnderlyingIndexName>e_mail</UnderlyingIndexName>
     </key>
-    <column id="418" parent="226" name="SID">
+    <column id="421" parent="226" name="SID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="419" parent="226" name="CID">
+    <column id="422" parent="226" name="CID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="420" parent="226" name="section">
+    <column id="423" parent="226" name="section">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="421" parent="226" name="content_num">
+    <column id="424" parent="226" name="content_num">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="422" parent="226" name="isCompleted">
+    <column id="425" parent="226" name="isCompleted">
       <Position>5</Position>
       <DataType>tinyint(1)|0s</DataType>
     </column>
-    <index id="423" parent="226" name="CID">
+    <index id="426" parent="226" name="CID">
       <ColNames>CID
 section
 content_num</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="424" parent="226" name="PRIMARY">
+    <key id="427" parent="226" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>SID
 CID
 content_num</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="425" parent="226" name="Take_Lecture_ibfk_1">
+    <foreign-key id="428" parent="226" name="Take_Lecture_ibfk_1">
       <ColNames>SID</ColNames>
       <RefTableName>Student</RefTableName>
       <RefColNames>SID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="426" parent="226" name="Take_Lecture_ibfk_2">
+    <foreign-key id="429" parent="226" name="Take_Lecture_ibfk_2">
       <ColNames>CID
 section
 content_num</ColNames>
@@ -1722,31 +1737,31 @@ content_num</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="427" parent="227" name="SID">
+    <column id="430" parent="227" name="SID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="428" parent="227" name="CID">
+    <column id="431" parent="227" name="CID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="429" parent="227" name="section">
+    <column id="432" parent="227" name="section">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="430" parent="227" name="content_num">
+    <column id="433" parent="227" name="content_num">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="431" parent="227" name="grade">
+    <column id="434" parent="227" name="grade">
       <Position>5</Position>
       <DataType>decimal(5,2 digit)|0s</DataType>
     </column>
-    <key id="432" parent="227" name="PRIMARY">
+    <key id="435" parent="227" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>SID
 CID
@@ -1754,48 +1769,48 @@ section
 content_num</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="433" parent="227" name="Take_Quiz_ibfk_1">
+    <foreign-key id="436" parent="227" name="Take_Quiz_ibfk_1">
       <ColNames>SID</ColNames>
       <RefTableName>Student</RefTableName>
       <RefColNames>SID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="434" parent="228" name="SID">
+    <column id="437" parent="228" name="SID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="435" parent="228" name="CID">
+    <column id="438" parent="228" name="CID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="436" parent="228" name="section">
+    <column id="439" parent="228" name="section">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="437" parent="228" name="content_num">
+    <column id="440" parent="228" name="content_num">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="438" parent="228" name="question_num">
+    <column id="441" parent="228" name="question_num">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="439" parent="228" name="answer">
+    <column id="442" parent="228" name="answer">
       <Position>6</Position>
       <DataType>enum(&apos;choice1&apos;, &apos;choice2&apos;, &apos;choice3&apos;)|0e</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="440" parent="228" name="isTrue">
+    <column id="443" parent="228" name="isTrue">
       <Position>7</Position>
       <DataType>tinyint(1)|0s</DataType>
     </column>
-    <key id="441" parent="228" name="PRIMARY">
+    <key id="444" parent="228" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>SID
 CID
@@ -1804,129 +1819,129 @@ content_num
 question_num</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="442" parent="228" name="Take_Quiz_Question_ibfk_1">
+    <foreign-key id="445" parent="228" name="Take_Quiz_Question_ibfk_1">
       <ColNames>SID</ColNames>
       <RefTableName>Student</RefTableName>
       <RefColNames>SID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="443" parent="229" name="IID">
+    <column id="446" parent="229" name="IID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="444" parent="229" name="CID">
+    <column id="447" parent="229" name="CID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="445" parent="229" name="CID">
+    <index id="448" parent="229" name="CID">
       <ColNames>CID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="446" parent="229" name="PRIMARY">
+    <key id="449" parent="229" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>IID
 CID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="447" parent="229" name="Teaches_ibfk_1">
+    <foreign-key id="450" parent="229" name="Teaches_ibfk_1">
       <ColNames>IID</ColNames>
       <RefTableName>Instructor</RefTableName>
       <RefColNames>IID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="448" parent="229" name="Teaches_ibfk_2">
+    <foreign-key id="451" parent="229" name="Teaches_ibfk_2">
       <ColNames>CID</ColNames>
       <RefTableName>Course</RefTableName>
       <RefColNames>CID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="449" parent="230" name="SID">
+    <column id="452" parent="230" name="SID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="450" parent="230" name="CID">
+    <column id="453" parent="230" name="CID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="451" parent="230" name="CID">
+    <index id="454" parent="230" name="CID">
       <ColNames>CID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="452" parent="230" name="PRIMARY">
+    <key id="455" parent="230" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>SID
 CID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="453" parent="230" name="Wishlist_ibfk_1">
+    <foreign-key id="456" parent="230" name="Wishlist_ibfk_1">
       <ColNames>SID</ColNames>
       <RefTableName>Student</RefTableName>
       <RefColNames>SID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="454" parent="230" name="Wishlist_ibfk_2">
+    <foreign-key id="457" parent="230" name="Wishlist_ibfk_2">
       <ColNames>CID</ColNames>
       <RefTableName>Course</RefTableName>
       <RefColNames>CID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="455" parent="231" name="Session_ID">
+    <column id="458" parent="231" name="Session_ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="456" parent="231" name="IID">
+    <column id="459" parent="231" name="IID">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="457" parent="231" name="CID">
+    <column id="460" parent="231" name="CID">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="458" parent="231" name="invite_link">
+    <column id="461" parent="231" name="invite_link">
       <Position>4</Position>
       <DataType>varchar(1024)|0s</DataType>
     </column>
-    <column id="459" parent="231" name="start_date">
+    <column id="462" parent="231" name="start_date">
       <Position>5</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
     </column>
-    <index id="460" parent="231" name="IID">
+    <index id="463" parent="231" name="IID">
       <ColNames>IID</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="461" parent="231" name="CID">
+    <index id="464" parent="231" name="CID">
       <ColNames>CID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="462" parent="231" name="PRIMARY">
+    <key id="465" parent="231" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Session_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="463" parent="231" name="Zoom_Session_ibfk_1">
+    <foreign-key id="466" parent="231" name="Zoom_Session_ibfk_1">
       <ColNames>IID</ColNames>
       <RefTableName>Instructor</RefTableName>
       <RefColNames>IID</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="464" parent="231" name="Zoom_Session_ibfk_2">
+    <foreign-key id="467" parent="231" name="Zoom_Session_ibfk_2">
       <ColNames>CID</ColNames>
       <RefTableName>Course</RefTableName>
       <RefColNames>CID</RefColNames>

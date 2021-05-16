@@ -137,6 +137,7 @@ CREATE TABLE Lecture(
                         content_num         INT NOT NULL,
                         title               VARCHAR(300) NOT NULL,
                         lecture_content     VARCHAR(300),
+                        description         VARCHAR(300),
                         PRIMARY KEY (CID, content_num),
                         FOREIGN KEY (CID, section) REFERENCES Section(CID, section) ON DELETE CASCADE ON UPDATE CASCADE,
                         UNIQUE (CID, title),
@@ -185,8 +186,7 @@ CREATE TABLE Note(
                      content_num         INT NOT NULL,
                      text                VARCHAR(300) NOT NULL,
                      PRIMARY KEY (Note_ID),
-                     FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
-                     FOREIGN KEY (section, content_num) REFERENCES Lecture(section, content_num) ON DELETE CASCADE ON UPDATE CASCADE
+                     FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Course_Announcement(
@@ -202,25 +202,27 @@ CREATE TABLE Course_Announcement(
 );
 
 CREATE TABLE QnA_Entry_Student(
-                                  QnA_ID              INT AUTO_INCREMENT,
+                                  QnA_ID_S            INT AUTO_INCREMENT,
                                   SID                 INT NOT NULL,
                                   CID                 INT NOT NULL,
                                   subject_name        VARCHAR(30) NOT NULL,
                                   text                VARCHAR(300) NOT NULL,
                                   date                DATE,
-                                  PRIMARY KEY (QnA_ID),
+                                  PRIMARY KEY (QnA_ID_S),
                                   FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE NO ACTION ON UPDATE CASCADE,
                                   FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE QnA_Entry_Instructor(
                                      QnA_ID              INT AUTO_INCREMENT,
+                                     QnA_ID_S            INT NOT NULL,
                                      IID                 INT NOT NULL,
                                      CID                 INT NOT NULL,
                                      subject_name        VARCHAR(30) NOT NULL,
                                      text                VARCHAR(300) NOT NULL,
                                      date                DATE,
                                      PRIMARY KEY(QnA_ID),
+                                     FOREIGN KEY (QnA_ID_S) REFERENCES QnA_Entry_Student(QnA_ID_S) ON DELETE NO ACTION ON UPDATE CASCADE,
                                      FOREIGN KEY (IID) REFERENCES Instructor(IID) ON DELETE NO ACTION ON UPDATE CASCADE,
                                      FOREIGN KEY (CID) REFERENCES Course(CID) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -373,8 +375,7 @@ CREATE TABLE Take_Quiz(
                           content_num         INT NOT NULL,
                           grade               NUMERIC(5, 2),
                           PRIMARY KEY (SID, CID, section, content_num),
-                          FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
-                          FOREIGN KEY (CID, content_num, section) REFERENCES Quiz(CID, content_num, section) ON DELETE CASCADE ON UPDATE CASCADE
+                          FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
@@ -391,8 +392,7 @@ CREATE TABLE Take_Quiz_Question(
                                    answer              ENUM('choice1', 'choice2', 'choice3') NOT NULL,
                                    isTrue              BOOLEAN,
                                    PRIMARY KEY (SID, CID, section, content_num, question_num),
-                                   FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
-                                   FOREIGN KEY (CID, content_num, question_num, section) REFERENCES Quiz_Question(CID, content_num, question_num, section) ON DELETE CASCADE ON UPDATE CASCADE
+                                   FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
