@@ -138,7 +138,7 @@ CREATE TABLE Lecture(
                         title               VARCHAR(300) NOT NULL,
                         lecture_content     VARCHAR(300),
                         description         VARCHAR(300),
-                        PRIMARY KEY (CID, content_num),
+                        PRIMARY KEY (CID, section, content_num),
                         FOREIGN KEY (CID, section) REFERENCES Section(CID, section) ON DELETE CASCADE ON UPDATE CASCADE,
                         UNIQUE (CID, title),
                         INDEX (section),
@@ -406,7 +406,7 @@ CREATE TABLE Take_Lecture(
                              section             INT NOT NULL,
                              content_num         INT NOT NULL,
                              isCompleted         BOOLEAN,
-                             PRIMARY KEY (SID, CID, content_num),
+                             PRIMARY KEY (SID, CID, section, content_num),
                              FOREIGN KEY (SID) REFERENCES Student(SID) ON DELETE CASCADE ON UPDATE CASCADE,
                              FOREIGN KEY (CID, section, content_num) REFERENCES Lecture(CID, section, content_num) ON DELETE CASCADE ON UPDATE CASCADE
 );
