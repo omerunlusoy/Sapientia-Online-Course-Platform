@@ -178,7 +178,7 @@ if(isset($_POST['post_question_button'])){
                 </div>
             </form>
         </div>
-        <a href="https://nicepage.com/website-builder" class="u-btn u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-btn-3">Go to Course Forum</a>
+        <a href="student_forum.php" class="u-btn u-button-style u-hover-palette-2-light-1 u-palette-2-light-2 u-btn-3">Go to Course Forum</a>
         <h6 class="u-text u-text-17">To see all Q&amp;A's :<span style="font-weight: 700;"></span>
         </h6>
     </div>

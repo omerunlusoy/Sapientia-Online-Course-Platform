@@ -138,7 +138,7 @@ if(isset($_POST['save_button'])){
             <input type="hidden" id="siteId" name="siteId" value="974128024">
             <input type="hidden" id="pageId" name="pageId" value="212977796">
             <div class="u-form-group u-form-name u-form-group-1">
-                <label for="name-2c18" class="u-form-control- u-label">Determined Price by Instructor</label>
+                <label for="name-2c18" class="u-form-control- u-label">Determined Price by Instructor (Discount will be applied to this price)</label>
                 <input type="text" id="name-2c18" disabled value='<?php echo $_SESSION["cost"]; ?>' name="price" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="" placeholder="Determined Price">
             </div>
             <div class="u-form-group u-form-group-2">
