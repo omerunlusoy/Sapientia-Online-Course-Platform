@@ -56,6 +56,33 @@ if($exists_result->num_rows == 0){
     if(!$take_lecture_result){
         echo "<script type='text/javascript'>alert('Database Error4!');</script>";
     }
+
+    // student completed another lecture
+
+    $take_lecture_sql = "select *
+                   from Take_Lecture 
+                   where SID = '$SID' and CID = '$CID'";
+
+    $lecture_sql = "select * 
+                   from Lecture 
+                   where CID = '$CID'";
+
+    $take_lecture_result = mysqli_query($con, $take_lecture_sql);
+    $lecture_result = mysqli_query($con, $lecture_sql);
+
+    $progress = 100 * ($take_lecture_result->num_rows) / ($lecture_result->num_rows);
+
+    echo "<script type='text/javascript'>alert($CID);</script>";
+    echo "<script type='text/javascript'>alert($SID);</script>";
+    echo "<script type='text/javascript'>alert($progress);</script>";
+
+
+    $sql = "UPDATE Enrolls SET progress = '$progress' WHERE CID = '$CID' and SID = '$SID';";
+
+    $lecture_result = mysqli_query($con, $sql);
+    if(!$lecture_result){
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
 }
 
 

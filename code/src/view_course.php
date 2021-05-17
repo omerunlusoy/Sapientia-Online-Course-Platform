@@ -120,7 +120,12 @@ if(isset($_POST['buy_button'])){
                 VALUES ('$SID', '$CID', CURDATE());";
         $result = mysqli_query($con, $sql_buy);
         if ($result) {
-            header("location: course_page.php");
+            //remove course from wishlist
+            $sql_delete = "DELETE FROM Wishlist WHERE CID = '$CID' and SID = '$SID' ";
+            $result = mysqli_query($con, $sql_delete);
+            if ($result) {
+                header("location: course_page.php");
+            }
         }
         else
         {

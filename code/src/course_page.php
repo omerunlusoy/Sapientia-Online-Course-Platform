@@ -79,6 +79,55 @@ if(isset($_POST['post_question_button'])){
 }
 
 
+if(isset($_POST['request_certificate_button'])){
+    $certificate_sql = "select * 
+                   from Enrolls 
+                   where SID = '$SID' and CID = '$CID'";
+
+    $certificate_result = mysqli_query($con, $certificate_sql);
+    if(!$certificate_result){
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
+    $row_cer = mysqli_fetch_array($certificate_result);
+    $progress = $row_cer['progress'];
+    if($progress == 100.0){
+
+        // check if the certificate exists
+        $certificate_sql = "select * 
+                   from Certificate 
+                   where SID = '$SID' and CID = '$CID'";
+        $certificate_result = mysqli_query($con, $certificate_sql);
+        if(!$certificate_result){
+            echo "<script type='text/javascript'>alert('Database Error!');</script>";
+        }
+        if($certificate_result->num_rows == 0){
+            // create certificate
+
+
+            $certificate_text = "";
+            $comment = "";
+            $certificate_insert_sql = "insert into Certificate (SID, CID, certificate_text, rating, comment, date) values ('$SID', '$CID', '$certificate_text', '$certificate_text', '$comment', CURDATE())";
+
+            $certificate_inser_result = mysqli_query($con, $certificate_insert_sql);
+            if(!$certificate_inser_result){
+                echo "<script type='text/javascript'>alert('Database Error!');</script>";
+            }
+            else{
+                echo "<script type='text/javascript'>alert('Certificate created.');</script>";
+            }
+
+        }
+        else{
+            echo "<script type='text/javascript'>alert('Certificate is already created.');</script>";
+        }
+    }
+    else{
+        echo "<script type='text/javascript'>alert('Course is not finished.');</script>";
+    }
+}
+
+
+
 
 
 ?>
@@ -158,6 +207,16 @@ if(isset($_POST['post_question_button'])){
                     <button name="view_contents_button" type="submit" value="submit" class="u-form-control-hidden">
                 </div>
             </form>
+
+            <form action="#" method="POST">
+                <div class="u-align-right u-form-group u-form-submit">
+                    <a class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-2">Request Certificate<br>
+                    </a>
+                    <button name="request_certificate_button" type="submit" value="submit" class="u-form-control-hidden">
+                </div>
+            </form>
+
+            
         </div>
         <h6 class="u-text u-text-16">
             <span style="font-weight: 700;">Ask a Question </span>
