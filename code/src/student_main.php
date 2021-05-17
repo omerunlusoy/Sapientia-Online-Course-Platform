@@ -81,7 +81,7 @@ if(isset($_POST['add_to_wishlist_button'])){
             echo "<script type='text/javascript'>alert('Course is already in wishlist!');</script>";
         }
         else{
-            $wishlist_sql = "insert into Wishlist (SID, CID) VALUES  ($SID, $CID)";
+            $wishlist_sql = "insert into Wishlist (SID, CID) VALUES ($SID, $CID)";
 
 
             $result = mysqli_query($con, $wishlist_sql);
@@ -351,18 +351,18 @@ if(isset($_POST['add_to_wishlist_button'])){
                 if($level == "All" && $category == "All"){
                     $all_courses_sql = "select * 
                                         from Discount right join Course on Course.CID = Discount.CID  and
-                                        rate <= '$discount_max' and rate >= '$discount_min' natural join Instructor
+                                        rate between '$discount_min' and '$discount_max' natural join Instructor
                                         where
-                                        cost <= '$price_max' and cost >= '$price_min' and 
+                                        cost between '$price_min' and '$price_max' and 
                                         (course_name like '%$search_word%' or Instructor.name like '%$search_word%')
                                         limit $page_num, $page_entry_num";
                 }
                 else if($level == "All" && $category != "All"){
                     $all_courses_sql = "select * 
                                     from Discount right join Course on Course.CID = Discount.CID and 
-                                        rate <= '$discount_max' and rate >= '$discount_min' natural join Instructor
+                                        rate between '$discount_min' and '$discount_max' natural join Instructor
                                     where
-                                        cost <= '$price_max' and cost >= '$price_min' and 
+                                        cost between '$price_min' and '$price_max' and 
                                         category = '$category' and 
                                         (course_name like '%$search_word%' or Instructor.name like '%$search_word%')
                                         limit $page_num, $page_entry_num";
@@ -370,9 +370,9 @@ if(isset($_POST['add_to_wishlist_button'])){
                 else if($level != "All" && $category == "All"){
                     $all_courses_sql = "select * 
                                     from Discount right join Course on Course.CID = Discount.CID and 
-                                        rate <= '$discount_max' and rate >= '$discount_min' natural join Instructor
+                                        rate between '$discount_min' and '$discount_max' natural join Instructor
                                     where
-                                        cost <= '$price_max' and cost >= '$price_min' and
+                                        cost between '$price_min' and '$price_max' and 
                                         level = '$level' and 
                                         (course_name like '%$search_word%' or Instructor.name like '%$search_word%')
                                         limit $page_num, $page_entry_num";
@@ -380,9 +380,9 @@ if(isset($_POST['add_to_wishlist_button'])){
                 else{
                     $all_courses_sql = "select * 
                                     from Discount right join Course on Course.CID = Discount.CID and 
-                                        rate <= '$discount_max' and rate >= '$discount_min' natural join Instructor
+                                        rate between '$discount_min' and '$discount_max' natural join Instructor
                                     where
-                                        cost <= '$price_max' and cost >= '$price_min' and 
+                                        cost between '$price_min' and '$price_max' and 
                                         category = '$category' and level = '$level' and 
                                         (course_name like '%$search_word%' or Instructor.name like '%$search_word%')
                                         limit $page_num, $page_entry_num";

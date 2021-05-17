@@ -2,6 +2,15 @@
 
 include("connect.php");
 
+$top_courses_sql = "select * 
+                        from Discount right join Course on Course.CID = Discount.CID  natural join Instructor
+                        order by rate DESC 
+                        limit 0, 5";
+
+$result = mysqli_query($con, $top_courses_sql);
+
+
+
 
 ?>
 
@@ -80,17 +89,62 @@ include("connect.php");
     </div>
 </section>
 <section class="u-align-center u-clearfix u-section-2" id="sec-4fce">
-    <form action="#" method="get" class="u-border-1 u-border-grey-30 u-search u-search-left u-white u-search-1">
-        <button class="u-search-button" type="submit">
-          <span class="u-search-icon u-spacing-10">
-            <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 56.966 56.966"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-edc1"></use></svg>
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svg-edc1" x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve" class="u-svg-content"><path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"></path></svg>
-          </span>
-        </button>
-        <input class="u-search-input" type="search" name="search" value="" placeholder="Search">
-    </form>
+
     <div class="u-table u-table-responsive u-table-1">
         <table class="u-table-entity u-table-entity-1">
+
+            <?php
+
+            if ($result) {
+
+                echo "<table class=\"u-table-body\">
+            <tr class=\"u-palette-4-base u-table-header u-table-header-1\">
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Course Name</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Price</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Category</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Level</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Instructor</th>
+
+            
+            
+            </tr>";
+
+                while($row = mysqli_fetch_array($result)) {
+                    $IID_cur = $row['IID'];
+                    $current_instructor_name_sql = "select name from Instructor where IID = '$IID_cur'";
+                    $result2 = mysqli_query($con, $current_instructor_name_sql);
+                    $row2 = mysqli_fetch_array($result2);
+                    $cur_int_name = $row2['name'];
+                    $discount_rate = $row['rate'];
+                    $cost = $row['cost'];
+                    $new_price = round(((100 - $discount_rate) / 100) * $cost, 2);
+
+                    if($cost == 0.0){
+                        $cost = "Free";
+                        $new_price = "Free";
+                    }
+
+                    echo "<tr>";
+                    echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7\">" .$row['course_name']. "</td>";
+                    if($cost == "Free"){
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13\">" .$cost."</td>" ;
+                    }
+                    else if($discount_rate == 0.0){
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13\">" .$cost."₺</td>" ;
+                    }
+                    else{
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13\"> <del>" .$cost. "₺<br></del> ".$new_price. "₺</td>" ;
+                    }
+
+                    echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['category']. "</td>";
+                    echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['level']. "</td>";
+                    echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$cur_int_name. "</td>";
+
+                }
+            }
+
+            ?>
+
             <colgroup>
                 <col width="20%">
                 <col width="20%">
@@ -98,52 +152,13 @@ include("connect.php");
                 <col width="20%">
                 <col width="20%">
             </colgroup>
-            <thead class="u-palette-4-base u-table-header u-table-header-1">
-            <tr style="height: 49px;">
-                <th class="u-border-1 u-border-palette-4-base u-table-cell">Course Name</th>
-                <th class="u-border-1 u-border-palette-4-base u-table-cell">Price</th>
-                <th class="u-border-1 u-border-palette-4-base u-table-cell">Level</th>
-                <th class="u-border-1 u-border-palette-4-base u-table-cell">Category</th>
-                <th class="u-border-1 u-border-palette-4-base u-table-cell">Instructor</th>
-            </tr>
-            </thead>
+
             <tbody class="u-table-body">
-            <tr style="height: 67px;">
-                <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-6">Row 1</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-            </tr>
-            <tr style="height: 69px;">
-                <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-11">Row 2</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-            </tr>
-            <tr style="height: 69px;">
-                <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-16">Row 3</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-            </tr>
-            <tr style="height: 69px;">
-                <td class="u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-21">Row 4</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell">Description</td>
-                <td class="u-border-1 u-border-grey-30 u-table-cell"></td>
-            </tr>
+
             </tbody>
         </table>
     </div>
 
-    <a href="https://nicepage.com/c/table-html-templates" class="u-btn u-button-style u-btn-5">View</a>
-    <a href="https://nicepage.com/c/table-html-templates" class="u-btn u-button-style u-btn-6">View</a>
-    <a href="https://nicepage.com/c/table-html-templates" class="u-btn u-button-style u-btn-7">View</a>
-    <a href="https://nicepage.com/c/table-html-templates" class="u-btn u-button-style u-btn-8">View</a>
 </section>
 
 
