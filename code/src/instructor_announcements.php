@@ -1,10 +1,22 @@
 <?php
-session_start();
-include("connect.php");
 
-if(isset($_POST['answer_button'])){
-    $_SESSION['CID'] = $_POST['answer_button'];
-    header("Location: instructor_answer.php");
+include("connect.php");
+session_start();
+
+if(isset($_POST['given_cid'])){
+
+    $cid = $_POST['given_cid'];
+    $IID = $_SESSION['IID'];
+
+    $sql_delete = "DELETE FROM Course_Announcement WHERE CID = '$cid' and IID = '$IID'";
+    $result = mysqli_query($con, $sql_delete);
+    if ($result) {
+        echo "<script type='text/javascript'>alert('Announcement Deleted!');</script>";
+    }
+    else
+    {
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
 }
 
 ?>
@@ -17,14 +29,13 @@ if(isset($_POST['answer_button'])){
     <meta name="keywords" content="Learn Everyday, Join online courses today, Train Your Brain Today!, Learn to enjoyevery minute of your life., Online Learning, Innovations in Online Learning, Education and Learning, 01, 02, 03, 04, Contact Us">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>forum-instructor</title>
+    <title>Announcements</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
-    <link rel="stylesheet" href="forum-instructor.css" media="screen">
+    <link rel="stylesheet" href="Instructor-Main---Courses.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.13.2, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
-    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
 
 
 
@@ -35,7 +46,7 @@ if(isset($_POST['answer_button'])){
             "url": "index.html",
             "logo": "images/SapientiaLogo.PNG"
         }</script>
-    <meta property="og:title" content="forum-instructor">
+    <meta property="og:title" content="Instructor Main - Courses">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#478ac9">
     <link rel="canonical" href="index.html">
@@ -46,7 +57,7 @@ if(isset($_POST['answer_button'])){
             <img src="images/SapientiaLogo.PNG" class="u-logo-image u-logo-image-1" data-image-width="196.129">
         </a>
     </div></header>
-<section class="u-clearfix u-section-1" id="sec-cff7">
+<section class="u-clearfix u-section-1" id="sec-5c2e">
     <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <a href="instructor_account.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
         <a href="instructor_forum.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Forum</a>
@@ -55,53 +66,51 @@ if(isset($_POST['answer_button'])){
         <a href="logout.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
     </div>
 </section>
-<section class="u-align-center u-border-14 u-border-palette-4-base u-clearfix u-section-2" id="carousel_b796">
+<section class="u-align-center u-border-7 u-border-palette-4-base u-clearfix u-white u-section-2" id="sec-17aa">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-text u-text-1"><b>Q&amp;A Section</b>
-        </h2>
+        <a  href="add_course.php" class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-2-light-2 u-radius-6 u-btn-1">Add Course</a>
         <div class="u-table u-table-responsive u-table-1">
-            <table class="u-table-entity">
+            <table class="u-table-entity u-table-entity-1">
                 <?php
 
                 $IID = $_SESSION['IID'];
 
-                $sql = "select * 
-                      from QnA_Entry_Student natural join Student";
-
+                $sql = "select *
+                        from Course_Announcement natural join Course
+                         where IID = '$IID'";
                 $result = mysqli_query($con, $sql);
 
-                if ($result) {
-
+                if ($result)
+                {
                     echo "<table class=\"u-table-body\">
             <tr class=\"u-palette-4-base u-table-header u-table-header-1\">
-            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Student Name</th>
-            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Question</th>
-            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"></th>
-            
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Course Name</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\"> Announcement</th>
             
             </tr>";
 
                     while($row = mysqli_fetch_array($result)) {
 
-                        $_SESSION['QnA_ID_S'] = $row['QnA_ID_S'];
+                        $CID = $row['CID'];
+                        $an = $row['text'];
 
                         echo "<tr>";
-                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7\">" .$row['name']. "</td>";
-                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['text']. "</td>";
-
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7\">" .$row['course_name']. "</td>";
+                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-13\">" .$an. "</td>";
                         echo "<td> <form action=\"#\" METHOD=\"POST\">
-                                    <button type=\"submit\" name = \"answer_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">Answer Question</button>
-                                     </form>
-                            </td>";
+                    <button type=\"submit\" name = \"given_cid\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">Delete</button>
+                    </form     
+                  </td>";
 
                         echo "</tr>";
                     }
 
                     echo "</table>";
                 }
-                else {
+                else
+                {
                     echo "<script type='text/javascript'>alert('Database Error!');</script>";
-                    //header("Location:login.php");
+                    header("Location:login.php");
                 }
                 ?>
             </table>
@@ -113,16 +122,6 @@ if(isset($_POST['answer_button'])){
 <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-266b"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <p class="u-small-text u-text u-text-variant u-text-1">Wisdom is life...</p>
     </div></footer>
-<section class="u-backlink u-clearfix u-grey-80">
-    <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
-        <span>Website Templates</span>
-    </a>
-    <p class="u-text">
-        <span>created with</span>
-    </p>
-    <a class="u-link" href="https://nicepage.com/html-website-builder" target="_blank">
-        <span>HTML Builder</span>
-    </a>.
-</section>
+
 </body>
 </html>

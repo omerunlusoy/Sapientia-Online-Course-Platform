@@ -10,8 +10,6 @@ $top_courses_sql = "select *
 $result = mysqli_query($con, $top_courses_sql);
 
 
-
-
 ?>
 
 <!DOCTYPE html>

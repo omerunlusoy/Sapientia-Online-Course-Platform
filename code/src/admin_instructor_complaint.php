@@ -21,60 +21,32 @@ if(isset($_POST['left_page'])){
     }
 }
 
-if(isset($_POST['refund_button'])){
-
-    //delete from student complaint
-    $cid = $_POST['refund_button'];
-    $sql_delete1 = "DELETE FROM Complaint_Entry_Student WHERE Complaint_ID = $cid ";
-    $result = mysqli_query($con, $sql_delete1);
-    if ($result) {
-        echo "<script type='text/javascript'>alert('Complaint accepted, Refund Approved!');</script>";
-    }
-    else
-    {
-        echo "<script type='text/javascript'>alert('Database Error!');</script>";
-    }
-
-    //delete from enrolls
-    $CID = $_SESSION['CID'];
-    $SID = $_SESSION['SID'];
-    $sql_delete2 = "DELETE FROM Enrolls WHERE CID= '$CID' and SID = '$SID' ";
-    $result2 = mysqli_query($con, $sql_delete2);
-    if ($result2) {
-
-    }
-    else
-    {
-        echo "<script type='text/javascript'>alert('Database Error!');</script>";
-    }
-}
-
 if(isset($_POST['ignore_button'])){
 
     //delete from student complaint
     $cid = $_POST['ignore_button'];
-    $sql_delete = "DELETE FROM Complaint_Entry_Student WHERE Complaint_ID = $cid ";
+    $sql_delete = "DELETE FROM Complaint_Entry_Instructor WHERE Complaint_ID = $cid ";
     $result = mysqli_query($con, $sql_delete);
     if ($result) {
         echo "<script type='text/javascript'>alert('Complaint Ignored!');</script>";
     }
     else
     {
-        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+        echo "<script type='text/javascript'>alert('Database Error1!');</script>";
     }
 }
 
 if(isset($_POST['noted_button'])){
     //delete from student complaint
     $cid = $_POST['noted_button'];
-    $sql_delete = "DELETE FROM Complaint_Entry_Student WHERE Complaint_ID = $cid ";
+    $sql_delete = "DELETE FROM Complaint_Entry_Instructor WHERE Complaint_ID = $cid ";
     $result = mysqli_query($con, $sql_delete);
     if ($result) {
         echo "<script type='text/javascript'>alert('Complaint Noted!');</script>";
     }
     else
     {
-        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+        echo "<script type='text/javascript'>alert('Database Error2!');</script>";
     }
 
 }
@@ -89,7 +61,7 @@ if(isset($_POST['noted_button'])){
     <meta name="keywords" content="Learn Everyday, Join online courses today, Train Your Brain Today!, Learn to enjoyevery minute of your life., Online Learning, Innovations in Online Learning, Education and Learning, 01, 02, 03, 04, Contact Us">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>admin main</title>
+    <title>instructor complaints</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
     <link rel="stylesheet" href="admin_main.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
@@ -128,25 +100,25 @@ if(isset($_POST['noted_button'])){
 </section>
 <section class="u-align-center u-border-7 u-border-palette-4-base u-clearfix u-white u-section-2" id="sec-8092">
 
-        <div class="u-table u-table-responsive u-table-1">
-            <h2>Student Complaints</h2>
-            <table class="u-table-entity u-table-entity-1">
-                <?php
+    <div class="u-table u-table-responsive u-table-1">
+        <h2>Instructor Complaints</h2>
+        <table class="u-table-entity u-table-entity-1">
+            <?php
 
 
-                $student_complaints = "select *
-                                       from  Complaint_Entry_Student C join Student S on C.SID = S.SID
+            $complaints = "select *
+                                       from  Complaint_Entry_Instructor C join Instructor S on C.IID = S.IID
                                        join Course C2 on C2.CID = C.CID";
 
-                $result = mysqli_query($con, $student_complaints);
+            $result = mysqli_query($con, $complaints);
 
 
-                if ($result) {
+            if ($result) {
 
-                    echo "<table class=\"u-table-body\">
+                echo "<table class=\"u-table-body\">
             <tr class=\"u-palette-4-base u-table-header u-table-header-1\">
             <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Course Name</th>
-            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Student Name</th>
+            <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Instructor Name</th>
             <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Complaint Subject</th>
             <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Complaint</th>
             <th class=\"u-border-1 u-border-palette-4-base u-table-cell\">Date</th>
@@ -156,66 +128,54 @@ if(isset($_POST['noted_button'])){
         
             </tr>";
 
-                    while($row = mysqli_fetch_array($result)) {
+                while($row = mysqli_fetch_array($result)) {
 
-                        $course_name = $row['course_name'];
-                        $_SESSION['SID'] = $row['SID'];
-                        $_SESSION['CID'] = $row['CID'];
-                        $student_name = $row['name'];
-                        $subject = $row['subject_title'];
-                        $text = $row['text'];
-                        $date = $row['date'];
-                        $complaint_id = $row['Complaint_ID'];
-                        $refund_request = $row['refund_request'];
+                    $course_name = $row['course_name'];
+                    $_SESSION['IID'] = $row['IID'];
+                    $_SESSION['CID'] = $row['CID'];
+                    $student_name = $row['name'];
+                    $subject = $row['subject_name'];
+                    $text = $row['text'];
+                    $date = $row['date'];
+                    $complaint_id = $row['Complaint_ID'];
 
 
-                        echo "<tr>";
-                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7\">" .$course_name. "</td>";
-                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$student_name. "</td>";
-                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$subject. "</td>";
-                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$text. "</td>";
-                        echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$date. "</td>";
+                    echo "<tr>";
+                    echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7\">" .$course_name. "</td>";
+                    echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$student_name. "</td>";
+                    echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$subject. "</td>";
+                    echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$text. "</td>";
+                    echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$date. "</td>";
 
-                        echo "<td> <form action=\"#\" METHOD=\"POST\">
+                    echo "<td> <form action=\"#\" METHOD=\"POST\">
                                     <button type=\"submit\" name = \"ignore_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$complaint_id.">Ignore</button>
                                      </form>
                             </td>";
-                        if($refund_request)
-                        {
-                            echo "<td> <form action=\"#\" METHOD=\"POST\">
-                        
-                        
-                                    <button type=\"submit\" name = \"refund_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$complaint_id.">Refund</button>
-                                     </form>
-                            </td>";
-                        }
-                        else
-                        {
-                            echo "<td> <form action=\"#\" METHOD=\"POST\">
+
+                        echo "<td> <form action=\"#\" METHOD=\"POST\">
                                     <button type=\"submit\" name = \"noted_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$complaint_id.">Noted</button>
                                      </form>
                             </td>";
-                        }
-                        echo "</tr>";
-                    }
-
-                    echo "</table>";
+                    echo "</tr>";
                 }
-                else {
-                    echo "<script type='text/javascript'>alert('Database Error!');</script>";
-                    //header("Location:login.php");
-                }
-                ?>
-            </table>
 
+                echo "</table>";
+            }
+            else {
+                echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                //header("Location:login.php");
+            }
+            ?>
+        </table>
+
+    </div>
+    <form action="#" method="POST">
+        <div class="u-form-group u-form-submit">
+            <button type="submit" name = "left_page" id = "btn" class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4-11">Left</button>
+            <button type="submit" name = "right_page" id = "btn" class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4-12">Right</button>
         </div>
-        <form action="#" method="POST">
-            <div class="u-form-group u-form-submit">
-                <button type="submit" name = "left_page" id = "btn" class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4-11">Left</button>
-                <button type="submit" name = "right_page" id = "btn" class="u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4-12">Right</button>
-            </div>
-        </form>
-        <p class="u-text u-text-1"><?php echo $_SESSION['PAGENUM'] + 1; ?></p>
+    </form>
+    <p class="u-text u-text-1"><?php echo $_SESSION['PAGENUM'] + 1; ?></p>
 </section>
 
 
