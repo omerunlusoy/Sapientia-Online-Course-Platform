@@ -1,7 +1,12 @@
 <?php
 
 include("connect.php");
+session_start();
 
+if(isset($_POST['go_back_button'])){
+
+    header("Location: student_forum.php");
+}
 
 ?>
 
@@ -13,7 +18,7 @@ include("connect.php");
     <meta name="keywords" content="Learn Everyday, Join online courses today, Train Your Brain Today!, Learn to enjoyevery minute of your life., Online Learning, Innovations in Online Learning, Education and Learning, 01, 02, 03, 04, Contact Us">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>Anwers</title>
+    <title>Answers</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
     <link rel="stylesheet" href="Anwers.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
@@ -44,13 +49,14 @@ include("connect.php");
     </div></header>
 <section class="u-clearfix u-section-1" id="sec-74f0">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Notifications</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Fill a Complaint</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Statistics</a>
-        <a href="https://nicepage.com/k/arabic-style-html-templates" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-7">Main Page</a>
+        <a href="student_account.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
+        <a href="student_notifications.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Nofitications</a>
+        <a href="student_my_courses.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
+        <a href="student_fill_complaint.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-4">Fill a Complaint</a>
+        <a href="logout.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-5">Logout</a>
+        <a href="certificates.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-6">Certificates</a>
+        <a href="wishlist.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-7">Wishlist</a>
+        <a href="student_main.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-8">Main Page</a>
     </div>
 </section>
 <section class="u-align-center u-border-15 u-border-palette-2-light-2 u-clearfix u-section-2" id="sec-c4db">
@@ -59,15 +65,29 @@ include("connect.php");
         </h2>
         <?php
 
-        session_start();
 
+        
+        $sql = "select S.text as question, S.QnA_ID_S, QAEI.text as answer
+                from QnA_Entry_Student S join QnA_Entry_Instructor QAEI on S.QnA_ID_S = QAEI.QnA_ID_S";
+
+        $result = mysqli_query($con, $sql);
+
+        if ($result) {
+            $row = mysqli_fetch_array($result);
+            $question = $row['question'];
+            $answer = $row['answer'];
+        }
+        else
+        {
+            echo "<script type='text/javascript'>alert('Database Error!');</script>";
+        }
 
         ?>
-        <h2 class="u-text u-text-2">Question here ???&nbsp;</h2>
-        <p class="u-text u-text-3">Sample text. Click to select the text box. Click again or double click to start editing the text.<br>
+        <h2 class="u-text u-text-2"><?php echo $question; ?>&nbsp;</h2>
+        <p class="u-text u-text-3"><?php echo $answer; ?><br>
             <br>
             <br>
-            <br>Answer here :)
+            <br>
         </p>
         <div class="u-form u-form-1">
             <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px" source="custom" name="form">
@@ -76,7 +96,7 @@ include("connect.php");
                 <div class="u-align-center u-form-group u-form-submit">
                     <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-2 u-radius-11 u-btn-1">Go back<br>
                     </a>
-                    <input type="submit" value="submit" class="u-form-control-hidden">
+                    <input type="submit" name= "go_back_button" value="submit" class="u-form-control-hidden">
                 </div>
             </form>
         </div>
