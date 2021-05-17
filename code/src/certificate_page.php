@@ -133,7 +133,7 @@ if(isset($_POST['rate_button']))
 </section>
 <section class="u-align-center u-border-13 u-border-palette-2-light-2 u-clearfix u-section-2" id="sec-0fef">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-text u-text-1"><b>Congradulations !!</b>
+        <h2 class="u-text u-text-1"><b>Congrat ulations !!</b>
         </h2>
         <?php
 
