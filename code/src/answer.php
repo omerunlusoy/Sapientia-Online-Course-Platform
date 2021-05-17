@@ -5,7 +5,7 @@ session_start();
 
 if(isset($_POST['go_back_button'])){
 
-    header("Location: student_forum.php");
+    header("Location: student_my_courses.php");
 }
 
 ?>
@@ -90,7 +90,7 @@ if(isset($_POST['go_back_button'])){
             <br>
         </p>
         <div class="u-form u-form-1">
-            <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px" source="custom" name="form">
+            <form action="#" method="POST">
                 <input type="hidden" id="siteId" name="siteId" value="30667520">
                 <input type="hidden" id="pageId" name="pageId" value="4945780">
                 <div class="u-align-center u-form-group u-form-submit">

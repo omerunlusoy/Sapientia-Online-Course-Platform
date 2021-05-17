@@ -73,6 +73,18 @@ if(isset($_POST['edit_course_button'])){
     }
 
 
+    $zoom_buy = "INSERT INTO Zoom_Session (IID, CID, invite_link, start_date)
+                VALUES ('$IID', '$CID','$zoom_link', NULL);";
+    $result = mysqli_query($con, $zoom_buy);
+    if ($result) {
+        echo "<script type='text/javascript'>alert('Link added!');</script>";
+    }
+    else
+    {
+        echo "<script type='text/javascript'>alert('Course Could not be bought!');</script>";
+    }
+
+
 }
 
 

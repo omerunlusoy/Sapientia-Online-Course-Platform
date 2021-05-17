@@ -216,7 +216,7 @@ if(isset($_POST['request_certificate_button'])){
                 </div>
             </form>
 
-            
+
         </div>
         <h6 class="u-text u-text-16">
             <span style="font-weight: 700;">Ask a Question </span>
