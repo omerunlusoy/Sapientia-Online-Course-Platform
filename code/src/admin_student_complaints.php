@@ -23,13 +23,59 @@ if(isset($_POST['left_page'])){
 
 if(isset($_POST['refund_button'])){
 
+    //delete from student complaint
+    $cid = $_POST['refund_button'];
+    $sql_delete1 = "DELETE FROM Complaint_Entry_Student WHERE Complaint_ID = $cid ";
+    $result = mysqli_query($con, $sql_delete1);
+    if ($result) {
+        echo "<script type='text/javascript'>alert('Complaint accepted, Refund Approved!');</script>";
+    }
+    else
+    {
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
+
+    //delete from enrolls
+    $CID = $_SESSION['CID'];
+    $SID = $_SESSION['SID'];
+    $sql_delete2 = "DELETE FROM Enrolls WHERE CID= '$CID' and SID = '$SID' ";
+    $result2 = mysqli_query($con, $sql_delete2);
+    if ($result2) {
+
+    }
+    else
+    {
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
 }
 
 if(isset($_POST['ignore_button'])){
 
+    //delete from student complaint
+    $cid = $_POST['ignore_button'];
+    $sql_delete = "DELETE FROM Complaint_Entry_Student WHERE Complaint_ID = $cid ";
+    $result = mysqli_query($con, $sql_delete);
+    if ($result) {
+        echo "<script type='text/javascript'>alert('Complaint Ignored!');</script>";
+    }
+    else
+    {
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
 }
 
 if(isset($_POST['noted_button'])){
+    //delete from student complaint
+    $cid = $_POST['noted_button'];
+    $sql_delete = "DELETE FROM Complaint_Entry_Student WHERE Complaint_ID = $cid ";
+    $result = mysqli_query($con, $sql_delete);
+    if ($result) {
+        echo "<script type='text/javascript'>alert('Complaint Noted!');</script>";
+    }
+    else
+    {
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
 
 }
 
@@ -115,6 +161,8 @@ if(isset($_POST['noted_button'])){
                     while($row = mysqli_fetch_array($result)) {
 
                         $course_name = $row['course_name'];
+                        $_SESSION['SID'] = $row['SID'];
+                        $_SESSION['CID'] = $row['CID'];
                         $student_name = $row['name'];
                         $subject = $row['subject_title'];
                         $text = $row['text'];
@@ -131,10 +179,6 @@ if(isset($_POST['noted_button'])){
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$date. "</td>";
 
                         echo "<td> <form action=\"#\" METHOD=\"POST\">
-                                    <button type=\"submit\" name = \"noted_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$complaint_id.">Noted</button>
-                                     </form>
-                            </td>";
-                        echo "<td> <form action=\"#\" METHOD=\"POST\">
                                     <button type=\"submit\" name = \"ignore_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$complaint_id.">Ignore</button>
                                      </form>
                             </td>";
@@ -144,6 +188,13 @@ if(isset($_POST['noted_button'])){
                         
                         
                                     <button type=\"submit\" name = \"refund_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$complaint_id.">Refund</button>
+                                     </form>
+                            </td>";
+                        }
+                        else
+                        {
+                            echo "<td> <form action=\"#\" METHOD=\"POST\">
+                                    <button type=\"submit\" name = \"noted_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$complaint_id.">Noted</button>
                                      </form>
                             </td>";
                         }

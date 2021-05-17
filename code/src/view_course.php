@@ -217,8 +217,8 @@ if(isset($_POST['buy_button'])){
 
 
         <div class="u-form u-form-2">
-            <form action="#" method="POST">
-                <div class="u-align-right u-form-group u-form-submit">
+            <form style="margin-top:250px; " action="#" method="POST">
+                <div  class="u-align-right u-form-group u-form-submit">
                     <a class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-2">Buy<br>
                     </a>
                     <button name="buy_button" type="submit" value="submit" class="u-form-control-hidden">
@@ -226,7 +226,7 @@ if(isset($_POST['buy_button'])){
             </form>
         </div>
         <div class="u-form u-form-1">
-            <form action="#" method="POST">
+            <form style="margin-top:-140px; "action="#" method="POST">
                 <div class="u-align-right u-form-group u-form-submit">
                     <a class="u-btn u-btn-submit u-button-style u-palette-2-light-2 u-btn-1">Add to Wishlist</a>
                     <button name="add_to_wishlist_button" type="submit" value="submit" class="u-form-control-hidden">
