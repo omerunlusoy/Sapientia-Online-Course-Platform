@@ -56,6 +56,33 @@ if($exists_result->num_rows == 0){
     if(!$take_lecture_result){
         echo "<script type='text/javascript'>alert('Database Error4!');</script>";
     }
+
+    // student completed another lecture
+
+    $take_lecture_sql = "select *
+                   from Take_Lecture 
+                   where SID = '$SID' and CID = '$CID'";
+
+    $lecture_sql = "select * 
+                   from Lecture 
+                   where CID = '$CID'";
+
+    $take_lecture_result = mysqli_query($con, $take_lecture_sql);
+    $lecture_result = mysqli_query($con, $lecture_sql);
+
+    $progress = 100 * ($take_lecture_result->num_rows) / ($lecture_result->num_rows);
+
+    echo "<script type='text/javascript'>alert($CID);</script>";
+    echo "<script type='text/javascript'>alert($SID);</script>";
+    echo "<script type='text/javascript'>alert($progress);</script>";
+
+
+    $sql = "UPDATE Enrolls SET progress = '$progress' WHERE CID = '$CID' and SID = '$SID';";
+
+    $lecture_result = mysqli_query($con, $sql);
+    if(!$lecture_result){
+        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    }
 }
 
 
@@ -173,11 +200,11 @@ if(isset($_POST['note_button'])){
 
 
 
-        <form action="#" method="POST">
+        <form   style="margin-left:350px;" action="#" method="POST ">
             <a href="back_lecture.php" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-3">Previous</a>
             <input type="submit" name="previous_button1" value="submit" class="u-form-control-hidden">
         </form>
-        <form action="#" method="POST">
+        <form  style="margin-left:550px; margin-top:-100px; " action="#" method="POST">
             <a href="next_lecture.php" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-3">Next</a>
             <input type="submit" name="next_button1" value="submit" class="u-form-control-hidden">
         </form>
