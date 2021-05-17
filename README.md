@@ -13,7 +13,7 @@ CS 353 Project (Online Course Platform)
 
 [Design Report](https://github.com/Sapientia-Course-Platform/CS353_Project/blob/main/Reports/Design%20Report.pdf)
 
-[Final Report](https://github.com/Sapientia-Course-Platform/CS353_Project/blob/main/Reports/Final%20Report.pdf)
+[Final Report](https://github.com/Sapientia-Course-Platform/CS353_Project/blob/main/Reports/CS_353_group_4_Final_Report.pdf)
 
 
 ### Project Website
