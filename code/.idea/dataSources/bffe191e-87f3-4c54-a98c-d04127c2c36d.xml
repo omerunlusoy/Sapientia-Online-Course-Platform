@@ -1,26 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="Dijkstra">
-  <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.21">
+  <database-model serializer="dbm" dbms="MARIADB" family-id="MARIADB" format-version="4.20">
     <root id="1">
       <ServerVersion>5.5.68</ServerVersion>
-      <Grants>omer_unlusoy|schema||omer.unlusoy||ALTER|G
-omer_unlusoy|schema||omer.unlusoy||ALTER ROUTINE|G
-omer_unlusoy|schema||omer.unlusoy||CREATE|G
-omer_unlusoy|schema||omer.unlusoy||CREATE ROUTINE|G
-omer_unlusoy|schema||omer.unlusoy||CREATE TEMPORARY TABLES|G
-omer_unlusoy|schema||omer.unlusoy||CREATE VIEW|G
-omer_unlusoy|schema||omer.unlusoy||DELETE|G
-omer_unlusoy|schema||omer.unlusoy||DROP|G
-omer_unlusoy|schema||omer.unlusoy||EVENT|G
-omer_unlusoy|schema||omer.unlusoy||EXECUTE|G
-omer_unlusoy|schema||omer.unlusoy||INDEX|G
-omer_unlusoy|schema||omer.unlusoy||INSERT|G
-omer_unlusoy|schema||omer.unlusoy||LOCK TABLES|G
-omer_unlusoy|schema||omer.unlusoy||REFERENCES|G
-omer_unlusoy|schema||omer.unlusoy||SELECT|G
-omer_unlusoy|schema||omer.unlusoy||SHOW VIEW|G
-omer_unlusoy|schema||omer.unlusoy||TRIGGER|G
-omer_unlusoy|schema||omer.unlusoy||UPDATE|G</Grants>
       <DefaultEngine>InnoDB</DefaultEngine>
       <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
       <DefaultCasing>exact</DefaultCasing>
@@ -677,7 +659,11 @@ omer_unlusoy|schema||omer.unlusoy||UPDATE|G</Grants>
     <collation id="205" parent="1" name="utf8mb4_unicode_ci">
       <Charset>utf8mb4</Charset>
     </collation>
-    <user id="206" parent="1" name="omer.unlusoy"/>
+    <user id="206" parent="1" name="omer.unlusoy">
+      <Host>%</Host>
+      <ObjectGrants>ALL PRIVILEGES|omer_unlusoy
+</ObjectGrants>
+    </user>
     <table id="207" parent="3" name="Admin"/>
     <table id="208" parent="3" name="Certificate"/>
     <table id="209" parent="3" name="Complaint_Entry_Instructor"/>
