@@ -91,6 +91,7 @@ $result = mysqli_query($con, $top_courses_sql);
 <section class="u-align-center u-clearfix u-section-2" id="sec-4fce">
 
     <div class="u-table u-table-responsive u-table-1">
+        <h2 class="u-text u-text-3">Popular Courses</h2>
         <table class="u-table-entity u-table-entity-1">
 
             <?php
