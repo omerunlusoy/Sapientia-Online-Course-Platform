@@ -31,7 +31,7 @@ if(isset($_POST['post_button'])){
             $result = mysqli_query($con, $sql_insert );
             if($result)
             {
-                echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                echo "<script type='text/javascript'>alert('Answer Posted!');</script>";
             }
             else
             {
@@ -43,7 +43,7 @@ if(isset($_POST['post_button'])){
     }
     else
     {
-        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+        echo "<script type='text/javascript'>alert('Database Error3!');</script>";
     }
 
 }
@@ -94,7 +94,6 @@ if(isset($_POST['go_back_button'])){
     </div></header>
 <section class="u-clearfix u-section-1" id="sec-ee35">
     <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <a href="instructor_account.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
         <a href="instructor_account.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-1">Account</a>
         <a href="instructor_forum.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-2">Forum</a>
         <a href="instructor_main_courses.php" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-text-body-color u-btn-3">My Courses</a>
