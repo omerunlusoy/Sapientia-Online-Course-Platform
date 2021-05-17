@@ -72,10 +72,6 @@ if($exists_result->num_rows == 0){
 
     $progress = 100 * ($take_lecture_result->num_rows) / ($lecture_result->num_rows);
 
-    echo "<script type='text/javascript'>alert($CID);</script>";
-    echo "<script type='text/javascript'>alert($SID);</script>";
-    echo "<script type='text/javascript'>alert($progress);</script>";
-
 
     $sql = "UPDATE Enrolls SET progress = '$progress' WHERE CID = '$CID' and SID = '$SID';";
 
