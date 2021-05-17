@@ -173,11 +173,11 @@ if(isset($_POST['note_button'])){
 
 
 
-        <form action="#" method="POST">
+        <form   style="margin-left:350px;" action="#" method="POST ">
             <a href="back_lecture.php" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-3">Previous</a>
             <input type="submit" name="previous_button1" value="submit" class="u-form-control-hidden">
         </form>
-        <form action="#" method="POST">
+        <form  style="margin-left:550px; margin-top:-100px; " action="#" method="POST">
             <a href="next_lecture.php" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-3">Next</a>
             <input type="submit" name="next_button1" value="submit" class="u-form-control-hidden">
         </form>
