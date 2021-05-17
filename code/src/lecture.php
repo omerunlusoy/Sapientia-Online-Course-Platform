@@ -21,11 +21,11 @@ if($lecture_result){
         $target_file = $row['lecture_content'];
     }
     else{
-        echo "<script type='text/javascript'>alert('Database Error!');</script>";
+        echo "<script type='text/javascript'>alert('Database Error1!');</script>";
     }
 }
 else{
-    echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    echo "<script type='text/javascript'>alert('Database Error2!');</script>";
 }
 
 $note_sql = "select * 
@@ -42,20 +42,27 @@ if($note_result){
     }
 }
 else{
-    echo "<script type='text/javascript'>alert('Database Error!');</script>";
+    echo "<script type='text/javascript'>alert('Database Error3!');</script>";
 }
+
+$exists_sql = "select * 
+                   from Take_Lecture 
+                   where SID = '$SID' and CID = '$CID' and section = '$section' and content_num = '$content_num'";
+$exists_result = mysqli_query($con, $exists_sql);
+if($exists_result->num_rows == 0){
+    $take_lecture_sql = "INSERT INTO Take_Lecture (SID, CID, section, content_num, isCompleted)
+                     VALUES ('$SID', '$CID', '$section', '$content_num', 1)";
+    $take_lecture_result = mysqli_query($con, $take_lecture_sql);
+    if(!$take_lecture_result){
+        echo "<script type='text/javascript'>alert('Database Error4!');</script>";
+    }
+}
+
 
 
 
 
 if(isset($_POST['back_button'])){
-    header("location: contents.php");
-}
-
-if(isset($_POST['left_button'])){
-    header("location: contents.php");
-}
-if(isset($_POST['right_button'])){
     header("location: contents.php");
 }
 
@@ -75,7 +82,7 @@ if(isset($_POST['note_button'])){
             if($update_result){
             }
             else{
-                echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                echo "<script type='text/javascript'>alert('Database Error5!');</script>";
             }
         }
         else{
@@ -87,12 +94,17 @@ if(isset($_POST['note_button'])){
             if($update_result){
             }
             else{
-                echo "<script type='text/javascript'>alert('Database Error!');</script>";
+                echo "<script type='text/javascript'>alert('Database Error6!');</script>";
             }
         }
-        header("location: lecture.php");
+        //header("location: lecture.php");
     }
 }
+
+
+
+
+
 
 ?>
 
@@ -150,34 +162,7 @@ if(isset($_POST['note_button'])){
             <iframe style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;" class="embed-responsive-item" src=<?php echo $target_file ?> allowfullscreen="true"></iframe>
         </div>
     </div>
-    <div class="u-form u-form-1">
-        <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
 
-
-
-            <div class="u-align-right u-form-group u-form-submit">
-                <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-1">
-                    <svg class="u-svg-content" viewBox="0 0 492.004 492.004" x="0px" y="0px" style="width: 1em; height: 1em;"><g><g><path d="M382.678,226.804L163.73,7.86C158.666,2.792,151.906,0,144.698,0s-13.968,2.792-19.032,7.86l-16.124,16.12    c-10.492,10.504-10.492,27.576,0,38.064L293.398,245.9l-184.06,184.06c-5.064,5.068-7.86,11.824-7.86,19.028    c0,7.212,2.796,13.968,7.86,19.04l16.124,16.116c5.068,5.068,11.824,7.86,19.032,7.86s13.968-2.792,19.032-7.86L382.678,265    c5.076-5.084,7.864-11.872,7.848-19.088C390.542,238.668,387.754,231.884,382.678,226.804z"></path>
-                            </g>
-                        </g></svg>
-                    <img>
-                </a>
-                <input type="submit" name="left_button" value="submit" class="u-form-control-hidden">
-            </div>
-        </form>
-    </div>
-    <div class="u-form u-form-2">
-        <form action="#" method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
-            <div class="u-align-right u-form-group u-form-submit">
-                <a href="#" name="left_button" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-2">
-                    <svg class="u-svg-content" viewBox="0 0 55.753 55.753" x="0px" y="0px" style="width: 1em; height: 1em;"><g><path d="M12.745,23.915c0.283-0.282,0.59-0.52,0.913-0.727L35.266,1.581c2.108-2.107,5.528-2.108,7.637,0.001   c2.109,2.108,2.109,5.527,0,7.637L24.294,27.828l18.705,18.706c2.109,2.108,2.109,5.526,0,7.637   c-1.055,1.056-2.438,1.582-3.818,1.582s-2.764-0.526-3.818-1.582L13.658,32.464c-0.323-0.207-0.632-0.445-0.913-0.727   c-1.078-1.078-1.598-2.498-1.572-3.911C11.147,26.413,11.667,24.994,12.745,23.915z"></path>
-                        </g></svg>
-                    <img>
-                </a>
-                <input type="submit" value="submit" class="u-form-control-hidden">
-            </div>
-        </form>
-    </div>
     <h3 class="u-text u-text-1"><?php echo $lecture_title ?></h3>
     <p class="u-text u-text-2"><?php echo $description ?><br>
         <br>
@@ -187,15 +172,26 @@ if(isset($_POST['note_button'])){
     <div class="u-form u-form-3">
 
 
+
+        <form action="#" method="POST">
+            <a href="back_lecture.php" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-3">Previous</a>
+            <input type="submit" name="previous_button1" value="submit" class="u-form-control-hidden">
+        </form>
+        <form action="#" method="POST">
+            <a href="next_lecture.php" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-3">Next</a>
+            <input type="submit" name="next_button1" value="submit" class="u-form-control-hidden">
+        </form>
+
+
+
         <form action="#" method="POST">
             <div class="u-align-right u-form-group u-form-submit">
                 <a href="contents.php" class="u-btn u-btn-round u-btn-submit u-button-style u-palette-2-light-3 u-radius-27 u-btn-3">Back to Contents</a>
                 <input type="submit" name="back_button" value="submit" class="u-form-control-hidden">
             </div>
         </form>
-
-
     </div>
+
     <div class="u-form u-form-4">
         <form action="#" method="POST">
             <div class="u-form-group u-form-message">
@@ -208,7 +204,10 @@ if(isset($_POST['note_button'])){
             </div>
         </form>
     </div>
+
 </section>
+
+
 
 
 <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-266b"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
