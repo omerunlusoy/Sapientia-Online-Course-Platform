@@ -3,7 +3,7 @@ session_start();
 include("connect.php");
 
 if(isset($_POST['answer_button'])){
-    $_SESSION['CID'] = $_POST['answer_button'];
+    $_SESSION['QnA_ID_S'] = $_POST['answer_button'];
     header("Location: instructor_answer.php");
 }
 
@@ -83,14 +83,14 @@ if(isset($_POST['answer_button'])){
 
                     while($row = mysqli_fetch_array($result)) {
 
-                        $_SESSION['QnA_ID_S'] = $row['QnA_ID_S'];
+                        $_SESSION['SID'] = $row['SID'];
 
                         echo "<tr>";
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-7\">" .$row['name']. "</td>";
                         echo "<td class=\"u-border-1 u-border-grey-30 u-first-column u-grey-5 u-table-cell u-table-cell-19\">" .$row['text']. "</td>";
 
                         echo "<td> <form action=\"#\" METHOD=\"POST\">
-                                    <button type=\"submit\" name = \"answer_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['CID'] .">Answer Question</button>
+                                    <button type=\"submit\" name = \"answer_button\" id = \"btn\" class=\"u-border-2 u-border-palette-2-light-2 u-btn u-button-style u-hover-palette-2-light-2 u-none u-text-black u-text-hover-white u-btn-4\" value =".$row['QnA_ID_S'] .">Answer Question</button>
                                      </form>
                             </td>";
 
