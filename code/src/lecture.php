@@ -97,7 +97,7 @@ if(isset($_POST['note_button'])){
                 echo "<script type='text/javascript'>alert('Database Error6!');</script>";
             }
         }
-        //header("location: lecture.php");
+        header("location: lecture.php");
     }
 }
 
