@@ -14,12 +14,12 @@ This project is implemented for the CS-353 Database Systems course with the grou
 
 
 ### Files
-[Project Proposal](https://github.com/Sapientia-Course-Platform/CS353_Project/blob/main/Reports/Project%20Proposal.pdf)
+[Project Proposal](https://github.com/omerunlusoy/Sapientia-Online-Couse-Platform/blob/main/Reports/CS_353_group_4_Final_Report.pdf)
 
-[Design Report](https://github.com/Sapientia-Course-Platform/CS353_Project/blob/main/Reports/Design%20Report.pdf)
+[Design Report](https://github.com/omerunlusoy/Sapientia-Online-Couse-Platform/blob/main/Reports/Design%20Report.pdf)
 
-[Final Report](https://github.com/Sapientia-Course-Platform/CS353_Project/blob/main/Reports/CS_353_group_4_Final_Report.pdf)
+[Final Report](https://github.com/omerunlusoy/Sapientia-Online-Couse-Platform/blob/main/Reports/CS_353_group_4_Final_Report.pdf)
 
 
 ### Project Website
-[Sapientia Website](https://sapientia-course-platform.github.io/CS353_Project/)
+[Sapientia Website](https://omerunlusoy.github.io/Sapientia-Online-Couse-Platform/)
