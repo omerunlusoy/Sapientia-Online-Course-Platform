@@ -1,4 +1,4 @@
-# Sapientia Online Couse Platform
+# Sapientia Online Course Platform
 
 Sapientia is a web-based course platform similar to Udemy.
 
