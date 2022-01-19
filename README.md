@@ -1,5 +1,10 @@
-# CS353_Project
-CS 353 Project (Online Course Platform)
+# Sapientia Online Couse Platform
+
+Sapientia is a web-based course platform similar to Udemy.
+
+The purpose of the platform is to enable instructors to build their online courses as well as students to reach out to these contents and educate themselves.
+
+This project is implemented for the CS-353 Database Systems course with the group of five. 
 
 ### Group Members
   - Ömer Ünlüsoy 	       - sec 1 - 21702136  
